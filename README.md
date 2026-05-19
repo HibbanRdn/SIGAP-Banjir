@@ -265,6 +265,17 @@ Font:
 - Plus Jakarta Sans untuk heading, body text, navigasi, tombol, form, tabel, card, badge, popup peta, dan microcopy.
 - JetBrains Mono hanya untuk angka statistik, koordinat, jarak, durasi, ID, kode, SRID, metadata teknis, dan nilai teknis lain.
 
+### Brand Assets
+
+Asset brand ditempatkan di folder publik Laravel:
+
+| Asset | Path | Penggunaan |
+|---|---|---|
+| Logo utama | `public/assets/brand/logo-utama.png` | Header, login page, sidebar/topbar, dan tampilan yang membutuhkan logo lengkap |
+| Logo icon | `public/assets/brand/logo-icon.png` | Favicon, app icon, sidebar compact, dan logo kecil |
+| Favicon PNG | `public/favicon.png` | Favicon utama berbasis PNG |
+| Favicon ICO | `public/favicon.ico` | Fallback favicon untuk browser yang membutuhkan `.ico` |
+
 ## Requirements
 
 Kebutuhan umum:

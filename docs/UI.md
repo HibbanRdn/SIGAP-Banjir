@@ -270,6 +270,24 @@ Contoh ikon:
 | Jarak | Ruler |
 | Durasi | Clock |
 
+### Brand Assets
+
+Asset logo project ditempatkan di struktur publik Laravel agar mudah dipakai di Blade:
+
+| Asset | Path | Penggunaan |
+|---|---|---|
+| Logo utama | `public/assets/brand/logo-utama.png` | Header publik, login page, sidebar/topbar, README, dan area yang membutuhkan logo lengkap |
+| Logo icon | `public/assets/brand/logo-icon.png` | Favicon, app icon, sidebar compact, dan logo kecil |
+| Favicon PNG | `public/favicon.png` | Favicon utama berbasis PNG |
+| Favicon ICO | `public/favicon.ico` | Fallback favicon untuk browser yang membutuhkan `.ico` |
+
+Aturan penggunaan logo:
+
+1. Gunakan `w-auto` atau `object-contain` agar logo tidak terdistorsi.
+2. Gunakan alt text yang jelas, misalnya `SIGAP Banjir Bandar Lampung`.
+3. Jangan memberi shadow, glow, atau efek dekoratif berlebihan.
+4. Jika logo dipakai pada background gelap, gunakan container terang sederhana agar tetap terbaca.
+
 ## G. Layout Utama Sistem
 
 Sistem memiliki dua area utama:
