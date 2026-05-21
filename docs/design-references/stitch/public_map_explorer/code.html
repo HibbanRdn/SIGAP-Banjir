@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SIGAP Banjir - Public Map Explorer</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&amp;family=Plus+Jakarta+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration (Provided) -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#a38c6a",
+                    "on-tertiary": "#ffffff",
+                    "surface": "#fbf8fa",
+                    "on-surface": "#1b1b1d",
+                    "surface-variant": "#e4e2e3",
+                    "background": "#fbf8fa",
+                    "error": "#ba1a1a",
+                    "surface-container-high": "#eae7e9",
+                    "surface-tint": "#545f73",
+                    "on-tertiary-fixed-variant": "#564427",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-bright": "#fbf8fa",
+                    "surface-container-low": "#f5f3f4",
+                    "secondary-fixed-dim": "#adc6ff",
+                    "on-error": "#ffffff",
+                    "on-background": "#1b1b1d",
+                    "outline-variant": "#c5c6cd",
+                    "on-primary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "primary-fixed": "#d8e3fb",
+                    "tertiary-fixed": "#fadfb8",
+                    "tertiary": "#1e1200",
+                    "primary-container": "#1e293b",
+                    "on-surface-variant": "#45474c",
+                    "tertiary-container": "#35260c",
+                    "secondary-fixed": "#d8e2ff",
+                    "on-secondary-container": "#fefcff",
+                    "danger-coral": "#F87171",
+                    "safe-teal": "#2DD4BF",
+                    "surface-container-highest": "#e4e2e3",
+                    "primary-fixed-dim": "#bcc7de",
+                    "outline": "#75777d",
+                    "on-secondary-fixed-variant": "#004395",
+                    "secondary": "#0058be",
+                    "inverse-surface": "#303032",
+                    "on-primary-fixed-variant": "#3c475a",
+                    "text-main": "#334155",
+                    "surface-container": "#f0edef",
+                    "on-error-container": "#93000a",
+                    "on-primary-container": "#8590a6",
+                    "on-primary-fixed": "#111c2d",
+                    "resource-amber": "#FBBF24",
+                    "inverse-primary": "#bcc7de",
+                    "surface-gray": "#F8FAFC",
+                    "on-secondary-fixed": "#001a42",
+                    "error-container": "#ffdad6",
+                    "text-muted": "#94A3B8",
+                    "tertiary-fixed-dim": "#ddc39d",
+                    "secondary-container": "#2170e4",
+                    "on-tertiary-fixed": "#271902",
+                    "inverse-on-surface": "#f3f0f2",
+                    "surface-dim": "#dcd9db",
+                    "primary": "#091426"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "radius-base": "8px",
+                    "panel-explorer": "400px",
+                    "gutter-grid": "16px",
+                    "margin-page": "24px",
+                    "panel-sidebar": "260px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "body-sm": ["Plus Jakarta Sans"],
+                    "mono-stats": ["JetBrains Mono"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "headline-sm": ["Plus Jakarta Sans"],
+                    "mono-label": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                    "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                    "mono-stats": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.02em", "fontWeight": "500" }],
+                    "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                    "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                    "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                    "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                    "mono-label": ["11px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        /* Custom Scrollbar for the Explorer Panel */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background-color: #c5c6cd; border-radius: 4px; }
+        .map-shadow { box-shadow: 0 4px 24px -4px rgba(0,0,0,0.08); }
+    </style>
+</head>
+<body class="bg-surface-gray text-on-surface h-screen w-full flex flex-col overflow-hidden font-body-md text-body-md">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-page h-16 bg-surface border-b border-outline-variant">
+<div class="flex items-center gap-4">
+<!-- Brand Logo Area -->
+<img alt="SIGAP Banjir Logo" class="h-8 w-auto object-contain hidden" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkYJxcuYq2rwozIZlYVeSEPEiSQw3sn6zMeh4Ly1Y21wMijqxee2d5YoYUA69Qm_TEHzhU7Nebbq5R_2faRKSuVzbBdF46KZtDcliTMASovkBighiVIWU3JTo2LyFv89w4ahuRGh3udqblP1-sHktVzpI5QntPq00dlKQtXMAmKzauV-EJYZqUQO6BuEe2Ah85ohZ1Jjhe-hO7TdoKgE2i_WOTFn3aQ8HpoHSl0ffUxjJb8ALyUjHxLUdXqWINaUn0Vhh2nXj9PE0"/>
+<div class="flex items-center gap-2 text-primary font-headline-sm text-headline-sm font-bold">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">water_drop</span>
+                Civic Flood Dashboard
+            </div>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex gap-6 h-full items-center">
+<a class="h-16 flex items-center text-secondary border-b-2 border-secondary font-body-md text-body-md transition-colors" href="#">Map Explorer</a>
+<a class="h-16 flex items-center text-on-surface-variant hover:bg-surface-container-low transition-colors font-body-md text-body-md px-2 cursor-pointer active:opacity-80" href="#">Risk Analysis</a>
+</nav>
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">help</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center ml-2 border border-outline-variant overflow-hidden">
+<span class="material-symbols-outlined text-sm">person</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Area: Split Layout -->
+<main class="flex-1 flex mt-16 overflow-hidden relative">
+<!-- Left Panel: Explorer (Search, Toggles, Results) -->
+<aside class="w-full md:w-panel-explorer bg-surface flex flex-col border-r border-outline-variant z-40 flex-shrink-0 h-full">
+<!-- Search Section -->
+<div class="p-4 border-b border-outline-variant bg-surface">
+<label class="block font-body-sm text-body-sm text-on-surface-variant mb-1" for="location-search">Location or Asset Search</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-lg">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-DEFAULT font-body-md text-body-md text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-colors" id="location-search" placeholder="Enter coordinates or address..." type="text"/>
+</div>
+</div>
+<!-- Layer Toggles (Bento Grid Style) -->
+<div class="p-4 border-b border-outline-variant bg-surface-gray">
+<h3 class="font-mono-label text-mono-label text-outline uppercase tracking-wider mb-3">Active Data Layers</h3>
+<div class="grid grid-cols-2 gap-2">
+<button class="flex items-center gap-2 p-2 bg-surface rounded-DEFAULT border border-secondary shadow-sm text-left hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-danger-coral" style="font-variation-settings: 'FILL' 1;">warning</span>
+<span class="font-body-sm text-body-sm font-semibold text-primary">Flood Events</span>
+</button>
+<button class="flex items-center gap-2 p-2 bg-surface rounded-DEFAULT border border-outline-variant text-left hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-safe-teal" style="font-variation-settings: 'FILL' 1;">home_work</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Evacuation</span>
+</button>
+<button class="flex items-center gap-2 p-2 bg-surface rounded-DEFAULT border border-outline-variant text-left hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-resource-amber" style="font-variation-settings: 'FILL' 1;">water_pump</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Equipment</span>
+</button>
+<button class="flex items-center gap-2 p-2 bg-surface rounded-DEFAULT border border-outline-variant text-left hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-primary-fixed-dim" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Risk Zones</span>
+</button>
+</div>
+</div>
+<!-- Result Cards List -->
+<div class="flex-1 overflow-y-auto p-4 flex flex-col gap-4 bg-surface">
+<!-- Result Card: Active Flood (Selected) -->
+<div class="bg-surface rounded-lg border border-outline-variant border-l-4 border-l-secondary p-4 hover:bg-surface-container-low transition-colors cursor-pointer map-shadow relative overflow-hidden">
+<div class="absolute top-0 right-0 p-2 opacity-10">
+<span class="material-symbols-outlined text-6xl">warning</span>
+</div>
+<div class="flex justify-between items-start mb-2 relative z-10">
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-DEFAULT bg-[#FEE2E2] text-[#991B1B] font-mono-label text-mono-label">
+<span class="material-symbols-outlined text-[14px]">sensors</span>
+                            ACTIVE FLOOD
+                        </div>
+<span class="font-mono-stats text-mono-stats text-outline">10 mins ago</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-primary mb-1 relative z-10">Sector 4 Riverbank</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-3 relative z-10">Water level critical. Immediate attention required.</p>
+<div class="flex gap-4 border-t border-outline-variant pt-3 mt-1 relative z-10">
+<div class="flex flex-col">
+<span class="font-mono-label text-mono-label text-outline">DEPTH</span>
+<span class="font-mono-stats text-mono-stats text-danger-coral font-bold">1.8m</span>
+</div>
+<div class="flex flex-col">
+<span class="font-mono-label text-mono-label text-outline">COORDINATES</span>
+<span class="font-mono-stats text-mono-stats text-text-main">-6.200, 106.816</span>
+</div>
+</div>
+</div>
+<!-- Result Card: Evacuation Center -->
+<div class="bg-surface rounded-lg border border-outline-variant p-4 hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-DEFAULT bg-[#CCFBF1] text-[#115E59] font-mono-label text-mono-label">
+<span class="material-symbols-outlined text-[14px]">local_hospital</span>
+                            SAFE ZONE
+                        </div>
+<span class="font-mono-stats text-mono-stats text-outline">Capacity: 45%</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-primary mb-1">Civic Hall Shelter Alpha</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-3">Supplies stable. Medical unit on standby.</p>
+<div class="flex justify-end border-t border-outline-variant pt-3 mt-1">
+<button class="font-body-sm text-body-sm text-secondary flex items-center gap-1 hover:underline">
+                            View Details <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Result Card: Equipment -->
+<div class="bg-surface rounded-lg border border-outline-variant p-4 hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-DEFAULT bg-[#FEF3C7] text-[#92400E] font-mono-label text-mono-label">
+<span class="material-symbols-outlined text-[14px]">settings</span>
+                            EQUIPMENT
+                        </div>
+<span class="font-mono-stats text-mono-stats text-safe-teal">Operational</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-primary mb-1">Mobile Pump Unit P-02</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-3">Deployed at North Checkpoint.</p>
+</div>
+</div>
+</aside>
+<!-- Right Panel: Fluid Map Area -->
+<section class="flex-1 bg-surface-dim relative overflow-hidden hidden md:block">
+<!-- Map Background Image -->
+<div class="absolute inset-0 bg-cover bg-center" data-alt="A highly detailed, modern top-down map interface showing a complex city street grid overlaid with data visualization elements. The map uses a clean, minimalist cartography style with a light gray, white, and subtle blue base, avoiding cluttered text labels. The aesthetic is professional, analytical, and tailored for a civic data dashboard. Lighting is flat and uniform, emphasizing spatial clarity over photographic realism, with high-contrast structural lines." data-location="Jakarta" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBOynenneGdTaHvLvvsp8jKfhcjS8Gjuz17d5rdViPqliAhUvEGCAsGIY-lXASHa5nCZCSaj5ist_59AqJEEn6SMh6Ke4Q6DWBcAHQynNvv5clKjnnQwndjsqqqZ4nFvrIg59QJ7sFySdggYIclm6JyNPyo76n8wqyCCeHtUienZ0YOZgvM9YRxt0jVP2GV7x1PAObMjO3ihLWKKd4gs0KqRPYHDftLksTFxW7cZpdDSDOMSlbFQ-5feiS0e-UhCS5i1lGkSgrW-50'); opacity: 0.8;">
+</div>
+<!-- Map Controls (Floating Top Right) -->
+<div class="absolute top-4 right-4 flex flex-col gap-2 z-10">
+<div class="bg-surface rounded-DEFAULT border border-outline-variant shadow-sm flex flex-col">
+<button class="p-2 text-on-surface hover:bg-surface-container-low border-b border-outline-variant transition-colors" title="Zoom In">
+<span class="material-symbols-outlined">add</span>
+</button>
+<button class="p-2 text-on-surface hover:bg-surface-container-low transition-colors" title="Zoom Out">
+<span class="material-symbols-outlined">remove</span>
+</button>
+</div>
+<button class="bg-surface rounded-DEFAULT border border-outline-variant shadow-sm p-2 text-on-surface hover:bg-surface-container-low transition-colors mt-2" title="Current Location">
+<span class="material-symbols-outlined">my_location</span>
+</button>
+<button class="bg-surface rounded-DEFAULT border border-outline-variant shadow-sm p-2 text-on-surface hover:bg-surface-container-low transition-colors" title="Map Layers">
+<span class="material-symbols-outlined">layers</span>
+</button>
+</div>
+<!-- Custom Map Markers -->
+<!-- Active Flood Marker -->
+<div class="absolute top-[40%] left-[35%] transform -translate-x-1/2 -translate-y-1/2 z-20 group cursor-pointer">
+<div class="w-10 h-10 bg-surface rounded-full flex items-center justify-center border-2 border-danger-coral shadow-md animate-pulse">
+<div class="w-8 h-8 rounded-full bg-danger-coral flex items-center justify-center text-on-error">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">water_drop</span>
+</div>
+</div>
+<!-- Pin shadow/anchor -->
+<div class="w-2 h-2 bg-on-surface rounded-full absolute -bottom-1 left-1/2 transform -translate-x-1/2 opacity-30"></div>
+</div>
+<!-- Evacuation Marker -->
+<div class="absolute top-[60%] left-[55%] transform -translate-x-1/2 -translate-y-1/2 z-10 cursor-pointer hover:scale-110 transition-transform">
+<div class="w-8 h-8 bg-surface rounded-full flex items-center justify-center border-2 border-safe-teal shadow-sm">
+<div class="w-6 h-6 rounded-full bg-safe-teal flex items-center justify-center text-on-surface">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">home</span>
+</div>
+</div>
+</div>
+<!-- Equipment Marker -->
+<div class="absolute top-[30%] left-[65%] transform -translate-x-1/2 -translate-y-1/2 z-10 cursor-pointer hover:scale-110 transition-transform">
+<div class="w-8 h-8 bg-surface rounded-full flex items-center justify-center border-2 border-resource-amber shadow-sm">
+<div class="w-6 h-6 rounded-full bg-resource-amber flex items-center justify-center text-on-surface">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">settings</span>
+</div>
+</div>
+</div>
+<!-- Compact Marker Popup (Attached to Active Flood Marker concept) -->
+<div class="absolute top-[40%] left-[35%] transform -translate-x-1/2 -translate-y-full mb-4 z-30 w-64 bg-surface rounded-lg border border-outline-variant map-shadow overflow-hidden" id="flood-popup">
+<!-- Header Banner -->
+<div class="bg-danger-coral px-3 py-1.5 flex justify-between items-center text-on-error">
+<span class="font-mono-label text-mono-label uppercase tracking-wider">Priority Alert</span>
+<button class="hover:opacity-80 transition-opacity" onclick="document.getElementById('flood-popup').style.display='none'">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+<!-- Content -->
+<div class="p-4">
+<h5 class="font-headline-sm text-headline-sm text-primary mb-1">Sector 4 Riverbank</h5>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-3">Rapid water accumulation detected. Sensor ID: S4-A.</p>
+<div class="bg-surface-gray border border-outline-variant rounded-DEFAULT p-2 mb-3 grid grid-cols-2 gap-2">
+<div>
+<div class="font-mono-label text-mono-label text-outline">LEVEL</div>
+<div class="font-mono-stats text-mono-stats text-danger-coral">1.8m</div>
+</div>
+<div>
+<div class="font-mono-label text-mono-label text-outline">TREND</div>
+<div class="font-mono-stats text-mono-stats text-text-main flex items-center gap-1">
+                                +0.2m/h <span class="material-symbols-outlined text-[14px] text-danger-coral">trending_up</span>
+</div>
+</div>
+</div>
+<button class="w-full py-2 bg-secondary text-on-secondary rounded-DEFAULT font-body-sm text-body-sm font-semibold hover:bg-secondary-container transition-colors shadow-sm">
+                        Dispatch Response
+                    </button>
+</div>
+<!-- Pointer triangle -->
+<div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-surface border-b border-r border-outline-variant rotate-45"></div>
+</div>
+<!-- Scale Reference (Bottom Left) -->
+<div class="absolute bottom-6 left-4 bg-surface/90 backdrop-blur-sm border border-outline-variant rounded-DEFAULT p-2 flex items-center gap-2 shadow-sm z-10">
+<div class="w-16 h-1 border-b-2 border-l-2 border-r-2 border-text-main"></div>
+<span class="font-mono-stats text-mono-stats text-text-main text-[12px]">500m</span>
+</div>
+</section>
+</main>
+</body></html>

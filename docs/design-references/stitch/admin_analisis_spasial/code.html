@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Analisis Spasial - SIGAP Banjir</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-gray": "#F8FAFC",
+                        "on-primary-fixed-variant": "#3c475a",
+                        "surface-container-high": "#eae7e9",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed": "#001a42",
+                        "tertiary-container": "#35260c",
+                        "on-primary-container": "#8590a6",
+                        "error": "#ba1a1a",
+                        "outline-variant": "#c5c6cd",
+                        "danger-coral": "#F87171",
+                        "tertiary": "#1e1200",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "secondary-fixed": "#d8e2ff",
+                        "surface-container-low": "#f5f3f4",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed-variant": "#004395",
+                        "resource-amber": "#FBBF24",
+                        "primary": "#091426",
+                        "on-background": "#1b1b1d",
+                        "inverse-primary": "#bcc7de",
+                        "tertiary-fixed": "#fadfb8",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed-variant": "#564427",
+                        "background": "#fbf8fa",
+                        "tertiary-fixed-dim": "#ddc39d",
+                        "safe-teal": "#2DD4BF",
+                        "on-tertiary": "#ffffff",
+                        "surface-bright": "#fbf8fa",
+                        "text-muted": "#94A3B8",
+                        "surface": "#fbf8fa",
+                        "secondary-container": "#2170e4",
+                        "primary-container": "#1e293b",
+                        "surface-container-lowest": "#ffffff",
+                        "outline": "#75777d",
+                        "surface-dim": "#dcd9db",
+                        "secondary": "#0058be",
+                        "surface-container-highest": "#e4e2e3",
+                        "surface-container": "#f0edef",
+                        "on-primary-fixed": "#111c2d",
+                        "primary-fixed-dim": "#bcc7de",
+                        "on-surface": "#1b1b1d",
+                        "on-secondary-container": "#fefcff",
+                        "on-tertiary-fixed": "#271902",
+                        "on-tertiary-container": "#a38c6a",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#303032",
+                        "inverse-on-surface": "#f3f0f2",
+                        "error-container": "#ffdad6",
+                        "text-main": "#334155",
+                        "surface-tint": "#545f73",
+                        "surface-variant": "#e4e2e3",
+                        "primary-fixed": "#d8e3fb",
+                        "on-surface-variant": "#45474c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "panel-sidebar": "260px",
+                        "panel-explorer": "400px",
+                        "radius-base": "8px",
+                        "margin-page": "24px",
+                        "gutter-grid": "16px"
+                    },
+                    "fontFamily": {
+                        "mono-label": ["JetBrains Mono"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "headline-sm": ["Plus Jakarta Sans"],
+                        "body-sm": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "mono-stats": ["JetBrains Mono"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "mono-label": ["11px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "mono-stats": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.02em", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined[data-weight="fill"] {
+            font-variation-settings: 'FILL' 1;
+        }
+        /* Custom scrollbar for left/right panels */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body class="bg-surface-gray text-on-surface font-body-md antialiased overflow-hidden h-screen flex">
+<!-- SideNavBar -->
+<nav class="flex flex-col h-full w-[260px] fixed left-0 top-0 py-6 px-4 z-50 overflow-y-auto bg-surface-container-lowest border-r border-outline-variant flat no shadows">
+<div class="mb-8 px-2 flex flex-col">
+<div class="text-headline-sm font-headline-sm font-bold text-primary mb-1">SIGAP Banjir</div>
+<div class="text-body-sm text-on-surface-variant">Kota Bandar Lampung</div>
+</div>
+<ul class="flex flex-col gap-2">
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-gray transition-all scale-100 active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-gray transition-all scale-100 active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined">map</span>
+<span>Peta Banjir</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-gray transition-all scale-100 active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined">warning</span>
+<span>Titik Rawan Banjir</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-gray transition-all scale-100 active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined">event_note</span>
+<span>Kejadian Banjir</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-gray transition-all scale-100 active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined">home_health</span>
+<span>Titik Evakuasi</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-gray transition-all scale-100 active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined">construction</span>
+<span>Pos Alat Berat</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-gray transition-all scale-100 active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined">local_shipping</span>
+<span>Jenis &amp; Unit Alat</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-fixed text-on-secondary-fixed font-semibold rounded-lg transition-all scale-100 active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined" data-weight="fill">query_stats</span>
+<span>Analisis Spasial</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-gray transition-all scale-100 active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined">database</span>
+<span>Sumber Data</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- Main Content Area (Split Explorer Layout) -->
+<main class="ml-[260px] flex-1 flex flex-col md:flex-row h-full relative">
+<!-- Top App Bar (Mobile / Tablet Overlay mostly, but visible in structure) -->
+<header class="absolute top-0 left-0 w-full z-40 md:hidden bg-surface-container-lowest border-b border-outline-variant flex justify-between items-center h-16 px-4">
+<div class="text-headline-sm font-headline-sm font-bold text-primary">SIGAP Banjir</div>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-primary">menu</span>
+</div>
+</header>
+<!-- Left Panel: Parameters -->
+<section class="w-full md:w-[400px] bg-surface-container-lowest border-r border-outline-variant h-full flex flex-col z-10 shrink-0 shadow-[2px_0_8px_rgba(0,0,0,0.02)] pt-16 md:pt-0">
+<div class="p-6 border-b border-outline-variant bg-white">
+<h1 class="font-headline-md text-headline-md text-primary mb-1">Analisis Spasial</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Hitung rekomendasi evakuasi dan alat berat berdasarkan jarak spasial.</p>
+</div>
+<div class="p-6 overflow-y-auto custom-scrollbar flex-1 space-y-6">
+<!-- Form Group: Kejadian -->
+<div>
+<label class="block font-mono-label text-mono-label text-on-surface-variant mb-2 uppercase tracking-wider">Pilih Kejadian Banjir</label>
+<div class="relative">
+<select class="w-full appearance-none bg-surface-gray border border-outline-variant rounded-lg px-4 py-3 pr-10 font-body-md text-primary focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-colors">
+<option value="">Pilih kejadian aktif...</option>
+<option selected="" value="1">Banjir Rajabasa (Kedalaman 1.2m)</option>
+<option value="2">Luapan Way Halim (Kedalaman 0.8m)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none">expand_more</span>
+</div>
+<div class="mt-2 flex items-center gap-2 text-danger-coral">
+<span class="material-symbols-outlined text-[16px]">info</span>
+<span class="font-mono-label text-mono-label">KOORDINAT: -5.3812, 105.2391</span>
+</div>
+</div>
+<div class="h-[1px] w-full bg-outline-variant/50"></div>
+<!-- Form Group: Evakuasi -->
+<div>
+<label class="block font-mono-label text-mono-label text-on-surface-variant mb-2 uppercase tracking-wider">Parameter Evakuasi</label>
+<div class="space-y-4">
+<div>
+<span class="font-body-sm text-body-sm text-text-muted mb-1 block">Batas Radius Pencarian (km)</span>
+<input class="w-full bg-surface-gray border border-outline-variant rounded-lg px-4 py-2 font-mono-stats text-mono-stats text-primary focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary" type="number" value="5"/>
+</div>
+<button class="w-full bg-secondary text-white font-body-md font-semibold py-2.5 rounded-lg border border-transparent hover:bg-secondary/90 focus:ring-2 focus:ring-secondary focus:ring-offset-2 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">directions_run</span>
+                            Cari Evakuasi Terdekat
+                        </button>
+</div>
+</div>
+<div class="h-[1px] w-full bg-outline-variant/50"></div>
+<!-- Form Group: Alat Berat -->
+<div>
+<label class="block font-mono-label text-mono-label text-on-surface-variant mb-2 uppercase tracking-wider">Parameter Alat Berat</label>
+<div class="space-y-4">
+<div>
+<span class="font-body-sm text-body-sm text-text-muted mb-1 block">Kebutuhan Spesifik</span>
+<div class="flex flex-wrap gap-2">
+<label class="flex items-center gap-2 px-3 py-1.5 rounded-full border border-outline-variant bg-white text-body-sm cursor-pointer hover:bg-surface-gray">
+<input checked="" class="rounded border-outline text-secondary focus:ring-secondary" type="checkbox"/>
+                                    Excavator
+                                </label>
+<label class="flex items-center gap-2 px-3 py-1.5 rounded-full border border-outline-variant bg-white text-body-sm cursor-pointer hover:bg-surface-gray">
+<input checked="" class="rounded border-outline text-secondary focus:ring-secondary" type="checkbox"/>
+                                    Pompa Air
+                                </label>
+<label class="flex items-center gap-2 px-3 py-1.5 rounded-full border border-outline-variant bg-white text-body-sm cursor-pointer hover:bg-surface-gray">
+<input class="rounded border-outline text-secondary focus:ring-secondary" type="checkbox"/>
+                                    Truk Sampah
+                                </label>
+</div>
+</div>
+<button class="w-full bg-white text-secondary font-body-md font-semibold py-2.5 rounded-lg border border-secondary hover:bg-surface-gray focus:ring-2 focus:ring-secondary focus:ring-offset-2 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">engineering</span>
+                            Cari Pos Alat Berat
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Center Panel: Map Area -->
+<section class="flex-1 relative bg-[#e5e5f7] h-full hidden md:block">
+<div class="absolute inset-0 opacity-40 mix-blend-multiply" style="background-image: radial-gradient(#cbd5e1 1px, transparent 1px); background-size: 20px 20px;"></div>
+<!-- Map Image Mockup -->
+<div class="absolute inset-0 bg-cover bg-center" data-alt="A clean, minimalist high-contrast digital map interface showing a coastal city grid. The map uses a light mode aesthetic with soft white and light gray tones for landmasses, and pale blue for water bodies. Civic Modernist style, focusing on data clarity, with subtle street lines and no distracting textures." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAN4MW7o9aOBiS-6kNy2YL2IsteSRm5qe5ACr9_bwnij1gmPoyAeLbsRKI2TmmHlSNC2CAyDriDun1z3goSXFM0ytPTBn_jGKWa-TosLoJzmBSsJmKEigRRdujHvHx-fxeiAPVOO8XzMajJ43Zltcr4KTkXrSNDUd4Ptcgg_5ItVuPc6LlUc0f0-Kytv7gp4cd2_PEy2RyVVk_HTduCt_emxd7J0UjQ3ayr1gJLbtisCTxBOeai4jka088TJT3BaD7wGP5jMOlPTVo'); opacity: 0.15;"></div>
+<!-- Map Overlays / Markers -->
+<div class="absolute inset-0 p-6 z-10 flex flex-col justify-between pointer-events-none">
+<!-- Top Controls -->
+<div class="flex justify-between items-start w-full">
+<div class="bg-white/90 backdrop-blur-sm border border-outline-variant rounded-lg px-3 py-2 flex items-center gap-2 shadow-sm pointer-events-auto">
+<span class="material-symbols-outlined text-outline">layers</span>
+<span class="font-mono-label text-mono-label text-primary uppercase">Default Map View</span>
+</div>
+</div>
+<!-- Mock Map Content Area (Centered relative to the map) -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+<!-- Flood Center Marker -->
+<div class="relative group">
+<div class="absolute w-64 h-64 bg-danger-coral/10 rounded-full border border-danger-coral/30 -translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
+<div class="absolute w-32 h-32 bg-danger-coral/20 rounded-full border border-danger-coral/50 -translate-x-1/2 -translate-y-1/2"></div>
+<div class="relative w-4 h-4 bg-danger-coral rounded-full shadow-[0_0_10px_rgba(248,113,113,0.8)] border-2 border-white z-10 -translate-x-1/2 -translate-y-1/2"></div>
+<!-- Connecting Line (SVG mockup) -->
+<svg class="absolute top-[-2px] left-[-2px] w-48 h-32 pointer-events-none overflow-visible" style="z-index: 0;">
+<path class="opacity-70" d="M 0 0 C 50 -20, 100 50, 150 80" fill="none" stroke="#0058be" stroke-dasharray="4 4" stroke-width="2"></path>
+</svg>
+<div class="absolute top-4 left-4 bg-white border border-outline-variant rounded-lg p-2 shadow-sm flex items-center gap-2 w-max z-20 pointer-events-auto">
+<span class="material-symbols-outlined text-danger-coral text-[18px]">water_drop</span>
+<div>
+<div class="font-body-sm text-body-sm font-semibold">Titik Banjir: Rajabasa</div>
+<div class="font-mono-stats text-mono-label text-text-muted">Radius: 5km</div>
+</div>
+</div>
+</div>
+<!-- Safe Zone Marker -->
+<div class="absolute top-[80px] left-[150px] pointer-events-auto">
+<div class="relative">
+<div class="w-5 h-5 bg-safe-teal rounded-full shadow-[0_0_8px_rgba(45,212,191,0.6)] border-2 border-white z-10 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[12px]">home</span>
+</div>
+<div class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-white border border-outline-variant rounded-lg px-2 py-1 shadow-sm whitespace-nowrap">
+<div class="font-mono-stats text-mono-label font-bold text-safe-teal">2.4 km</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Right Zoom -->
+<div class="self-end bg-white border border-outline-variant rounded-lg flex flex-col shadow-sm pointer-events-auto overflow-hidden">
+<button class="p-2 hover:bg-surface-gray border-b border-outline-variant transition-colors"><span class="material-symbols-outlined">add</span></button>
+<button class="p-2 hover:bg-surface-gray transition-colors"><span class="material-symbols-outlined">remove</span></button>
+</div>
+</div>
+</section>
+<!-- Right Panel: Results -->
+<section class="w-full md:w-[400px] bg-white border-l border-outline-variant h-full flex flex-col z-20 shrink-0 shadow-[-2px_0_8px_rgba(0,0,0,0.02)]">
+<div class="p-6 border-b border-outline-variant bg-surface-gray flex justify-between items-center">
+<h2 class="font-headline-sm text-headline-sm text-primary">Hasil Analisis</h2>
+<div class="px-2 py-1 bg-surface-container-high rounded text-mono-label font-mono-label text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] animate-spin hidden">sync</span>
+<span>Selesai</span>
+</div>
+</div>
+<div class="p-6 overflow-y-auto custom-scrollbar flex-1 space-y-6">
+<!-- Evacuation Recommendation -->
+<div>
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-safe-teal">home_health</span>
+<h3 class="font-body-md font-semibold text-primary">Rekomendasi Evakuasi Terdekat</h3>
+</div>
+<div class="bg-white border-2 border-safe-teal/30 rounded-lg p-4 shadow-sm relative overflow-hidden group hover:border-safe-teal transition-colors">
+<div class="absolute top-0 right-0 w-16 h-16 bg-safe-teal/10 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+<div class="flex justify-between items-start mb-2 relative z-10">
+<div>
+<h4 class="font-headline-sm text-[16px] text-primary">Balai Desa Rajabasa</h4>
+<p class="font-body-sm text-on-surface-variant mt-0.5">Kapasitas: 150 / 200 Orang</p>
+</div>
+<div class="bg-safe-teal/10 text-safe-teal px-2 py-1 rounded font-mono-stats text-mono-label font-bold border border-safe-teal/20">
+                                2.40 km
+                            </div>
+</div>
+<div class="flex gap-2 mt-4 relative z-10">
+<button class="flex-1 text-center py-1.5 border border-outline-variant rounded text-body-sm font-medium hover:bg-surface-gray transition-colors">Rute</button>
+<button class="flex-1 text-center py-1.5 bg-safe-teal text-white rounded text-body-sm font-medium hover:bg-safe-teal/90 transition-colors">Pilih Lokasi</button>
+</div>
+</div>
+</div>
+<div class="h-[1px] w-full bg-outline-variant/50"></div>
+<!-- Equipment Recommendation -->
+<div>
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-resource-amber">construction</span>
+<h3 class="font-body-md font-semibold text-primary">Pos Alat Berat Terdekat</h3>
+</div>
+<div class="space-y-3">
+<!-- Card 1 -->
+<div class="bg-white border border-outline-variant rounded-lg p-3 hover:bg-surface-gray transition-colors cursor-pointer flex gap-3 items-center">
+<div class="w-10 h-10 rounded bg-resource-amber/10 flex items-center justify-center shrink-0 border border-resource-amber/20">
+<span class="font-mono-stats font-bold text-resource-amber text-[14px]">#1</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-body-md font-medium text-primary truncate">Posko PU Bina Marga</h4>
+<div class="flex gap-2 mt-1">
+<span class="inline-flex items-center gap-1 text-[10px] font-mono-label bg-surface-container-high px-1.5 py-0.5 rounded text-on-surface-variant"><span class="material-symbols-outlined text-[12px]">check</span> 2 Exc</span>
+<span class="inline-flex items-center gap-1 text-[10px] font-mono-label bg-surface-container-high px-1.5 py-0.5 rounded text-on-surface-variant"><span class="material-symbols-outlined text-[12px]">check</span> 1 Pmp</span>
+</div>
+</div>
+<div class="text-right shrink-0">
+<div class="font-mono-stats text-mono-label font-medium text-primary">3.15 km</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-white border border-outline-variant rounded-lg p-3 hover:bg-surface-gray transition-colors cursor-pointer flex gap-3 items-center opacity-80">
+<div class="w-10 h-10 rounded bg-surface-container-high flex items-center justify-center shrink-0 border border-outline-variant">
+<span class="font-mono-stats font-bold text-outline text-[14px]">#2</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-body-md font-medium text-primary truncate">Gudang Logistik BPBD</h4>
+<div class="flex gap-2 mt-1">
+<span class="inline-flex items-center gap-1 text-[10px] font-mono-label bg-surface-container-high px-1.5 py-0.5 rounded text-on-surface-variant"><span class="material-symbols-outlined text-[12px]">close</span> 0 Exc</span>
+<span class="inline-flex items-center gap-1 text-[10px] font-mono-label bg-surface-container-high px-1.5 py-0.5 rounded text-on-surface-variant"><span class="material-symbols-outlined text-[12px]">check</span> 3 Pmp</span>
+</div>
+</div>
+<div class="text-right shrink-0">
+<div class="font-mono-stats text-mono-label font-medium text-primary">5.80 km</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+</body></html>

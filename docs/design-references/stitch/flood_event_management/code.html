@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Civic Flood Dashboard - Incident Reports</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#a38c6a",
+                        "on-tertiary": "#ffffff",
+                        "surface": "#fbf8fa",
+                        "on-surface": "#1b1b1d",
+                        "surface-variant": "#e4e2e3",
+                        "background": "#fbf8fa",
+                        "error": "#ba1a1a",
+                        "surface-container-high": "#eae7e9",
+                        "surface-tint": "#545f73",
+                        "on-tertiary-fixed-variant": "#564427",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#fbf8fa",
+                        "surface-container-low": "#f5f3f4",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "on-error": "#ffffff",
+                        "on-background": "#1b1b1d",
+                        "outline-variant": "#c5c6cd",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed": "#d8e3fb",
+                        "tertiary-fixed": "#fadfb8",
+                        "tertiary": "#1e1200",
+                        "primary-container": "#1e293b",
+                        "on-surface-variant": "#45474c",
+                        "tertiary-container": "#35260c",
+                        "secondary-fixed": "#d8e2ff",
+                        "on-secondary-container": "#fefcff",
+                        "danger-coral": "#F87171",
+                        "safe-teal": "#2DD4BF",
+                        "surface-container-highest": "#e4e2e3",
+                        "primary-fixed-dim": "#bcc7de",
+                        "outline": "#75777d",
+                        "on-secondary-fixed-variant": "#004395",
+                        "secondary": "#0058be",
+                        "inverse-surface": "#303032",
+                        "on-primary-fixed-variant": "#3c475a",
+                        "text-main": "#334155",
+                        "surface-container": "#f0edef",
+                        "on-error-container": "#93000a",
+                        "on-primary-container": "#8590a6",
+                        "on-primary-fixed": "#111c2d",
+                        "resource-amber": "#FBBF24",
+                        "inverse-primary": "#bcc7de",
+                        "surface-gray": "#F8FAFC",
+                        "on-secondary-fixed": "#001a42",
+                        "error-container": "#ffdad6",
+                        "text-muted": "#94A3B8",
+                        "tertiary-fixed-dim": "#ddc39d",
+                        "secondary-container": "#2170e4",
+                        "on-tertiary-fixed": "#271902",
+                        "inverse-on-surface": "#f3f0f2",
+                        "surface-dim": "#dcd9db",
+                        "primary": "#091426"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "radius-base": "8px",
+                        "panel-explorer": "400px",
+                        "gutter-grid": "16px",
+                        "margin-page": "24px",
+                        "panel-sidebar": "260px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-sm": ["Plus Jakarta Sans"],
+                        "mono-stats": ["JetBrains Mono"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "headline-sm": ["Plus Jakarta Sans"],
+                        "mono-label": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "mono-stats": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.02em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "mono-label": ["11px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased h-screen overflow-hidden flex">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-full flex flex-col p-4 z-40 bg-surface-gray border-r border-outline-variant w-[260px] hidden md:flex">
+<div class="mb-8 px-2 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-lg">
+<span class="material-symbols-outlined" data-icon="waves" data-weight="fill" style="font-variation-settings: 'FILL' 1;">waves</span>
+</div>
+<div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">Civic GIS</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Flood Mitigation Unit</p>
+</div>
+</div>
+<div class="flex flex-col gap-2 flex-grow">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+<span class="font-body-md text-body-md">Map Explorer</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-body-md text-body-md">Risk Analysis</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="inventory">inventory</span>
+<span class="font-body-md text-body-md">Asset Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-secondary text-on-secondary border-l-4 border-primary scale-95 transition-transform active:scale-100" href="#">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+<span class="font-body-md text-body-md">Incident Reports</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="database">database</span>
+<span class="font-body-md text-body-md">Data Management</span>
+</a>
+</div>
+<button class="w-full mt-4 bg-danger-coral text-white py-2 rounded-lg font-body-md font-medium hover:opacity-90 transition-opacity">
+            Emergency Response
+        </button>
+<div class="mt-8 border-t border-outline-variant pt-4 flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span class="font-body-md text-body-md">User Guide</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="contact_support">contact_support</span>
+<span class="font-body-md text-body-md">Support</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col md:ml-[260px] h-screen overflow-hidden">
+<!-- TopNavBar (Mobile Only for Shell, but we need a header here) -->
+<header class="flex items-center justify-between px-margin-page h-16 bg-surface border-b border-outline-variant flex-shrink-0">
+<div>
+<h2 class="font-headline-md text-headline-md font-semibold text-primary">Flood Events</h2>
+</div>
+<div class="flex items-center gap-4 text-primary">
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-container overflow-hidden ml-2 border border-outline-variant">
+<img alt="Administrator Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a municipal administrator in a bright, modern office setting. The lighting is clean and balanced, suitable for a professional avatar in a web application. The subject appears approachable yet serious, reflecting the tone of a civic management dashboard. The color palette is neutral with soft tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtTPJ-MbKTyltbbCM6SinYIUjjiWQhKff07J7dN_c71Nsy9lI9zIsVCrHYeKjUUxwiyNlEO4AZcHyGfrme_q0oM5faYzBrrDbSsj3BLV3HmeNR0u4IKjIxUTEU-cA4pvy9A-cRoSsq95ZwjGNmXIqRe-PF7lp0UDsi0GPb-u1UEIU49fsopNEkqVjQzEC8RCNHb7fmYnXM2JRt28s9Rr2ejo0exm-vcbGm2PQTJqMNfce_Qc9guSKDoiUotR3znigwb6CA3AXao6Y"/>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-1 overflow-auto p-margin-page bg-surface-gray">
+<!-- Table Container -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden flex flex-col h-full max-h-[800px]">
+<!-- Toolbar -->
+<div class="p-4 border-b border-outline-variant flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-surface-container-lowest">
+<div class="relative w-full sm:w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-10 pr-4 py-2 rounded-lg border border-outline-variant bg-surface focus:ring-2 focus:ring-secondary focus:border-secondary transition-all font-body-md text-body-md outline-none" placeholder="Search events by name, district or ID..." type="text"/>
+</div>
+<div class="flex gap-2 w-full sm:w-auto">
+<button class="flex items-center gap-2 px-4 py-2 border border-outline-variant rounded-lg hover:bg-surface-gray transition-colors text-on-surface-variant font-body-md text-body-md font-medium">
+<span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span>
+                            Filter
+                        </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-opacity-90 transition-colors font-body-md text-body-md font-medium">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                            New Event
+                        </button>
+</div>
+</div>
+<!-- Table -->
+<div class="overflow-x-auto flex-1">
+<table class="w-full text-left border-collapse">
+<thead class="sticky top-0 bg-surface-container-lowest border-b border-outline-variant z-10">
+<tr>
+<th class="px-6 py-4 font-mono-label text-mono-label text-text-muted uppercase tracking-wider font-semibold">Event Name</th>
+<th class="px-6 py-4 font-mono-label text-mono-label text-text-muted uppercase tracking-wider font-semibold">District</th>
+<th class="px-6 py-4 font-mono-label text-mono-label text-text-muted uppercase tracking-wider font-semibold">Status</th>
+<th class="px-6 py-4 font-mono-label text-mono-label text-text-muted uppercase tracking-wider font-semibold">Severity</th>
+<th class="px-6 py-4 font-mono-label text-mono-label text-text-muted uppercase tracking-wider font-semibold">Updated At</th>
+<th class="px-6 py-4 font-mono-label text-mono-label text-text-muted uppercase tracking-wider font-semibold text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant bg-surface-container-lowest">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-gray transition-colors group cursor-default">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-error-container text-on-error-container flex items-center justify-center">
+<span class="material-symbols-outlined text-sm" data-icon="water_drop">water_drop</span>
+</div>
+<div>
+<p class="font-body-md text-body-md font-semibold text-on-surface">Riverfront Overflow</p>
+<p class="font-mono-label text-mono-label text-text-muted mt-1">ID-FL-2023-001</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-body-md text-body-md text-on-surface-variant">Central Basin</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-mono-label text-mono-label bg-error-container text-on-error-container border border-error/20">
+                                        Active
+                                    </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1.5 text-danger-coral">
+<div class="w-2 h-2 rounded-full bg-danger-coral"></div>
+<span class="font-body-sm text-body-sm font-medium">Critical</span>
+</div>
+</td>
+<td class="px-6 py-4 font-mono-stats text-mono-stats text-on-surface-variant">
+                                    10 mins ago
+                                </td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-variant rounded transition-colors" title="View Detail">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-variant rounded transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-danger-coral hover:bg-error-container rounded transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-gray transition-colors group cursor-default">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-surface-variant text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-sm" data-icon="water_drop">water_drop</span>
+</div>
+<div>
+<p class="font-body-md text-body-md font-semibold text-on-surface">Suburban Drainage Block</p>
+<p class="font-mono-label text-mono-label text-text-muted mt-1">ID-FL-2023-002</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-body-md text-body-md text-on-surface-variant">Northridge</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-mono-label text-mono-label bg-surface-container-high text-on-surface-variant border border-outline-variant">
+                                        Resolved
+                                    </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1.5 text-safe-teal">
+<div class="w-2 h-2 rounded-full bg-safe-teal"></div>
+<span class="font-body-sm text-body-sm font-medium">Low</span>
+</div>
+</td>
+<td class="px-6 py-4 font-mono-stats text-mono-stats text-on-surface-variant">
+                                    2 hours ago
+                                </td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-variant rounded transition-colors" title="View Detail">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-variant rounded transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-danger-coral hover:bg-error-container rounded transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-gray transition-colors group cursor-default">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-sm" data-icon="water_drop">water_drop</span>
+</div>
+<div>
+<p class="font-body-md text-body-md font-semibold text-on-surface">Highway 4 Flash Flood</p>
+<p class="font-mono-label text-mono-label text-text-muted mt-1">ID-FL-2023-003</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-body-md text-body-md text-on-surface-variant">East Valley</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-mono-label text-mono-label bg-tertiary-fixed text-on-tertiary-fixed border border-tertiary/20">
+                                        Monitoring
+                                    </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1.5 text-resource-amber">
+<div class="w-2 h-2 rounded-full bg-resource-amber"></div>
+<span class="font-body-sm text-body-sm font-medium">Elevated</span>
+</div>
+</td>
+<td class="px-6 py-4 font-mono-stats text-mono-stats text-on-surface-variant">
+                                    Yesterday, 14:30
+                                </td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-variant rounded transition-colors" title="View Detail">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-variant rounded transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-danger-coral hover:bg-error-container rounded transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="p-4 border-t border-outline-variant bg-surface-container-lowest flex items-center justify-between">
+<p class="font-body-sm text-body-sm text-on-surface-variant">Showing 1 to 3 of 45 entries</p>
+<div class="flex gap-1">
+<button class="px-3 py-1 border border-outline-variant rounded hover:bg-surface-gray disabled:opacity-50 text-on-surface-variant font-body-sm text-body-sm" disabled="">Prev</button>
+<button class="px-3 py-1 bg-primary text-white rounded font-body-sm text-body-sm">1</button>
+<button class="px-3 py-1 border border-outline-variant rounded hover:bg-surface-gray text-on-surface-variant font-body-sm text-body-sm">2</button>
+<button class="px-3 py-1 border border-outline-variant rounded hover:bg-surface-gray text-on-surface-variant font-body-sm text-body-sm">3</button>
+<button class="px-3 py-1 border border-outline-variant rounded hover:bg-surface-gray text-on-surface-variant font-body-sm text-body-sm">Next</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

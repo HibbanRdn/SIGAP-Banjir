@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pos Alat Berat - SIGAP Banjir</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&amp;family=Plus+Jakarta+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-gray": "#F8FAFC",
+                        "on-primary-fixed-variant": "#3c475a",
+                        "surface-container-high": "#eae7e9",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed": "#001a42",
+                        "tertiary-container": "#35260c",
+                        "on-primary-container": "#8590a6",
+                        "error": "#ba1a1a",
+                        "outline-variant": "#c5c6cd",
+                        "danger-coral": "#F87171",
+                        "tertiary": "#1e1200",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "secondary-fixed": "#d8e2ff",
+                        "surface-container-low": "#f5f3f4",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed-variant": "#004395",
+                        "resource-amber": "#FBBF24",
+                        "primary": "#091426",
+                        "on-background": "#1b1b1d",
+                        "inverse-primary": "#bcc7de",
+                        "tertiary-fixed": "#fadfb8",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed-variant": "#564427",
+                        "background": "#fbf8fa",
+                        "tertiary-fixed-dim": "#ddc39d",
+                        "safe-teal": "#2DD4BF",
+                        "on-tertiary": "#ffffff",
+                        "surface-bright": "#fbf8fa",
+                        "text-muted": "#94A3B8",
+                        "surface": "#fbf8fa",
+                        "secondary-container": "#2170e4",
+                        "primary-container": "#1e293b",
+                        "surface-container-lowest": "#ffffff",
+                        "outline": "#75777d",
+                        "surface-dim": "#dcd9db",
+                        "secondary": "#0058be",
+                        "surface-container-highest": "#e4e2e3",
+                        "surface-container": "#f0edef",
+                        "on-primary-fixed": "#111c2d",
+                        "primary-fixed-dim": "#bcc7de",
+                        "on-surface": "#1b1b1d",
+                        "on-secondary-container": "#fefcff",
+                        "on-tertiary-fixed": "#271902",
+                        "on-tertiary-container": "#a38c6a",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#303032",
+                        "inverse-on-surface": "#f3f0f2",
+                        "error-container": "#ffdad6",
+                        "text-main": "#334155",
+                        "surface-tint": "#545f73",
+                        "surface-variant": "#e4e2e3",
+                        "primary-fixed": "#d8e3fb",
+                        "on-surface-variant": "#45474c"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "panel-sidebar": "260px",
+                        "panel-explorer": "400px",
+                        "radius-base": "8px",
+                        "margin-page": "24px",
+                        "gutter-grid": "16px"
+                    },
+                    fontFamily: {
+                        "mono-label": ["JetBrains Mono"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "headline-sm": ["Plus Jakarta Sans"],
+                        "body-sm": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "mono-stats": ["JetBrains Mono"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"]
+                    },
+                    fontSize: {
+                        "mono-label": ["11px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "mono-stats": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.02em", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface-gray text-on-surface font-body-md flex h-screen overflow-hidden antialiased">
+<!-- SideNavBar -->
+<nav class="hidden md:flex flex-col h-full w-panel-sidebar fixed left-0 top-0 py-6 px-4 z-50 overflow-y-auto bg-surface-container-lowest border-r border-outline-variant">
+<div class="flex items-center gap-3 px-3 mb-8">
+<div class="w-8 h-8 rounded-DEFAULT bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">water_drop</span>
+</div>
+<div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">SIGAP Banjir</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Kota Bandar Lampung</p>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-gray rounded-lg transition-all scale-100 active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-gray rounded-lg transition-all scale-100 active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="font-body-md text-body-md">Peta Banjir</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-gray rounded-lg transition-all scale-100 active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined">warning</span>
+<span class="font-body-md text-body-md">Titik Rawan Banjir</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-gray rounded-lg transition-all scale-100 active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined">event_note</span>
+<span class="font-body-md text-body-md">Kejadian Banjir</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-gray rounded-lg transition-all scale-100 active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined">home_health</span>
+<span class="font-body-md text-body-md">Titik Evakuasi</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-secondary-fixed text-on-secondary-fixed font-semibold rounded-lg transition-all scale-100 active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">construction</span>
+<span class="font-body-md text-body-md">Pos Alat Berat</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-gray rounded-lg transition-all scale-100 active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined">local_shipping</span>
+<span class="font-body-md text-body-md">Jenis &amp; Unit Alat</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-gray rounded-lg transition-all scale-100 active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined">query_stats</span>
+<span class="font-body-md text-body-md">Analisis Spasial</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-gray rounded-lg transition-all scale-100 active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined">database</span>
+<span class="font-body-md text-body-md">Sumber Data</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col min-w-0 md:ml-panel-sidebar">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center h-16 px-margin-page w-full z-40 sticky top-0 bg-surface-container-lowest border-b border-outline-variant">
+<div class="flex items-center w-full max-w-md">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-gray border border-outline-variant rounded-full font-body-md text-body-md focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-colors" placeholder="Cari pos atau alat..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-gray transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-gray transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-gray transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">help</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-container ml-2 overflow-hidden border border-outline-variant">
+<!-- Placeholder for profile image -->
+<div class="w-full h-full bg-secondary text-on-secondary flex items-center justify-center font-bold text-sm">A</div>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-1 overflow-y-auto p-margin-page">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary mb-1">Pos Alat Berat</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Kelola lokasi pos dan ketersediaan alat untuk respons pemulihan.</p>
+</div>
+<button class="bg-secondary text-on-secondary px-4 py-2 rounded-DEFAULT font-headline-sm text-body-md inline-flex items-center justify-center gap-2 hover:bg-on-secondary-fixed-variant transition-colors focus:ring-2 focus:ring-secondary focus:ring-offset-2">
+<span class="material-symbols-outlined">add</span>
+                    Tambah Pos Alat Berat
+                </button>
+</div>
+<!-- Stats Overview -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter-grid mb-8">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-4 flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-gray flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">warehouse</span>
+</div>
+<div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Total Pos Aktif</p>
+<p class="font-headline-md text-headline-md text-primary">12</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-4 flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-gray flex items-center justify-center text-resource-amber">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">precision_manufacturing</span>
+</div>
+<div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Total Excavator</p>
+<p class="font-headline-md text-headline-md text-primary">24</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-4 flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-gray flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
+</div>
+<div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Total Dump Truck</p>
+<p class="font-headline-md text-headline-md text-primary">45</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-4 flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-gray flex items-center justify-center text-safe-teal">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">water_pump</span>
+</div>
+<div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Total Pompa Air</p>
+<p class="font-headline-md text-headline-md text-primary">80</p>
+</div>
+</div>
+</div>
+<!-- Management Grid (Bento/Card Hybrid) -->
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-gutter-grid">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg flex flex-col hover:border-outline hover:shadow-sm transition-all group">
+<div class="p-5 flex-1 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-1">Pos Induk BPBD</h3>
+<p class="font-body-md text-body-md text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">location_city</span>
+                                    Kec. Tanjung Karang Pusat
+                                </p>
+</div>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-DEFAULT bg-safe-teal/10 border border-safe-teal/20 text-on-surface font-mono-label text-mono-label">
+<span class="w-1.5 h-1.5 rounded-full bg-safe-teal"></span>
+                                AKTIF
+                            </span>
+</div>
+<div class="bg-surface-gray rounded-DEFAULT p-3 border border-outline-variant/50">
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-2">Ketersediaan Alat:</p>
+<div class="flex flex-wrap gap-2">
+<div class="bg-surface-container-lowest border border-outline-variant px-3 py-1.5 rounded-DEFAULT flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-resource-amber">precision_manufacturing</span>
+<span class="font-body-sm text-body-sm">Excavator: <strong>2</strong></span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant px-3 py-1.5 rounded-DEFAULT flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">local_shipping</span>
+<span class="font-body-sm text-body-sm">Dump Truck: <strong>5</strong></span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant px-3 py-1.5 rounded-DEFAULT flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-safe-teal">water_pump</span>
+<span class="font-body-sm text-body-sm">Pompa Air: <strong>10</strong></span>
+</div>
+</div>
+</div>
+</div>
+<div class="px-5 py-3 border-t border-outline-variant bg-surface-gray/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-b-lg">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">person</span>
+<span class="font-body-sm text-body-sm">Budi Santoso (0812-3456-7890)</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="font-mono-stats text-mono-stats">-5.4294, 105.2615</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 rounded-DEFAULT flex items-center justify-center border border-outline-variant text-on-surface-variant hover:bg-surface-container-lowest transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded-DEFAULT flex items-center justify-center border border-outline-variant text-danger-coral hover:bg-danger-coral/10 hover:border-danger-coral transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg flex flex-col hover:border-outline hover:shadow-sm transition-all group">
+<div class="p-5 flex-1 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-1">Pos Pembantu Kemiling</h3>
+<p class="font-body-md text-body-md text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">location_city</span>
+                                    Kec. Kemiling
+                                </p>
+</div>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-DEFAULT bg-resource-amber/10 border border-resource-amber/20 text-tertiary-container font-mono-label text-mono-label">
+<span class="w-1.5 h-1.5 rounded-full bg-resource-amber"></span>
+                                SIAGA
+                            </span>
+</div>
+<div class="bg-surface-gray rounded-DEFAULT p-3 border border-outline-variant/50">
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-2">Ketersediaan Alat:</p>
+<div class="flex flex-wrap gap-2">
+<div class="bg-surface-container-lowest border border-outline-variant px-3 py-1.5 rounded-DEFAULT flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-resource-amber">precision_manufacturing</span>
+<span class="font-body-sm text-body-sm">Excavator: <strong>1</strong></span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant px-3 py-1.5 rounded-DEFAULT flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">local_shipping</span>
+<span class="font-body-sm text-body-sm">Dump Truck: <strong>2</strong></span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant px-3 py-1.5 rounded-DEFAULT flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-safe-teal">water_pump</span>
+<span class="font-body-sm text-body-sm">Pompa Air: <strong>5</strong></span>
+</div>
+</div>
+</div>
+</div>
+<div class="px-5 py-3 border-t border-outline-variant bg-surface-gray/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-b-lg">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">person</span>
+<span class="font-body-sm text-body-sm">Agus Pramono (0813-4567-8901)</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="font-mono-stats text-mono-stats">-5.3981, 105.2289</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 rounded-DEFAULT flex items-center justify-center border border-outline-variant text-on-surface-variant hover:bg-surface-container-lowest transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded-DEFAULT flex items-center justify-center border border-outline-variant text-danger-coral hover:bg-danger-coral/10 hover:border-danger-coral transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg flex flex-col hover:border-outline hover:shadow-sm transition-all group">
+<div class="p-5 flex-1 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-1">Pos Pantai Panjang</h3>
+<p class="font-body-md text-body-md text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">location_city</span>
+                                    Kec. Panjang
+                                </p>
+</div>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-DEFAULT bg-surface-variant border border-outline-variant text-on-surface-variant font-mono-label text-mono-label">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+                                PERAWATAN
+                            </span>
+</div>
+<div class="bg-surface-gray rounded-DEFAULT p-3 border border-outline-variant/50">
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-2">Ketersediaan Alat:</p>
+<div class="flex flex-wrap gap-2">
+<div class="bg-surface-container-lowest border border-outline-variant px-3 py-1.5 rounded-DEFAULT flex items-center gap-2 opacity-60">
+<span class="material-symbols-outlined text-[18px] text-resource-amber">precision_manufacturing</span>
+<span class="font-body-sm text-body-sm">Excavator: <strong>0</strong></span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant px-3 py-1.5 rounded-DEFAULT flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">local_shipping</span>
+<span class="font-body-sm text-body-sm">Dump Truck: <strong>1</strong></span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant px-3 py-1.5 rounded-DEFAULT flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-safe-teal">water_pump</span>
+<span class="font-body-sm text-body-sm">Pompa Air: <strong>2</strong></span>
+</div>
+</div>
+</div>
+</div>
+<div class="px-5 py-3 border-t border-outline-variant bg-surface-gray/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-b-lg">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">person</span>
+<span class="font-body-sm text-body-sm">Rina Wijaya (0811-2233-4455)</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="font-mono-stats text-mono-stats">-5.4678, 105.3190</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 rounded-DEFAULT flex items-center justify-center border border-outline-variant text-on-surface-variant hover:bg-surface-container-lowest transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded-DEFAULT flex items-center justify-center border border-outline-variant text-danger-coral hover:bg-danger-coral/10 hover:border-danger-coral transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-8 flex justify-center">
+<button class="border border-outline-variant bg-surface-container-lowest text-primary px-4 py-2 rounded-DEFAULT font-headline-sm text-body-md hover:bg-surface-gray transition-colors">
+                    Muat Lebih Banyak
+                </button>
+</div>
+</main>
+</div>
+</body></html>

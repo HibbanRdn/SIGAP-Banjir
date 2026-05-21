@@ -8,33 +8,301 @@
 @theme {
     --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
     --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    --color-civic-navy: #10233f;
-    --color-civic-blue: #2563eb;
-    --color-civic-red: #dc2626;
-    --color-civic-green: #15803d;
-    --color-civic-amber: #d97706;
+
+    --color-primary: #091426;
+    --color-primary-container: #1e293b;
+    --color-secondary: #0058be;
+    --color-secondary-container: #2170e4;
+    --color-surface: #fbf8fa;
+    --color-surface-gray: #f8fafc;
+    --color-surface-container: #f0edef;
+    --color-surface-container-low: #f5f3f4;
+    --color-surface-container-high: #eae7e9;
+    --color-outline: #75777d;
+    --color-outline-variant: #c5c6cd;
+    --color-text-main: #334155;
+    --color-text-muted: #94a3b8;
+    --color-danger-coral: #f87171;
+    --color-safe-teal: #2dd4bf;
+    --color-resource-amber: #fbbf24;
+
+    --color-civic-navy: #091426;
+    --color-civic-blue: #0058be;
+    --color-civic-red: #f87171;
+    --color-civic-green: #2dd4bf;
+    --color-civic-amber: #fbbf24;
     --color-civic-muted: #64748b;
+
+    --shadow-soft: 0 1px 2px 0 rgb(15 23 42 / 0.04), 0 1px 3px 0 rgb(15 23 42 / 0.06);
 }
 
 @layer base {
     html {
         font-family: var(--font-sans);
+        scroll-behavior: smooth;
     }
 
     body {
+        min-height: 100vh;
         background: #f8fafc;
         color: #0f172a;
         text-rendering: optimizeLegibility;
     }
 
+    button,
+    input,
+    select,
+    textarea {
+        font: inherit;
+    }
+
     :focus-visible {
-        outline: 2px solid #2563eb;
+        outline: 2px solid #0058be;
         outline-offset: 2px;
+    }
+}
+
+@layer components {
+    .sig-card {
+        border: 1px solid rgb(203 213 225 / 0.85);
+        border-radius: 0.75rem;
+        background: rgb(255 255 255 / 0.96);
+        box-shadow: var(--shadow-soft);
+    }
+
+    .sig-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        border-radius: 0.5rem;
+        padding: 0.625rem 0.875rem;
+        font-size: 0.875rem;
+        font-weight: 700;
+        line-height: 1.25rem;
+        transition:
+            color 140ms ease-out,
+            background-color 140ms ease-out,
+            border-color 140ms ease-out,
+            box-shadow 140ms ease-out,
+            transform 140ms ease-out;
+    }
+
+    .sig-button:active {
+        transform: translateY(1px);
+    }
+
+    .sig-button-primary {
+        border: 1px solid #0058be;
+        background: #0058be;
+        color: #ffffff;
+    }
+
+    .sig-button-primary:hover {
+        border-color: #004395;
+        background: #004395;
+    }
+
+    .sig-button-outline {
+        border: 1px solid rgb(203 213 225 / 0.9);
+        background: #ffffff;
+        color: #334155;
+    }
+
+    .sig-button-outline:hover {
+        border-color: #0058be;
+        color: #0058be;
+    }
+
+    .sig-button-ghost {
+        color: #64748b;
+    }
+
+    .sig-button-ghost:hover {
+        background: #f1f5f9;
+        color: #0f172a;
+    }
+
+    .sig-input {
+        width: 100%;
+        border-radius: 0.5rem;
+        border: 1px solid rgb(203 213 225 / 0.9);
+        background: #ffffff;
+        padding: 0.625rem 0.75rem;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        color: #0f172a;
+        transition:
+            border-color 140ms ease-out,
+            box-shadow 140ms ease-out,
+            background-color 140ms ease-out;
+    }
+
+    .sig-input::placeholder {
+        color: #94a3b8;
+    }
+
+    .sig-input:focus {
+        border-color: #0058be;
+        box-shadow: 0 0 0 3px rgb(0 88 190 / 0.12);
+        outline: none;
+    }
+
+    .sig-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        border-radius: 9999px;
+        border: 1px solid transparent;
+        padding: 0.25rem 0.625rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        line-height: 1rem;
+        white-space: nowrap;
+    }
+
+    .sig-icon {
+        display: inline-flex;
+        height: 1rem;
+        width: 1rem;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .sig-grid-bg {
+        background-image:
+            linear-gradient(to right, rgb(203 213 225 / 0.46) 1px, transparent 1px),
+            linear-gradient(to bottom, rgb(203 213 225 / 0.46) 1px, transparent 1px);
+        background-size: 40px 40px;
+    }
+
+    .map-marker {
+        position: absolute;
+        z-index: 10;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 9999px;
+        border: 2px solid #ffffff;
+        box-shadow:
+            0 8px 18px rgb(15 23 42 / 0.14),
+            0 1px 2px rgb(15 23 42 / 0.08);
+        translate: -50% -50%;
+        transition:
+            transform 160ms ease-out,
+            box-shadow 160ms ease-out,
+            outline-color 160ms ease-out;
+    }
+
+    .map-marker::before {
+        position: absolute;
+        inset: -0.45rem;
+        z-index: -1;
+        border-radius: inherit;
+        background: currentColor;
+        content: '';
+        opacity: 0.18;
+    }
+
+    .map-marker:hover {
+        transform: scale(1.08);
+    }
+
+    .map-marker-flood {
+        background: #f87171;
+        color: #ef4444;
+    }
+
+    .map-marker-risk {
+        background: #f59e0b;
+        color: #f59e0b;
+    }
+
+    .map-marker-evacuation {
+        background: #2dd4bf;
+        color: #14b8a6;
+    }
+
+    .map-marker-equipment {
+        background: #fbbf24;
+        color: #f59e0b;
+    }
+
+    .map-marker-selected {
+        z-index: 20;
+        outline: 2px solid #091426;
+        outline-offset: 3px;
+        box-shadow:
+            0 12px 26px rgb(15 23 42 / 0.18),
+            0 0 0 6px rgb(255 255 255 / 0.75);
+    }
+
+    .map-marker-recommended {
+        outline: 2px solid rgb(0 88 190 / 0.28);
+        outline-offset: 4px;
+    }
+
+    .map-control-button {
+        display: inline-flex;
+        height: 2.25rem;
+        width: 2.25rem;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.75rem;
+        border: 1px solid rgb(203 213 225 / 0.9);
+        background: rgb(255 255 255 / 0.94);
+        color: #334155;
+        box-shadow: var(--shadow-soft);
+        backdrop-filter: blur(10px);
+        transition:
+            color 140ms ease-out,
+            background-color 140ms ease-out,
+            border-color 140ms ease-out,
+            transform 140ms ease-out;
+    }
+
+    .map-control-button:hover {
+        border-color: rgb(0 88 190 / 0.35);
+        background: #ffffff;
+        color: #0058be;
+    }
+
+    .map-control-button:active {
+        transform: translateY(1px);
+    }
+
+    .sig-scrollbar {
+        scrollbar-width: thin;
+        scrollbar-color: rgb(148 163 184 / 0.7) transparent;
+    }
+
+    .sig-scrollbar::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    .sig-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .sig-scrollbar::-webkit-scrollbar-thumb {
+        border-radius: 9999px;
+        background: rgb(148 163 184 / 0.55);
+    }
+
+    .sig-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: rgb(100 116 139 / 0.7);
     }
 }
 
 @layer utilities {
     .font-technical {
         font-family: var(--font-mono);
+        font-variant-numeric: tabular-nums;
+    }
+
+    .text-balance {
+        text-wrap: balance;
     }
 }

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Civic Flood Dashboard</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#a38c6a",
+                    "on-tertiary": "#ffffff",
+                    "surface": "#fbf8fa",
+                    "on-surface": "#1b1b1d",
+                    "surface-variant": "#e4e2e3",
+                    "background": "#fbf8fa",
+                    "error": "#ba1a1a",
+                    "surface-container-high": "#eae7e9",
+                    "surface-tint": "#545f73",
+                    "on-tertiary-fixed-variant": "#564427",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-bright": "#fbf8fa",
+                    "surface-container-low": "#f5f3f4",
+                    "secondary-fixed-dim": "#adc6ff",
+                    "on-error": "#ffffff",
+                    "on-background": "#1b1b1d",
+                    "outline-variant": "#c5c6cd",
+                    "on-primary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "primary-fixed": "#d8e3fb",
+                    "tertiary-fixed": "#fadfb8",
+                    "tertiary": "#1e1200",
+                    "primary-container": "#1e293b",
+                    "on-surface-variant": "#45474c",
+                    "tertiary-container": "#35260c",
+                    "secondary-fixed": "#d8e2ff",
+                    "on-secondary-container": "#fefcff",
+                    "danger-coral": "#F87171",
+                    "safe-teal": "#2DD4BF",
+                    "surface-container-highest": "#e4e2e3",
+                    "primary-fixed-dim": "#bcc7de",
+                    "outline": "#75777d",
+                    "on-secondary-fixed-variant": "#004395",
+                    "secondary": "#0058be",
+                    "inverse-surface": "#303032",
+                    "on-primary-fixed-variant": "#3c475a",
+                    "text-main": "#334155",
+                    "surface-container": "#f0edef",
+                    "on-error-container": "#93000a",
+                    "on-primary-container": "#8590a6",
+                    "on-primary-fixed": "#111c2d",
+                    "resource-amber": "#FBBF24",
+                    "inverse-primary": "#bcc7de",
+                    "surface-gray": "#F8FAFC",
+                    "on-secondary-fixed": "#001a42",
+                    "error-container": "#ffdad6",
+                    "text-muted": "#94A3B8",
+                    "tertiary-fixed-dim": "#ddc39d",
+                    "secondary-container": "#2170e4",
+                    "on-tertiary-fixed": "#271902",
+                    "inverse-on-surface": "#f3f0f2",
+                    "surface-dim": "#dcd9db",
+                    "primary": "#091426"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "radius-base": "8px",
+                    "panel-explorer": "400px",
+                    "gutter-grid": "16px",
+                    "margin-page": "24px",
+                    "panel-sidebar": "260px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "body-sm": ["Plus Jakarta Sans"],
+                    "mono-stats": ["JetBrains Mono"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "headline-sm": ["Plus Jakarta Sans"],
+                    "mono-label": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "body-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "mono-stats": ["14px", {"lineHeight": "20px", "letterSpacing": "-0.02em", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "mono-label": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+            }
+          }
+        }
+      }
+    </script>
+</head>
+<body class="bg-surface-gray text-on-surface font-body-md h-screen flex overflow-hidden">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col p-4 z-40 docked left-0 h-screen w-panel-sidebar border-r border-outline-variant bg-surface-gray text-primary font-body-md text-body-md flat no shadows">
+<div class="mb-8 px-4">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Civic GIS</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Flood Mitigation Unit</p>
+</div>
+<nav class="flex-1 flex flex-col gap-2">
+<!-- Inactive Tab -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container hover:bg-surface-container-high transition-all scale-95 active:scale-100 cursor-pointer active:opacity-80" href="#">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+<span>Map Explorer</span>
+</a>
+<!-- Inactive Tab -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container hover:bg-surface-container-high transition-all scale-95 active:scale-100 cursor-pointer active:opacity-80" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span>Risk Analysis</span>
+</a>
+<!-- Inactive Tab -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container hover:bg-surface-container-high transition-all scale-95 active:scale-100 cursor-pointer active:opacity-80" href="#">
+<span class="material-symbols-outlined" data-icon="inventory">inventory</span>
+<span>Asset Inventory</span>
+</a>
+<!-- Active Tab: Incident Reports aligns with Dashboard Intent -->
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary text-on-secondary rounded-lg border-l-4 border-primary scale-95 transition-transform cursor-pointer active:opacity-80" href="#">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+<span>Incident Reports</span>
+</a>
+<!-- Inactive Tab -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container hover:bg-surface-container-high transition-all scale-95 active:scale-100 cursor-pointer active:opacity-80" href="#">
+<span class="material-symbols-outlined" data-icon="database">database</span>
+<span>Data Management</span>
+</a>
+</nav>
+<div class="mt-auto pt-4 border-t border-outline-variant">
+<button class="w-full mb-4 px-4 py-2 bg-primary text-on-primary rounded border border-transparent font-body-md text-body-md hover:bg-primary/90 transition-colors">
+                Emergency Response
+            </button>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="menu_book">menu_book</span>
+<span class="font-body-sm text-body-sm">User Guide</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="contact_support">contact_support</span>
+<span class="font-body-sm text-body-sm">Support</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<div class="flex-1 ml-panel-sidebar flex flex-col h-screen overflow-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 z-50 flex justify-between items-center px-margin-page h-16 w-[calc(100%-260px)] bg-surface text-primary font-body-md text-body-md docked top-0 border-b border-outline-variant flat no shadows">
+<div class="font-headline-sm text-headline-sm font-bold text-primary">Civic Flood Dashboard</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:bg-surface-container-low transition-colors p-2 rounded-full cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-container-low transition-colors p-2 rounded-full cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-container-low transition-colors p-2 rounded-full cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-primary-fixed-dim overflow-hidden ml-2 border border-outline-variant">
+<img alt="Administrator Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwWaOEU8SXsvPcGQXkROsdoIL_hBX1WAuiTLardl9pIBDNdr12cw7KlTy2h1cObXVldmvQ1qtToNIIJjaxR3Def5u-LTGG9NlF6YSiZtDb9t2VZJgK8oA0GtmgAJjK3gXjgm5YD5yaMbgsbRHpFDGYymPi6RzP7VRXOfFjmzinBqFmmJA46CFpCriMdaZsUn8vdufx4U5E5tUlSv9xZow9rfuIZxEO5KxpgDOrufQyinawpI7pGa5Xy_SPNh6N1WZ5M0X64702C80"/>
+</div>
+</div>
+</header>
+<!-- Scrollable Canvas -->
+<main class="flex-1 overflow-y-auto mt-16 p-margin-page">
+<div class="mb-8">
+<h2 class="font-headline-md text-headline-md text-primary mb-2">Overview Statistics</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Current status across all municipal zones.</p>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter-grid mb-8">
+<!-- Stat Card: Active Events -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-6 flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<span class="font-body-md text-body-md text-on-surface-variant">Active Events</span>
+<span class="px-2 py-1 bg-danger-coral/10 text-danger-coral rounded text-mono-label font-mono-label uppercase border border-danger-coral/20">Critical</span>
+</div>
+<div class="mt-auto flex items-end justify-between">
+<span class="font-headline-lg text-headline-lg text-primary">04</span>
+<span class="font-mono-stats text-mono-stats text-on-surface-variant">+2 hrs</span>
+</div>
+</div>
+<!-- Stat Card: Risk Points -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-6 flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<span class="font-body-md text-body-md text-on-surface-variant">Risk Points</span>
+<span class="px-2 py-1 bg-surface-container text-on-surface-variant rounded text-mono-label font-mono-label uppercase border border-outline-variant">Monitoring</span>
+</div>
+<div class="mt-auto flex items-end justify-between">
+<span class="font-headline-lg text-headline-lg text-primary">12</span>
+<span class="font-mono-stats text-mono-stats text-on-surface-variant">Steady</span>
+</div>
+</div>
+<!-- Stat Card: Available Equipment -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-6 flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<span class="font-body-md text-body-md text-on-surface-variant">Available Equipment</span>
+<span class="px-2 py-1 bg-resource-amber/10 text-resource-amber rounded text-mono-label font-mono-label uppercase border border-resource-amber/20">Ready</span>
+</div>
+<div class="mt-auto flex items-end justify-between">
+<span class="font-headline-lg text-headline-lg text-primary">45</span>
+<span class="font-mono-stats text-mono-stats text-on-surface-variant">Units</span>
+</div>
+</div>
+</div>
+<!-- Bento Layout Sections -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter-grid">
+<!-- Recent Flood Events (Spans 2 columns) -->
+<div class="lg:col-span-2 bg-surface-container-lowest border border-outline-variant rounded-lg flex flex-col">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-primary">Recent Flood Events</h3>
+<button class="font-body-sm text-body-sm text-secondary hover:underline cursor-pointer">View All</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr>
+<th class="font-mono-label text-mono-label text-on-surface-variant px-6 py-3 border-b border-outline-variant font-normal uppercase">Location ID</th>
+<th class="font-mono-label text-mono-label text-on-surface-variant px-6 py-3 border-b border-outline-variant font-normal uppercase">Severity</th>
+<th class="font-mono-label text-mono-label text-on-surface-variant px-6 py-3 border-b border-outline-variant font-normal uppercase">Reported</th>
+<th class="font-mono-label text-mono-label text-on-surface-variant px-6 py-3 border-b border-outline-variant font-normal uppercase text-right">Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-outline-variant hover:bg-surface-gray transition-colors">
+<td class="px-6 py-4">
+<div class="font-body-md text-body-md text-primary font-medium">Sector 4, North River</div>
+<div class="font-mono-stats text-mono-stats text-on-surface-variant text-[12px] mt-1">-5.1234, 106.8456</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-danger-coral/10 text-danger-coral rounded text-body-sm font-body-sm border border-danger-coral/20">High</span>
+</td>
+<td class="px-6 py-4 font-body-sm text-body-sm text-on-surface-variant">10:45 AM</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 border border-outline-variant rounded hover:bg-surface-container-low text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="map">map</span>
+</button>
+</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-gray transition-colors">
+<td class="px-6 py-4">
+<div class="font-body-md text-body-md text-primary font-medium">East Valley Underpass</div>
+<div class="font-mono-stats text-mono-stats text-on-surface-variant text-[12px] mt-1">-5.1521, 106.9011</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-resource-amber/10 text-resource-amber rounded text-body-sm font-body-sm border border-resource-amber/20">Moderate</span>
+</td>
+<td class="px-6 py-4 font-body-sm text-body-sm text-on-surface-variant">09:12 AM</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 border border-outline-variant rounded hover:bg-surface-container-low text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="map">map</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Equipment Availability (Spans 1 column) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg flex flex-col">
+<div class="p-6 border-b border-outline-variant">
+<h3 class="font-headline-sm text-headline-sm text-primary">Equipment Inventory</h3>
+</div>
+<div class="p-4 flex flex-col gap-4">
+<div class="flex items-center justify-between p-3 border border-outline-variant rounded hover:bg-surface-gray transition-colors">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-surface-container rounded">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="water_damage">water_damage</span>
+</div>
+<div>
+<div class="font-body-md text-body-md text-primary font-medium">Water Pumps</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Depot A</div>
+</div>
+</div>
+<div class="font-mono-stats text-mono-stats text-primary font-semibold">24</div>
+</div>
+<div class="flex items-center justify-between p-3 border border-outline-variant rounded hover:bg-surface-gray transition-colors">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-surface-container rounded">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="agriculture">agriculture</span>
+</div>
+<div>
+<div class="font-body-md text-body-md text-primary font-medium">Excavators</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Depot B</div>
+</div>
+</div>
+<div class="font-mono-stats text-mono-stats text-primary font-semibold">12</div>
+</div>
+<div class="flex items-center justify-between p-3 border border-outline-variant rounded hover:bg-surface-gray transition-colors">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-surface-container rounded">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="directions_boat">directions_boat</span>
+</div>
+<div>
+<div class="font-body-md text-body-md text-primary font-medium">Rescue Boats</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Harbor Unit</div>
+</div>
+</div>
+<div class="font-mono-stats text-mono-stats text-primary font-semibold">09</div>
+</div>
+</div>
+<div class="mt-auto p-4 border-t border-outline-variant">
+<button class="w-full py-2 border border-outline-variant text-on-surface-variant rounded font-body-md text-body-md hover:bg-surface-container-low transition-colors">
+                            Request Deployment
+                        </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

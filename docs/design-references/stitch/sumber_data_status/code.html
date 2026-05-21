@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sumber Data - SIGAP Banjir</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&amp;family=Plus+Jakarta+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-gray": "#F8FAFC",
+                    "on-primary-fixed-variant": "#3c475a",
+                    "surface-container-high": "#eae7e9",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed": "#001a42",
+                    "tertiary-container": "#35260c",
+                    "on-primary-container": "#8590a6",
+                    "error": "#ba1a1a",
+                    "outline-variant": "#c5c6cd",
+                    "danger-coral": "#F87171",
+                    "tertiary": "#1e1200",
+                    "secondary-fixed-dim": "#adc6ff",
+                    "secondary-fixed": "#d8e2ff",
+                    "surface-container-low": "#f5f3f4",
+                    "on-primary": "#ffffff",
+                    "on-secondary-fixed-variant": "#004395",
+                    "resource-amber": "#FBBF24",
+                    "primary": "#091426",
+                    "on-background": "#1b1b1d",
+                    "inverse-primary": "#bcc7de",
+                    "tertiary-fixed": "#fadfb8",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed-variant": "#564427",
+                    "background": "#fbf8fa",
+                    "tertiary-fixed-dim": "#ddc39d",
+                    "safe-teal": "#2DD4BF",
+                    "on-tertiary": "#ffffff",
+                    "surface-bright": "#fbf8fa",
+                    "text-muted": "#94A3B8",
+                    "surface": "#fbf8fa",
+                    "secondary-container": "#2170e4",
+                    "primary-container": "#1e293b",
+                    "surface-container-lowest": "#ffffff",
+                    "outline": "#75777d",
+                    "surface-dim": "#dcd9db",
+                    "secondary": "#0058be",
+                    "surface-container-highest": "#e4e2e3",
+                    "surface-container": "#f0edef",
+                    "on-primary-fixed": "#111c2d",
+                    "primary-fixed-dim": "#bcc7de",
+                    "on-surface": "#1b1b1d",
+                    "on-secondary-container": "#fefcff",
+                    "on-tertiary-fixed": "#271902",
+                    "on-tertiary-container": "#a38c6a",
+                    "on-secondary": "#ffffff",
+                    "inverse-surface": "#303032",
+                    "inverse-on-surface": "#f3f0f2",
+                    "error-container": "#ffdad6",
+                    "text-main": "#334155",
+                    "surface-tint": "#545f73",
+                    "surface-variant": "#e4e2e3",
+                    "primary-fixed": "#d8e3fb",
+                    "on-surface-variant": "#45474c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "panel-sidebar": "260px",
+                    "panel-explorer": "400px",
+                    "radius-base": "8px",
+                    "margin-page": "24px",
+                    "gutter-grid": "16px"
+            },
+            "fontFamily": {
+                    "mono-label": [
+                            "JetBrains Mono"
+                    ],
+                    "headline-md": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "headline-sm": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "body-sm": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "body-md": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "mono-stats": [
+                            "JetBrains Mono"
+                    ],
+                    "headline-lg": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "body-lg": [
+                            "Plus Jakarta Sans"
+                    ]
+            },
+            "fontSize": {
+                    "mono-label": [
+                            "11px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "headline-sm": [
+                            "20px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-sm": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "body-md": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "mono-stats": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "headline-lg": [
+                            "32px",
+                            {
+                                    "lineHeight": "40px",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-lg": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ]
+            }
+        },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-surface-gray text-on-surface font-body-md min-h-screen flex">
+<!-- SideNavBar (Desktop) -->
+<nav class="bg-surface-container-lowest border-r border-outline-variant hidden md:flex flex-col h-full w-[260px] fixed left-0 top-0 py-6 px-4 z-50 overflow-y-auto shrink-0">
+<!-- Header -->
+<div class="flex items-center gap-3 mb-8 px-2">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined icon-fill">flood</span>
+</div>
+<div>
+<h1 class="text-headline-sm font-headline-sm font-bold text-primary">SIGAP Banjir</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Kota Bandar Lampung</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<ul class="flex flex-col gap-1 w-full space-y-1">
+<li><a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:bg-surface-gray transition-all scale-100 active:scale-[0.98] duration-200 rounded-lg" href="#"><span class="material-symbols-outlined text-[20px]" data-icon="dashboard">dashboard</span> <span class="font-body-md text-body-md">Dashboard</span></a></li>
+<li><a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:bg-surface-gray transition-all scale-100 active:scale-[0.98] duration-200 rounded-lg" href="#"><span class="material-symbols-outlined text-[20px]" data-icon="map">map</span> <span class="font-body-md text-body-md">Peta Banjir</span></a></li>
+<li><a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:bg-surface-gray transition-all scale-100 active:scale-[0.98] duration-200 rounded-lg" href="#"><span class="material-symbols-outlined text-[20px]" data-icon="warning">warning</span> <span class="font-body-md text-body-md">Titik Rawan Banjir</span></a></li>
+<li><a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:bg-surface-gray transition-all scale-100 active:scale-[0.98] duration-200 rounded-lg" href="#"><span class="material-symbols-outlined text-[20px]" data-icon="event_note">event_note</span> <span class="font-body-md text-body-md">Kejadian Banjir</span></a></li>
+<li><a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:bg-surface-gray transition-all scale-100 active:scale-[0.98] duration-200 rounded-lg" href="#"><span class="material-symbols-outlined text-[20px]" data-icon="home_health">home_health</span> <span class="font-body-md text-body-md">Titik Evakuasi</span></a></li>
+<li><a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:bg-surface-gray transition-all scale-100 active:scale-[0.98] duration-200 rounded-lg" href="#"><span class="material-symbols-outlined text-[20px]" data-icon="construction">construction</span> <span class="font-body-md text-body-md">Pos Alat Berat</span></a></li>
+<li><a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:bg-surface-gray transition-all scale-100 active:scale-[0.98] duration-200 rounded-lg" href="#"><span class="material-symbols-outlined text-[20px]" data-icon="local_shipping">local_shipping</span> <span class="font-body-md text-body-md">Jenis &amp; Unit Alat</span></a></li>
+<li><a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:bg-surface-gray transition-all scale-100 active:scale-[0.98] duration-200 rounded-lg" href="#"><span class="material-symbols-outlined text-[20px]" data-icon="query_stats">query_stats</span> <span class="font-body-md text-body-md">Analisis Spasial</span></a></li>
+<!-- Active Tab -->
+<li><a class="flex items-center gap-3 px-3 py-2.5 bg-secondary-fixed text-on-secondary-fixed font-semibold rounded-lg scale-100 active:scale-[0.98] transition-transform duration-200" href="#"><span class="material-symbols-outlined text-[20px] icon-fill" data-icon="database">database</span> <span class="font-body-md text-body-md">Sumber Data</span></a></li>
+</ul>
+</nav>
+<!-- Main Content Wrapper -->
+<div class="flex-1 flex flex-col min-w-0 md:ml-[260px]">
+<!-- TopNavBar -->
+<header class="bg-surface-container-lowest border-b border-outline-variant flex justify-between items-center h-16 px-margin-page w-full z-40 sticky top-0 shrink-0">
+<!-- Mobile Brand/Menu Toggle (Hidden on Desktop) -->
+<div class="flex items-center gap-4 md:hidden">
+<button class="text-on-surface-variant hover:bg-surface-gray p-2 rounded-full transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h2 class="text-headline-sm font-headline-sm font-bold text-primary">SIGAP Banjir</h2>
+</div>
+<!-- Desktop Search (Empty spacer for alignment based on JSON) -->
+<div class="hidden md:block flex-1">
+<!-- Search bar on_left logic from JSON would go here if defined in detail -->
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-2">
+<button aria-label="notifications" class="text-on-surface-variant hover:bg-surface-gray p-2 rounded-full transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button aria-label="settings" class="text-on-surface-variant hover:bg-surface-gray p-2 rounded-full transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<button aria-label="help" class="text-on-surface-variant hover:bg-surface-gray p-2 rounded-full transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="ml-2 w-8 h-8 rounded-full bg-surface-variant overflow-hidden border border-outline-variant cursor-pointer">
+<!-- Placeholder Profile Image -->
+<div class="w-full h-full bg-primary-fixed-dim flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[18px]">person</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Page Canvas -->
+<main class="flex-1 p-margin-page flex flex-col gap-6 overflow-x-hidden">
+<!-- Header Section -->
+<div class="flex flex-col gap-2">
+<h1 class="font-headline-lg text-headline-lg text-primary">Sumber Data</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl">Pantau status data nyata, dummy, simulasi, dan data yang perlu validasi.</p>
+</div>
+<!-- Academic Info Banner -->
+<div class="bg-surface-container border-l-4 border-resource-amber p-4 rounded-r-lg flex items-start gap-4">
+<span class="material-symbols-outlined text-resource-amber mt-0.5">info</span>
+<p class="font-body-md text-body-md text-on-surface">Data dummy dan simulasi digunakan untuk kebutuhan demo akademik dan tidak diklaim sebagai data resmi.</p>
+</div>
+<!-- Summary Cards Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter-grid">
+<!-- Card 1: Data Nyata -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-5 flex flex-col gap-3 hover:bg-surface-gray transition-colors">
+<div class="flex justify-between items-start">
+<div class="w-10 h-10 rounded-full bg-safe-teal/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-safe-teal icon-fill">verified</span>
+</div>
+<span class="font-mono-stats text-mono-stats text-on-surface">1,204</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-1">Data Nyata</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Terverifikasi sistem &amp; institusi</p>
+</div>
+</div>
+<!-- Card 2: Data Dummy -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-5 flex flex-col gap-3 hover:bg-surface-gray transition-colors">
+<div class="flex justify-between items-start">
+<div class="w-10 h-10 rounded-full bg-resource-amber/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-resource-amber icon-fill">science</span>
+</div>
+<span class="font-mono-stats text-mono-stats text-on-surface">45</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-1">Data Dummy</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Data pengujian sistem</p>
+</div>
+</div>
+<!-- Card 3: Data Simulasi -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-5 flex flex-col gap-3 hover:bg-surface-gray transition-colors">
+<div class="flex justify-between items-start">
+<div class="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary icon-fill">model_training</span>
+</div>
+<span class="font-mono-stats text-mono-stats text-on-surface">12</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-1">Data Simulasi</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Proyeksi model hidrologi</p>
+</div>
+</div>
+<!-- Card 4: Perlu Validasi -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-5 flex flex-col gap-3 hover:bg-surface-gray transition-colors">
+<div class="flex justify-between items-start">
+<div class="w-10 h-10 rounded-full bg-danger-coral/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-danger-coral icon-fill">rule</span>
+</div>
+<span class="font-mono-stats text-mono-stats text-on-surface">89</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-1">Perlu Validasi</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Laporan crowdsource &amp; sensor anomali</p>
+</div>
+</div>
+</div>
+<!-- Dataset Table -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden mt-2">
+<div class="px-5 py-4 border-b border-outline-variant bg-surface-gray flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-primary">Daftar Dataset Aktif</h3>
+<button class="flex items-center gap-2 px-3 py-1.5 border border-outline-variant rounded hover:bg-surface-container-high transition-colors text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px]">filter_list</span> Filter
+                    </button>
+</div>
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left border-collapse min-w-[800px]">
+<thead>
+<tr class="font-mono-label text-mono-label text-on-surface-variant border-b border-outline-variant bg-surface-gray uppercase">
+<th class="px-5 py-3 font-semibold">Dataset</th>
+<th class="px-5 py-3 font-semibold">Source Type</th>
+<th class="px-5 py-3 font-semibold">Source Reference</th>
+<th class="px-5 py-3 font-semibold">Data Status</th>
+<th class="px-5 py-3 font-semibold">Verified</th>
+<th class="px-5 py-3 font-semibold">Last Updated</th>
+<th class="px-5 py-3 font-semibold text-right">Aksi</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md text-on-surface">
+<!-- Row 1: Nyata -->
+<tr class="border-b border-surface-variant hover:bg-surface-gray transition-colors group">
+<td class="px-5 py-4 font-semibold text-primary flex items-center gap-3">
+<span class="material-symbols-outlined text-outline">water_drop</span>
+                                    Curah Hujan Stasiun BMKG Panjang
+                                </td>
+<td class="px-5 py-4">API Telemetri</td>
+<td class="px-5 py-4 font-mono-stats text-[12px] text-on-surface-variant">BMKG-LMP-01</td>
+<td class="px-5 py-4">
+<span class="inline-flex items-center px-2 py-1 rounded bg-surface-container border border-safe-teal/30 font-mono-label text-[10px] text-safe-teal">NYATA</span>
+</td>
+<td class="px-5 py-4">
+<span class="material-symbols-outlined text-safe-teal icon-fill text-[20px]">check_circle</span>
+</td>
+<td class="px-5 py-4 text-on-surface-variant font-mono-stats text-[12px]">Hari ini, 08:30 WIB</td>
+<td class="px-5 py-4 text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
+</td>
+</tr>
+<!-- Row 2: Simulasi -->
+<tr class="border-b border-surface-variant hover:bg-surface-gray transition-colors group">
+<td class="px-5 py-4 font-semibold text-primary flex items-center gap-3">
+<span class="material-symbols-outlined text-outline">waves</span>
+                                    Proyeksi Genangan Periode 50 Tahun
+                                </td>
+<td class="px-5 py-4">Model Hidrologi</td>
+<td class="px-5 py-4 font-mono-stats text-[12px] text-on-surface-variant">HEC-RAS-SIM-50Y</td>
+<td class="px-5 py-4">
+<span class="inline-flex items-center px-2 py-1 rounded bg-surface-container border border-secondary/30 font-mono-label text-[10px] text-secondary">SIMULASI</span>
+</td>
+<td class="px-5 py-4">
+<span class="material-symbols-outlined text-outline text-[20px]">remove</span>
+</td>
+<td class="px-5 py-4 text-on-surface-variant font-mono-stats text-[12px]">12 Nov 2023, 14:00 WIB</td>
+<td class="px-5 py-4 text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
+</td>
+</tr>
+<!-- Row 3: Perlu Validasi -->
+<tr class="border-b border-surface-variant hover:bg-surface-gray transition-colors group">
+<td class="px-5 py-4 font-semibold text-primary flex items-center gap-3">
+<span class="material-symbols-outlined text-outline">record_voice_over</span>
+                                    Laporan Tinggi Air Way Halim
+                                </td>
+<td class="px-5 py-4">Crowdsource (App)</td>
+<td class="px-5 py-4 font-mono-stats text-[12px] text-on-surface-variant">USR-REP-8992</td>
+<td class="px-5 py-4">
+<span class="inline-flex items-center px-2 py-1 rounded bg-surface-container border border-danger-coral/30 font-mono-label text-[10px] text-danger-coral">PERLU VALIDASI</span>
+</td>
+<td class="px-5 py-4">
+<span class="material-symbols-outlined text-danger-coral text-[20px]">pending</span>
+</td>
+<td class="px-5 py-4 text-on-surface-variant font-mono-stats text-[12px]">10 menit yang lalu</td>
+<td class="px-5 py-4 text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
+</td>
+</tr>
+<!-- Row 4: Dummy -->
+<tr class="border-b border-surface-variant hover:bg-surface-gray transition-colors group">
+<td class="px-5 py-4 font-semibold text-primary flex items-center gap-3">
+<span class="material-symbols-outlined text-outline">engineering</span>
+                                    Kapasitas Pompa Kedaton (Stress Test)
+                                </td>
+<td class="px-5 py-4">Internal Generator</td>
+<td class="px-5 py-4 font-mono-stats text-[12px] text-on-surface-variant">DEV-DUMMY-P01</td>
+<td class="px-5 py-4">
+<span class="inline-flex items-center px-2 py-1 rounded bg-surface-container border border-resource-amber/30 font-mono-label text-[10px] text-resource-amber">DUMMY</span>
+</td>
+<td class="px-5 py-4">
+<span class="material-symbols-outlined text-outline text-[20px]">remove</span>
+</td>
+<td class="px-5 py-4 text-on-surface-variant font-mono-stats text-[12px]">01 Jan 2024, 00:00 WIB</td>
+<td class="px-5 py-4 text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+</div>
+</body></html>
