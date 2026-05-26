@@ -1,10 +1,13 @@
 <?php
 
 use App\Http\Controllers\Auth\AdminAuthController;
+use App\Http\Controllers\Admin\EquipmentInventoryController;
+use App\Http\Controllers\Admin\EquipmentTypeController;
 use App\Http\Controllers\Admin\FloodEventController;
 use App\Http\Controllers\Admin\FloodRiskPointController;
 use App\Http\Controllers\Admin\EvacuationPointController;
 use App\Http\Controllers\Admin\HeavyEquipmentPostController;
+use App\Http\Controllers\Admin\HeavyEquipmentUnitController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'pages.home')->name('home');
@@ -22,7 +25,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('flood-risks', FloodRiskPointController::class);
         Route::resource('evacuation-points', EvacuationPointController::class);
         Route::resource('heavy-equipment-posts', HeavyEquipmentPostController::class);
-        Route::view('/equipment', 'admin.equipment.index')->name('equipment.index');
+        Route::get('/equipment', EquipmentInventoryController::class)->name('equipment.index');
+        Route::resource('equipment-types', EquipmentTypeController::class);
+        Route::resource('heavy-equipment-units', HeavyEquipmentUnitController::class);
         Route::view('/spatial-analysis', 'admin.spatial-analysis.index')->name('spatial-analysis.index');
         Route::view('/routes/preview', 'admin.routes.preview')->name('routes.preview');
         Route::view('/data-sources', 'admin.data-sources.index')->name('data-sources.index');

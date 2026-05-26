@@ -44,12 +44,9 @@
         <div class="min-h-screen lg:flex">
             <aside class="border-b border-outline-variant/70 bg-white/95 lg:fixed lg:inset-y-0 lg:left-0 lg:z-30 lg:w-[280px] lg:border-b-0 lg:border-r">
                 <div class="flex h-20 items-center gap-3 px-5">
-                    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white">
-                        <img src="{{ asset('assets/brand/logo-icon.png') }}" alt="SIGAP" class="h-9 w-9 object-contain">
-                    </span>
                     <div class="min-w-0">
-                        <img src="{{ asset('assets/brand/logo-utama.png') }}" alt="SIGAP Banjir" class="h-9 w-auto object-contain">
-                        <p class="mt-1 truncate text-xs font-medium text-slate-500">Mode Demo Akademik</p>
+                        <img src="{{ asset('assets/brand/logo-utama.png') }}" alt="SIGAP" class="h-9 w-auto object-contain">
+                        <p class="mt-1 truncate text-xs font-medium text-slate-500">Banjir Bandar Lampung</p>
                     </div>
                 </div>
 

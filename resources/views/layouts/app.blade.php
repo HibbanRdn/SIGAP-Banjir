@@ -20,11 +20,10 @@
             <header class="@yield('header-class', 'shrink-0 border-b border-outline-variant/70 bg-white/90 backdrop-blur')">
                 <div class="@yield('header-inner-class', 'mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8')">
                     <a href="{{ route('home') }}" class="flex min-w-0 items-center gap-3">
-                        <img src="{{ asset('assets/brand/logo-utama.png') }}" alt="SIGAP Banjir Bandar Lampung" class="h-9 w-auto object-contain">
-                        <span class="hidden min-w-0 sm:block">
-                            <span class="block truncate text-sm font-bold text-primary">SIGAP Banjir</span>
-                            <span class="block truncate text-xs text-slate-500">Antisipasi dan Penanganan Banjir</span>
-                        </span>
+                        <div class="min-w-0">
+                        <img src="{{ asset('assets/brand/logo-utama.png') }}" alt="SIGAP" class="h-9 w-auto object-contain">
+                        <p class="mt-1 truncate text-xs font-medium text-slate-500">Banjir Bandar Lampung</p>
+                        </div>
                     </a>
 
                     <nav class="flex items-center gap-2 text-sm font-semibold" aria-label="Navigasi utama">

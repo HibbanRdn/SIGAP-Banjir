@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'routing' => [
+        'provider' => env('ROUTING_PROVIDER', 'osrm'),
+        'osrm_base_url' => env('OSRM_BASE_URL', 'https://router.project-osrm.org'),
+    ],
+
 ];

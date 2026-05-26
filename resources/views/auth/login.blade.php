@@ -51,7 +51,7 @@
                             name="email"
                             type="email"
                             value="{{ old('email') }}"
-                            placeholder="hibbanrdn@gmail.com"
+                            placeholder="example@gmail.com"
                             autocomplete="email"
                             autofocus
                             class="sig-input mt-2 @error('email') border-red-300 focus:border-red-400 focus:ring-red-100 @enderror"
