@@ -77,7 +77,7 @@
     @endphp
 
     <div class="space-y-6">
-        <section class="overflow-hidden rounded-2xl border border-slate-200 bg-primary text-white shadow-soft">
+        <section class="sig-reveal overflow-hidden rounded-2xl border border-slate-200 bg-primary text-white shadow-soft">
             <div class="relative p-6 sm:p-7">
                 <div class="absolute inset-y-0 right-0 hidden w-1/2 sig-grid-bg opacity-10 lg:block"></div>
                 <div class="relative flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
@@ -105,7 +105,7 @@
                 <span class="hidden text-sm text-slate-500 sm:inline">Sumber data internal SIGAP</span>
             </div>
 
-            <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+            <div class="sig-stagger grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
                 @foreach ($stats as $stat)
                     <article class="sig-card p-4 transition duration-150 hover:-translate-y-0.5 hover:border-slate-300">
                         <div class="flex items-start justify-between gap-3">
@@ -206,7 +206,7 @@
                                     <span class="font-technical rounded-lg bg-yellow-50 px-2 py-1 text-sm font-semibold text-yellow-700">{{ $formatStatNumber($item->available_quantity) }}/{{ $formatStatNumber($item->total_quantity) }}</span>
                                 </div>
                                 <div class="mt-3 h-2 overflow-hidden rounded-full bg-slate-100">
-                                    <div class="h-full rounded-full bg-resource-amber" style="width: {{ $item->percentage }}%"></div>
+                                    <div class="sig-progress-bar h-full rounded-full bg-resource-amber" style="width: {{ $item->percentage }}%"></div>
                                 </div>
                             </div>
                         @empty
@@ -291,7 +291,7 @@
                 <p class="text-sm text-slate-500">Semua tautan mengarah ke modul yang sudah tersedia.</p>
             </div>
 
-            <div class="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+            <div class="sig-stagger mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
                 @foreach ($quickActions as $action)
                     <a href="{{ $action['href'] }}" class="group rounded-xl border p-4 transition duration-150 hover:-translate-y-0.5 hover:shadow-soft {{ $action['tone'] }}">
                         <div class="flex items-start justify-between gap-3">

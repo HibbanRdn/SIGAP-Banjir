@@ -45,12 +45,19 @@
             </div>
         </section>
 
-        <div class="grid gap-6 xl:grid-cols-[1.2fr_.8fr]">
-            <section class="sig-card overflow-hidden">
+        <div class="grid items-start gap-6 xl:grid-cols-[1.2fr_.8fr]">
+            <section class="sig-card sig-detail-map-card">
+                <div class="sig-section-header flex flex-col gap-2 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-[0.18em] text-secondary">Konteks Spasial</p>
+                        <h3 class="mt-1 text-lg font-bold text-primary">Mini Map Titik Rawan</h3>
+                    </div>
+                    <span class="sig-badge border border-amber-100 bg-amber-50 text-amber-700">Leaflet + OSM</span>
+                </div>
                 @if ($floodRisk->longitude !== null && $floodRisk->latitude !== null)
                     <div
                         id="admin-spatial-detail-map"
-                        class="admin-spatial-detail-map h-[430px] min-h-[430px] w-full bg-slate-100"
+                        class="admin-spatial-detail-map sig-detail-map"
                         data-map-type="risk"
                         data-name="{{ $floodRisk->name }}"
                         data-longitude="{{ $formatCoordinate($floodRisk->longitude) }}"
@@ -60,7 +67,7 @@
                         data-data-status="{{ $floodRisk->data_status }}"
                     ></div>
                 @else
-                    <div class="flex min-h-[430px] items-center justify-center bg-slate-50 p-6 text-center text-sm leading-6 text-slate-500">
+                    <div class="flex min-h-[320px] items-center justify-center bg-slate-50 p-6 text-center text-sm leading-6 text-slate-500 lg:min-h-[460px]">
                         Koordinat belum tersedia untuk menampilkan mini map.
                     </div>
                 @endif
@@ -98,11 +105,11 @@
                     <h3 class="text-lg font-bold text-primary">Sumber Data</h3>
                     <div class="mt-4 space-y-3">
                         <div class="rounded-xl border border-slate-200 bg-slate-50 p-3">
-                            <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Source Type</p>
+                            <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Tipe Sumber</p>
                             <p class="mt-1 text-sm font-semibold text-slate-700">{{ $floodRisk->source_type }}</p>
                         </div>
                         <div class="rounded-xl border border-slate-200 bg-slate-50 p-3">
-                            <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Source Reference</p>
+                            <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Referensi Sumber</p>
                             <p class="mt-1 break-words text-sm leading-6 text-slate-600">{{ $floodRisk->source_reference ?: 'Belum ada referensi sumber.' }}</p>
                         </div>
                     </div>

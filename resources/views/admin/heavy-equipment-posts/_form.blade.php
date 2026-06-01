@@ -97,7 +97,7 @@
                 <div class="relative mt-5 min-h-72 overflow-hidden rounded-xl border border-slate-200 bg-slate-100">
                     <div class="absolute inset-0 sig-grid-bg"></div>
                     <div class="map-marker map-marker-equipment map-marker-selected left-[50%] top-[46%] h-5 w-5"></div>
-                    <div class="absolute inset-x-0 bottom-0 bg-white/90 p-3 text-sm text-slate-600 backdrop-blur">Placeholder pemilih peta. Integrasi klik peta akan dikerjakan pada fase Leaflet final.</div>
+                    <div class="absolute inset-x-0 bottom-0 bg-white/90 p-3 text-sm text-slate-600 backdrop-blur">Gunakan input koordinat di atas. Setelah tersimpan, titik ini tampil pada layer GeoJSON dan peta publik.</div>
                 </div>
             </section>
 

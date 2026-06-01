@@ -159,7 +159,7 @@ function renderEvacuations(refs, evacuations) {
     refs.evacuationsList.innerHTML = evacuations
         .slice(0, 3)
         .map((item) => `
-            <article class="rounded-xl border border-slate-200 bg-white p-3 shadow-soft">
+            <article class="sig-reveal rounded-xl border border-slate-200 bg-white p-3 shadow-soft">
                 <div class="flex items-start justify-between gap-3">
                     <div class="min-w-0">
                         <p class="truncate text-sm font-bold text-primary">#${escapeHtml(item.rank)} ${escapeHtml(item.name)}</p>
@@ -204,7 +204,7 @@ function renderEquipment(refs, equipmentPosts) {
                 .join(', ') || 'Unit tersedia';
 
             return `
-                <article class="rounded-xl border border-slate-200 bg-white p-3 shadow-soft">
+                <article class="sig-reveal rounded-xl border border-slate-200 bg-white p-3 shadow-soft">
                     <div class="flex items-start justify-between gap-3">
                         <div class="min-w-0">
                             <p class="truncate text-sm font-bold text-primary">#${escapeHtml(item.rank)} ${escapeHtml(item.name)}</p>

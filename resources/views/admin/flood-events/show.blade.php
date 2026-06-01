@@ -63,8 +63,8 @@
             </div>
         @endif
 
-        <div class="grid gap-6 xl:grid-cols-[1.2fr_.8fr]">
-            <section class="space-y-6">
+        <div class="grid items-start gap-6 xl:grid-cols-[1.2fr_.8fr]">
+            <section class="space-y-6 xl:self-start">
                 <section class="sig-card overflow-hidden" aria-labelledby="spatial-context">
                     <div class="flex flex-col gap-3 border-b border-slate-200 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
                         <div>
@@ -73,7 +73,7 @@
                         </div>
                         <span class="sig-badge border border-blue-100 bg-blue-50 text-blue-700">Leaflet + OSM</span>
                     </div>
-                    <div class="relative h-[460px] min-h-[360px] overflow-hidden bg-slate-100">
+                    <div class="relative h-[360px] min-h-[360px] overflow-hidden bg-slate-100 lg:h-[460px]">
                         <div
                             id="admin-flood-event-map"
                             class="h-full w-full"
@@ -110,7 +110,7 @@
                             Menghitung rute referensi...
                         </div>
                         <div id="admin-detail-route-error" class="hidden rounded-xl border border-red-100 bg-red-50 p-4 text-sm font-semibold text-red-700"></div>
-                        <div id="admin-detail-route-panel" class="hidden space-y-4">
+                        <div id="admin-detail-route-panel" class="sig-route-panel hidden space-y-4">
                             <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                                 <div>
                                     <p class="text-sm text-slate-500">Tujuan evakuasi</p>

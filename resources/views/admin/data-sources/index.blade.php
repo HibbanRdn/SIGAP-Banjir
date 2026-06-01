@@ -23,7 +23,7 @@
     @endphp
 
     <div class="space-y-6">
-        <section class="overflow-hidden rounded-2xl border border-blue-100 bg-blue-50 shadow-soft">
+        <section class="sig-reveal overflow-hidden rounded-2xl border border-blue-100 bg-blue-50 shadow-soft">
             <div class="relative p-5 sm:p-6">
                 <div class="absolute inset-y-0 right-0 hidden w-1/3 sig-grid-bg opacity-25 lg:block"></div>
                 <div class="relative flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
@@ -50,7 +50,7 @@
                 <span class="hidden text-sm text-slate-500 sm:inline">Bersumber dari empat tabel spasial utama</span>
             </div>
 
-            <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+            <div class="sig-stagger grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
                 @foreach ($stats as $stat)
                     <article class="sig-card p-4">
                         <span class="sig-badge border {{ $stat['tone'] }}">{{ $stat['label'] }}</span>
@@ -88,7 +88,7 @@
                                 </span>
                             </div>
                             <div class="mt-3 h-2 overflow-hidden rounded-full bg-slate-100">
-                                <div class="h-full rounded-full bg-secondary" style="width: {{ $module['verified_percentage'] }}%"></div>
+                                <div class="sig-progress-bar h-full rounded-full bg-secondary" style="width: {{ $module['verified_percentage'] }}%"></div>
                             </div>
                         </div>
                     @endforeach

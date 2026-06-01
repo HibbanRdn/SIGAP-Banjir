@@ -40,22 +40,27 @@
             ];
         @endphp
 
-        <div class="min-h-screen lg:flex">
-            <aside class="border-b border-outline-variant/70 bg-white/95 lg:fixed lg:inset-y-0 lg:left-0 lg:z-30 lg:w-[280px] lg:border-b-0 lg:border-r">
-                <div class="flex h-20 items-center gap-3 px-5">
-                    <div class="min-w-0">
-                        <img src="{{ asset('assets/brand/logo-utama.png') }}" alt="SIGAP" class="h-15 w-auto object-contain">
+        <div class="admin-shell-bg min-h-screen lg:flex">
+            <aside class="admin-sidebar-shell border-b border-outline-variant/70 lg:fixed lg:inset-y-0 lg:left-0 lg:z-30 lg:w-[292px] lg:border-b-0 lg:border-r">
+                <div class="px-4 py-4">
+                    <div class="admin-brand-panel flex items-center gap-3 px-4 py-3">
+                        <img src="{{ asset('assets/brand/logo-icon.png') }}" alt="SIGAP Banjir Bandar Lampung" class="h-11 w-11 shrink-0 object-contain">
+                        <div class="min-w-0">
+                            <p class="text-base font-extrabold leading-tight text-primary">SIGAP Banjir</p>
+                            <p class="mt-0.5 truncate text-xs font-semibold text-slate-500">Admin Bandar Lampung</p>
+                        </div>
+                        <span class="ml-auto hidden h-2 w-2 rounded-full bg-safe-teal sm:block" aria-hidden="true"></span>
                     </div>
                 </div>
 
-                <nav class="flex gap-2 overflow-x-auto px-3 pb-4 lg:block lg:space-y-1.5 lg:overflow-visible lg:px-4 lg:py-3" aria-label="Navigasi admin">
+                <nav class="flex gap-2 overflow-x-auto px-3 pb-4 lg:block lg:space-y-1.5 lg:overflow-visible lg:px-4 lg:py-2" aria-label="Navigasi admin">
                     @foreach ($navItems as $item)
                         <a
                             href="{{ $item['href'] }}"
-                            class="group inline-flex min-w-max items-center gap-3 rounded-lg px-3.5 py-2.5 text-sm font-semibold transition duration-150 lg:flex lg:min-w-0 {{ $item['active'] ? 'bg-secondary text-white shadow-soft' : 'text-slate-600 hover:bg-slate-100 hover:text-primary' }}"
+                            class="admin-nav-item group inline-flex min-w-max items-center gap-3 rounded-xl border px-3.5 py-2.5 text-sm font-semibold lg:flex lg:min-w-0 {{ $item['active'] ? 'admin-nav-item-active border-blue-100 bg-blue-50 text-secondary shadow-soft' : 'border-transparent text-slate-600 hover:border-slate-200 hover:bg-white hover:text-primary' }}"
                             @if ($item['href'] === '#') aria-disabled="true" @endif
                         >
-                            <svg class="h-4.5 w-4.5 shrink-0 {{ $item['active'] ? 'text-white' : 'text-slate-400 group-hover:text-secondary' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <svg class="h-4.5 w-4.5 shrink-0 {{ $item['active'] ? 'text-secondary' : 'text-slate-400 group-hover:text-secondary' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                 <path d="{{ $item['icon'] }}" />
                             </svg>
                             <span class="truncate">{{ $item['label'] }}</span>
@@ -64,15 +69,15 @@
                 </nav>
 
                 <div class="hidden border-t border-outline-variant/70 px-4 py-4 lg:block">
-                    <div class="rounded-xl border border-slate-200 bg-slate-50 p-3">
-                        <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Status MVP</p>
-                        <p class="mt-2 text-sm font-semibold text-primary">CRUD, GeoJSON, Analisis, dan Routing Aktif</p>
-                        <p class="mt-1 text-xs leading-5 text-slate-500">Dashboard membaca ringkasan data real dari database SIGAP Banjir.</p>
+                    <div class="overflow-hidden rounded-2xl border border-blue-100 bg-blue-50/70 p-3">
+                        <p class="text-xs font-bold uppercase tracking-[0.14em] text-secondary">Status MVP</p>
+                        <p class="mt-2 text-sm font-bold leading-5 text-primary">CRUD, GeoJSON, Analisis, dan Routing Aktif</p>
+                        <p class="mt-1 text-xs leading-5 text-blue-900/70">Ringkasan data dibaca dari database dan layer peta memakai endpoint GeoJSON.</p>
                     </div>
                     <div class="mt-4 space-y-1">
                         <form method="POST" action="{{ route('admin.logout') }}">
                             @csrf
-                            <button type="submit" class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm font-medium text-slate-500 transition hover:bg-red-50 hover:text-red-700">
+                            <button type="submit" class="admin-nav-item flex w-full items-center gap-3 rounded-xl border border-transparent px-3 py-2 text-left text-sm font-semibold text-slate-500 transition hover:border-red-100 hover:bg-red-50 hover:text-red-700">
                                 Logout
                             </button>
                         </form>
@@ -80,8 +85,8 @@
                 </div>
             </aside>
 
-            <div class="min-w-0 flex-1 lg:pl-[280px]">
-                <header class="sticky top-0 z-20 border-b border-outline-variant/70 bg-white/90 backdrop-blur">
+            <div class="min-w-0 flex-1 lg:pl-[292px]">
+                <header class="admin-topbar sticky top-0 z-20 border-b border-outline-variant/70 backdrop-blur">
                     <div class="flex min-h-20 flex-col gap-4 px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
                         <div>
                             <p class="text-xs font-bold uppercase tracking-[0.18em] text-secondary">@yield('eyebrow', 'Panel Admin')</p>
@@ -98,7 +103,7 @@
                                 <input class="sig-input pl-9" type="search" placeholder="Cari data admin..." disabled>
                             </label>
                             <div class="flex items-center gap-2">
-                                <div class="flex items-center gap-3 rounded-full border border-slate-200 bg-white px-3 py-2">
+                                <div class="flex items-center gap-3 rounded-full border border-slate-200 bg-white px-3 py-2 shadow-soft">
                                     <span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">{{ $adminInitials }}</span>
                                     <div class="hidden max-w-44 text-left sm:block">
                                         <p class="truncate text-sm font-semibold text-primary">{{ $adminName }}</p>
@@ -107,7 +112,7 @@
                                 </div>
                                 <form method="POST" action="{{ route('admin.logout') }}" class="hidden sm:block">
                                     @csrf
-                                    <button type="submit" class="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-600 transition hover:border-red-200 hover:bg-red-50 hover:text-red-700">
+                                    <button type="submit" class="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-600 shadow-soft transition hover:border-red-200 hover:bg-red-50 hover:text-red-700">
                                         Logout
                                     </button>
                                 </form>
@@ -116,7 +121,7 @@
                     </div>
                 </header>
 
-                <main class="px-4 py-6 sm:px-6 lg:px-8">
+                <main class="sig-reveal px-4 py-6 sm:px-6 lg:px-8">
                     @if (session('success'))
                         <div class="mb-6 rounded-2xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-800 shadow-soft">
                             {{ session('success') }}

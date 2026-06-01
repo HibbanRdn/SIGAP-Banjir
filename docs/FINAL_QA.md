@@ -256,6 +256,49 @@ Perbaikan dokumentasi yang dilakukan:
 - `docs/API.md` dibatasi pada endpoint yang benar-benar aktif.
 - `docs/DATABASE.md`, `docs/DATASET.md`, `docs/UI.md`, dan `docs/REQUIREMENTS.md` diberi penyesuaian status aktual.
 
+## QA Lanjutan Visual Consistency & Motion Polish
+
+Tanggal pemeriksaan lanjutan: 2 Juni 2026
+
+Fokus QA lanjutan ini adalah konsistensi visual setelah login admin split layout ditetapkan sebagai anchor desain. Scope tetap UI-only: tidak ada perubahan backend API, migration, seeder, PostGIS analysis, routing provider, atau data demo.
+
+Temuan visual:
+
+- Halaman detail spatial, terutama detail titik evakuasi, memiliki mini map card yang ikut stretch setinggi kolom informasi kanan sehingga muncul ruang putih kosong besar di bawah peta.
+- Sidebar, topbar, status MVP card, dashboard intro, dan beberapa card detail belum sepenuhnya satu keluarga visual dengan login page yang lebih refined.
+- Motion UI masih terasa statis dan belum punya reduced-motion guard eksplisit.
+- Form spatial masih menyisakan copy lama tentang fase peta final pada panel koordinat.
+
+Perbaikan yang dilakukan:
+
+- Admin shell diberi background netral dengan nuansa spatial/civic yang lebih subtle.
+- Sidebar brand area, active menu, hover state, status MVP module, topbar, dan profile chip dipoles agar lebih dekat dengan kualitas login page.
+- Dashboard hero, statistik, quick actions, dan progress bar diberi reveal/animate-in sekali saat load.
+- Detail titik rawan, titik evakuasi, dan pos alat berat memakai map shell dengan header konteks dan tinggi eksplisit.
+- Grid detail spatial memakai alignment start agar map card tidak meninggalkan ruang kosong besar.
+- Detail kejadian banjir tetap memakai mini map, rekomendasi PostGIS, dan rute OSRM; panel hasil/rekomendasi diberi motion ringan setelah data tersedia.
+- Copy panel koordinat pada form CRUD diperbarui agar tidak lagi menyebut fase placeholder.
+- Motion memakai CSS transition/keyframes saja; GSAP tidak ditambahkan.
+- Three.js tidak digunakan.
+- `prefers-reduced-motion: reduce` ditambahkan untuk mematikan atau mempersingkat motion dekoratif.
+
+Halaman yang menjadi target validasi ulang:
+
+- `/admin/login`
+- `/admin/dashboard`
+- `/admin/flood-events/{id}`
+- `/admin/flood-risks/{id}`
+- `/admin/evacuation-points/{id}`
+- `/admin/heavy-equipment-posts/{id}`
+- `/admin/data-sources`
+- `/peta`
+
+Catatan validasi:
+
+- Perubahan tidak menyentuh endpoint GeoJSON, Spatial Analysis API, Routing API, query dashboard, CRUD controller, migration, atau seeder.
+- Public map `/peta` tetap dipertahankan sebagai map explorer utama. Marker pin, basemap selector, legend, dan route styling tidak dirombak.
+- Tombol Admin tidak ditambahkan kembali ke public map.
+
 ## Known Limitations
 
 - Data yang tersedia adalah data simulasi dan dummy untuk demo akademik.

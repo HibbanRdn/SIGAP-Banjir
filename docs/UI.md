@@ -16,6 +16,44 @@ MVP final sudah memiliki:
 
 Setiap pengembangan setelah MVP harus mempertahankan gaya civic, calm, map-first, dan transparan ini.
 
+## Visual Anchor dan Motion Polish Lanjutan
+
+Halaman login admin split layout menjadi visual anchor untuk polish lanjutan sistem. Turunan visual ke admin tidak menyalin layout login secara mentah, tetapi mengambil bahasa desainnya:
+
+- civic navy sebagai anchor;
+- civic blue untuk active state dan aksi primer;
+- panel putih/netral dengan border halus;
+- spatial grid pattern yang subtle;
+- hierarchy typography tegas dengan eyebrow kecil;
+- font Plus Jakarta Sans untuk UI dan JetBrains Mono untuk angka, koordinat, jarak, durasi, ID, dan metadata teknis;
+- accent teal untuk evakuasi, coral/red untuk kejadian banjir, dan amber/gold untuk titik rawan serta alat berat.
+
+Admin tetap light dan data-oriented. Dashboard boleh memakai panel navy terbatas untuk intro dan identitas, tetapi halaman manajemen/detail tidak dibuat dark penuh.
+
+Motion aktual menggunakan CSS transition dan keyframes ringan, bukan dependency animasi tambahan. Pola motion yang dipakai:
+
+- entrance fade/translate halus pada login, admin content, hero dashboard, statistik, dan quick actions;
+- progress bar ketersediaan/validasi animasi sekali saat load;
+- panel rekomendasi dan rute pada detail kejadian muncul dengan reveal halus setelah data tersedia;
+- hover/focus state nav, button, card, input, dan basemap control tetap singkat dan tidak looping.
+
+Implementasi wajib menghormati `prefers-reduced-motion: reduce`. Pada mode reduced motion, entrance/stagger/pulse dekoratif dimatikan atau dipersingkat sehingga fungsi aplikasi tetap sama.
+
+Keputusan teknologi motion:
+
+- CSS transition/keyframes cukup untuk polish MVP saat ini.
+- GSAP tidak dipakai karena kebutuhan motion masih sederhana dan tidak memerlukan timeline kompleks.
+- Three.js tidak dipakai karena terlalu berat untuk kebutuhan UI civic SIGAP Banjir dan berisiko membuat desain terasa gimmick.
+
+Layout mini map pada detail spatial memakai shell yang konsisten:
+
+- card map tidak boleh stretch mengikuti tinggi kolom informasi kanan;
+- grid detail memakai alignment start agar tidak muncul ruang putih kosong besar di bawah peta;
+- map memiliki header konteks, border/radius konsisten, dan tinggi eksplisit;
+- desktop sekitar `460px`, mobile sekitar `320px`;
+- Leaflet tetap dipanggil dengan `invalidateSize()` setelah render/layout siap;
+- marker, popup, attribution, dan format koordinat tetap mengikuti aturan Leaflet dan GeoJSON yang sudah ada.
+
 ## A. Ringkasan Arah UI
 
 UI sistem ini bukan hanya admin CRUD, tetapi platform eksplorasi peta banjir berbasis SIG. Fokus utama sistem adalah membantu pengguna melihat kondisi spasial banjir, titik evakuasi, dan pos alat berat secara cepat, jelas, dan dapat dipercaya.

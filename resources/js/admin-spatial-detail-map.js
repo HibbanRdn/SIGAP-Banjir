@@ -12,7 +12,7 @@ function initAdminSpatialDetailMap() {
 
     if (!Number.isFinite(longitude) || !Number.isFinite(latitude)) {
         mapElement.innerHTML = `
-            <div class="flex h-full min-h-[430px] items-center justify-center bg-slate-50 p-6 text-center text-sm leading-6 text-slate-500">
+            <div class="flex h-full min-h-[320px] items-center justify-center bg-slate-50 p-6 text-center text-sm leading-6 text-slate-500 lg:min-h-[460px]">
                 Koordinat belum tersedia untuk menampilkan mini map.
             </div>
         `;
@@ -47,6 +47,11 @@ function initAdminSpatialDetailMap() {
     });
 
     marker.openPopup();
+
+    map.whenReady(() => {
+        map.invalidateSize();
+        map.setView([latitude, longitude], 15);
+    });
 
     window.setTimeout(() => {
         map.invalidateSize();

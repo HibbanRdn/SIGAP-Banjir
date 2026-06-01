@@ -54,12 +54,19 @@
             </div>
         </section>
 
-        <div class="grid gap-6 xl:grid-cols-[1.2fr_.8fr]">
-            <section class="sig-card overflow-hidden">
+        <div class="grid items-start gap-6 xl:grid-cols-[1.2fr_.8fr]">
+            <section class="sig-card sig-detail-map-card">
+                <div class="sig-section-header flex flex-col gap-2 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-[0.18em] text-secondary">Konteks Spasial</p>
+                        <h3 class="mt-1 text-lg font-bold text-primary">Mini Map Pos Alat Berat</h3>
+                    </div>
+                    <span class="sig-badge border border-yellow-100 bg-yellow-50 text-yellow-700">Leaflet + OSM</span>
+                </div>
                 @if ($post->longitude !== null && $post->latitude !== null)
                     <div
                         id="admin-spatial-detail-map"
-                        class="admin-spatial-detail-map h-[430px] min-h-[430px] w-full bg-slate-100"
+                        class="admin-spatial-detail-map sig-detail-map"
                         data-map-type="equipment"
                         data-name="{{ $post->name }}"
                         data-longitude="{{ $formatCoordinate($post->longitude) }}"
@@ -70,7 +77,7 @@
                         data-data-status="{{ $post->data_status }}"
                     ></div>
                 @else
-                    <div class="flex min-h-[430px] items-center justify-center bg-slate-50 p-6 text-center text-sm leading-6 text-slate-500">
+                    <div class="flex min-h-[320px] items-center justify-center bg-slate-50 p-6 text-center text-sm leading-6 text-slate-500 lg:min-h-[460px]">
                         Koordinat belum tersedia untuk menampilkan mini map.
                     </div>
                 @endif

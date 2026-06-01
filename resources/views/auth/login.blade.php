@@ -4,7 +4,7 @@
 
 @section('content')
     <main class="grid min-h-screen overflow-hidden bg-white lg:grid-cols-[1.05fr_.95fr]">
-        <section class="relative hidden min-h-screen overflow-hidden bg-primary text-white lg:flex">
+        <section class="sig-login-hero relative hidden min-h-screen overflow-hidden bg-primary text-white lg:flex">
             <div class="absolute inset-0 opacity-70 sig-grid-bg"></div>
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_18%_14%,rgba(45,212,191,0.20),transparent_32%),radial-gradient(circle_at_78%_72%,rgba(0,88,190,0.38),transparent_36%),linear-gradient(135deg,rgba(9,20,38,0.96),rgba(0,38,82,0.92))]"></div>
             <div class="absolute -left-24 top-24 h-72 w-72 rounded-full border border-white/10"></div>
@@ -18,7 +18,7 @@
                         </a>
                     </div>
 
-                    <div class="mt-16 max-w-xl">
+                    <div class="sig-login-copy mt-16 max-w-xl">
                        
                         <h1 class="mt-5 text-4xl font-extrabold leading-tight tracking-tight xl:text-5xl">
                             Ruang kendali data banjir untuk keputusan berbasis lokasi.
@@ -29,7 +29,7 @@
                     </div>
                 </div>
 
-                <div class="relative mt-10 overflow-hidden rounded-3xl border border-white/10 bg-white/8 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.26)] backdrop-blur">
+                <div class="sig-login-visual relative mt-10 overflow-hidden rounded-3xl border border-white/10 bg-white/8 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.26)] backdrop-blur">
                     <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-200/50 to-transparent"></div>
                     <div class="mb-5 flex items-center justify-between gap-4">
                         <div>
@@ -41,8 +41,8 @@
 
                     <div class="relative h-72 overflow-hidden rounded-2xl border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.10),rgba(255,255,255,0.04))]">
                         <svg class="absolute inset-0 h-full w-full" viewBox="0 0 760 360" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path d="M64 262C138 222 181 256 246 216C316 173 365 193 425 150C494 102 572 126 700 62" stroke="rgba(125,211,252,0.48)" stroke-width="3" stroke-linecap="round" stroke-dasharray="10 12"/>
-                            <path d="M72 308C158 260 224 294 300 242C376 190 454 221 534 162C584 126 630 110 700 98" stroke="rgba(20,184,166,0.45)" stroke-width="2" stroke-linecap="round"/>
+                            <path class="sig-login-line" d="M64 262C138 222 181 256 246 216C316 173 365 193 425 150C494 102 572 126 700 62" stroke="rgba(125,211,252,0.48)" stroke-width="3" stroke-linecap="round"/>
+                            <path class="sig-login-line" d="M72 308C158 260 224 294 300 242C376 190 454 221 534 162C584 126 630 110 700 98" stroke="rgba(20,184,166,0.45)" stroke-width="2" stroke-linecap="round"/>
                             <g opacity="0.18" stroke="white">
                                 <path d="M0 72H760" />
                                 <path d="M0 144H760" />
@@ -81,9 +81,9 @@
                                 </g>
                             </g>
                             <g>
-                                <circle cx="214" cy="212" r="8" fill="#EF4444" stroke="white" stroke-width="4"/>
-                                <circle cx="432" cy="154" r="8" fill="#0D9488" stroke="white" stroke-width="4"/>
-                                <circle cx="580" cy="124" r="8" fill="#D97706" stroke="white" stroke-width="4"/>
+                                <circle class="sig-login-pin" cx="214" cy="212" r="8" fill="#EF4444" stroke="white" stroke-width="4"/>
+                                <circle class="sig-login-pin" cx="432" cy="154" r="8" fill="#0D9488" stroke="white" stroke-width="4"/>
+                                <circle class="sig-login-pin" cx="580" cy="124" r="8" fill="#D97706" stroke="white" stroke-width="4"/>
                             </g>
                         </svg>
                         <div class="absolute bottom-4 left-4 right-4 flex flex-wrap gap-2">
@@ -98,7 +98,7 @@
         </section>
 
         <section class="flex min-h-screen items-center justify-center bg-white px-5 py-10 sm:px-8 lg:px-12">
-            <div class="w-full max-w-[30rem]">
+            <div class="sig-login-form w-full max-w-[30rem]">
                 <a href="{{ route('map') }}" class="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 transition hover:text-secondary">
                     <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="m15 18-6-6 6-6" />

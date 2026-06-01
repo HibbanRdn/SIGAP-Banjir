@@ -75,7 +75,7 @@
                         <path d="M36 58 C48 61 58 64 68 62" fill="none" stroke="#FBBF24" stroke-width="0.7" stroke-dasharray="1.6 1.4" stroke-linecap="round" />
                     </svg>
                     <div class="absolute bottom-4 left-4 rounded-xl border border-slate-200 bg-white/95 p-3 shadow-soft">
-                        <p class="text-sm font-semibold text-primary">Placeholder peta analisis</p>
+                        <p class="text-sm font-semibold text-primary">Pratinjau peta analisis</p>
                         <p class="font-technical mt-1 text-xs text-slate-500">Preview ST_Distance</p>
                     </div>
                 </div>
