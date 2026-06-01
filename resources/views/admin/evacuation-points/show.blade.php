@@ -48,6 +48,7 @@
                     </p>
                 </div>
                 <div class="flex flex-wrap gap-2">
+                    <a href="{{ route('map') }}" class="sig-button sig-button-outline">Buka Peta Publik</a>
                     <a href="{{ route('admin.evacuation-points.edit', $evacuationPoint) }}" class="sig-button sig-button-primary">Edit Data</a>
                     <a href="{{ route('admin.evacuation-points.index') }}" class="sig-button sig-button-outline">Kembali</a>
                 </div>
@@ -56,17 +57,25 @@
 
         <div class="grid gap-6 xl:grid-cols-[1.2fr_.8fr]">
             <section class="sig-card overflow-hidden">
-                <div class="relative min-h-[430px] bg-slate-100">
-                    <div class="absolute inset-0 sig-grid-bg"></div>
-                    <div class="map-marker map-marker-evacuation map-marker-selected left-[48%] top-[45%] h-6 w-6"></div>
-                    <div class="absolute left-4 top-4 rounded-xl border border-slate-200 bg-white/95 p-3 text-sm shadow-soft">
-                        <p class="font-semibold text-primary">Lokasi Evakuasi</p>
-                        <p class="font-technical mt-1 text-xs text-slate-500">{{ $formatCoordinate($evacuationPoint->longitude) }}, {{ $formatCoordinate($evacuationPoint->latitude) }}</p>
+                @if ($evacuationPoint->longitude !== null && $evacuationPoint->latitude !== null)
+                    <div
+                        id="admin-spatial-detail-map"
+                        class="admin-spatial-detail-map h-[430px] min-h-[430px] w-full bg-slate-100"
+                        data-map-type="evacuation"
+                        data-name="{{ $evacuationPoint->name }}"
+                        data-longitude="{{ $formatCoordinate($evacuationPoint->longitude) }}"
+                        data-latitude="{{ $formatCoordinate($evacuationPoint->latitude) }}"
+                        data-record-type="{{ $evacuationPoint->type }}"
+                        data-status="{{ $evacuationPoint->status }}"
+                        data-capacity="{{ $evacuationPoint->capacity }}"
+                        data-district="{{ $evacuationPoint->district }}"
+                        data-data-status="{{ $evacuationPoint->data_status }}"
+                    ></div>
+                @else
+                    <div class="flex min-h-[430px] items-center justify-center bg-slate-50 p-6 text-center text-sm leading-6 text-slate-500">
+                        Koordinat belum tersedia untuk menampilkan mini map.
                     </div>
-                    <div class="absolute bottom-4 left-4 max-w-sm rounded-xl border border-teal-100 bg-teal-50/95 p-3 text-sm leading-6 text-teal-800 shadow-soft">
-                        Mini map masih placeholder. Integrasi Leaflet dan GeoJSON dikerjakan pada fase peta final.
-                    </div>
-                </div>
+                @endif
             </section>
 
             <aside class="space-y-6">

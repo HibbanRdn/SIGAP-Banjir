@@ -2,6 +2,20 @@
 
 # Panduan UI/UX Sistem Informasi Geografis Mitigasi dan Respons Banjir Kota Bandar Lampung
 
+## Status Implementasi UI Aktual
+
+MVP final sudah memiliki:
+
+- public map explorer `/peta` berbasis Leaflet;
+- basemap selector gratis: Standar, Humanitarian, dan Satelit;
+- marker pin kategori dengan ikon untuk kejadian banjir, titik rawan, titik evakuasi, dan pos alat berat;
+- route LineString referensi dengan gaya civic blue dan outline;
+- dashboard admin berbasis data database;
+- detail kejadian banjir admin sebagai decision support dengan mini map, rekomendasi resource, dan rute OSRM;
+- halaman `Sumber Data & Validasi` untuk transparansi status dummy/simulasi/verifikasi.
+
+Setiap pengembangan setelah MVP harus mempertahankan gaya civic, calm, map-first, dan transparan ini.
+
 ## A. Ringkasan Arah UI
 
 UI sistem ini bukan hanya admin CRUD, tetapi platform eksplorasi peta banjir berbasis SIG. Fokus utama sistem adalah membantu pengguna melihat kondisi spasial banjir, titik evakuasi, dan pos alat berat secara cepat, jelas, dan dapat dipercaya.

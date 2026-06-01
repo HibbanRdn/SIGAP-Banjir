@@ -61,7 +61,7 @@ Fitur berikut tidak termasuk MVP dan dapat dikembangkan setelah fitur utama sele
 ### 5.2 Tujuan Pendukung
 
 1. Menyediakan antarmuka peta yang mudah digunakan.
-2. Menyediakan fitur input titik kejadian banjir langsung dari peta.
+2. Menyediakan fitur input titik kejadian banjir melalui form admin dengan koordinat longitude dan latitude.
 3. Menyediakan informasi severity atau tingkat keparahan banjir.
 4. Menyediakan data spasial dalam format GeoJSON.
 5. Menyediakan dasar dokumentasi akademik untuk analisis SIG.
@@ -73,7 +73,7 @@ Fitur berikut tidak termasuk MVP dan dapat dikembangkan setelah fitur utama sele
 3. Data alat berat boleh berupa data dummy, tetapi harus masuk akal secara geografis.
 4. Sistem tidak menangani prediksi banjir.
 5. Sistem tidak menangani sensor tinggi air atau data real-time.
-6. Routing pada MVP menggunakan layanan eksternal seperti OSRM atau OpenRouteService.
+6. Routing pada MVP menggunakan layanan eksternal seperti OSRM.
 7. Analisis spasial utama dibatasi pada pencarian titik terdekat, perhitungan jarak, dan visualisasi GeoJSON.
 8. Sistem hanya membutuhkan role admin dan pengguna umum pada versi MVP.
 9. Petugas lapangan dan BPBD digunakan sebagai konteks aktor, tetapi tidak wajib memiliki modul login terpisah.
@@ -156,7 +156,7 @@ BPBD menjadi aktor konseptual yang menggunakan informasi peta dan rekomendasi si
 ### 8.9 Rute Evakuasi Sederhana
 
 - Sistem mengambil koordinat kejadian banjir dan titik evakuasi yang direkomendasikan.
-- Sistem meminta rute ke layanan routing eksternal seperti OSRM atau OpenRouteService.
+- Sistem meminta rute ke layanan routing eksternal seperti OSRM.
 - Sistem menampilkan rute sebagai garis pada peta.
 - Rute hanya bersifat referensi dan belum mempertimbangkan kondisi jalan tertutup.
 
@@ -188,7 +188,7 @@ Stack final yang direkomendasikan:
 - Frontend: Blade + Tailwind CSS
 - Peta: Leaflet.js
 - Basemap: OpenStreetMap
-- Routing: OSRM atau OpenRouteService
+- Routing: OSRM
 - Format data spasial: GeoJSON
 
 Alasan pemilihan stack:
@@ -196,7 +196,7 @@ Alasan pemilihan stack:
 1. Laravel mempercepat pembuatan CRUD, autentikasi, validasi, dan struktur project.
 2. PostgreSQL + PostGIS memberikan nilai akademik SIG yang kuat.
 3. Leaflet ringan, mudah digunakan, dan cocok untuk peta interaktif.
-4. OSRM atau OpenRouteService membuat fitur routing realistis tanpa membebani MVP.
+4. OSRM membuat fitur routing realistis tanpa membebani MVP.
 5. Stack ini cukup profesional tetapi tetap realistis untuk project kuliah.
 
 ## 11. Data yang Dibutuhkan
@@ -309,7 +309,7 @@ Alasan pemilihan stack:
 
 1. Sistem mengambil koordinat kejadian banjir.
 2. Sistem mengambil koordinat titik evakuasi terdekat.
-3. Sistem meminta data rute ke OSRM atau OpenRouteService.
+3. Sistem meminta data rute ke OSRM.
 4. Sistem menampilkan polyline rute pada peta.
 5. Sistem menampilkan estimasi jarak dan durasi jika tersedia.
 
@@ -319,7 +319,7 @@ MVP dianggap berhasil jika:
 
 1. Data spasial tersimpan di PostgreSQL dengan PostGIS.
 2. Peta dapat menampilkan minimal empat layer utama.
-3. Admin dapat menambahkan kejadian banjir dari peta.
+3. Admin dapat menambahkan kejadian banjir melalui form CRUD dengan koordinat yang dikonversi menjadi `geom`.
 4. Sistem dapat menghitung titik evakuasi terdekat.
 5. Sistem dapat menghitung pos alat berat terdekat.
 6. Sistem dapat menampilkan jarak hasil rekomendasi.
@@ -345,7 +345,7 @@ Dokumen yang disarankan untuk repository:
    - Berisi rancangan halaman, komponen peta, layer, marker, legenda, dan alur interaksi.
 
 5. `API.md`
-   - Berisi rancangan endpoint untuk data GeoJSON, CRUD, rekomendasi evakuasi, rekomendasi pos alat berat, dan routing.
+   - Berisi endpoint GeoJSON, rekomendasi evakuasi, rekomendasi pos alat berat, dan routing yang aktif pada MVP.
 
 6. `TASKS.md`
    - Berisi daftar pekerjaan bertahap dari setup project sampai testing dan dokumentasi.
@@ -367,11 +367,11 @@ Urutan pembuatan dokumen:
 
 Versi MVP final adalah:
 
-Sistem Informasi Geografis berbasis web untuk Kota Bandar Lampung yang menampilkan titik rawan banjir, titik kejadian banjir, titik evakuasi, dan pos alat berat; memungkinkan admin menambah kejadian banjir dari peta; serta menyediakan rekomendasi titik evakuasi dan pos alat berat terdekat menggunakan PostGIS, dengan rute evakuasi sederhana menggunakan layanan routing eksternal.
+Sistem Informasi Geografis berbasis web untuk Kota Bandar Lampung yang menampilkan titik rawan banjir, titik kejadian banjir, titik evakuasi, dan pos alat berat; memungkinkan admin mengelola data spasial melalui CRUD; serta menyediakan rekomendasi titik evakuasi dan pos alat berat terdekat menggunakan PostGIS, dengan rute evakuasi sederhana menggunakan OSRM.
 
 Stack final:
 
-Laravel + Blade + Tailwind CSS + PostgreSQL + PostGIS + Leaflet + OSRM/OpenRouteService.
+Laravel + Blade + Tailwind CSS + PostgreSQL + PostGIS + Leaflet + OSRM.
 
 Fokus utama project:
 

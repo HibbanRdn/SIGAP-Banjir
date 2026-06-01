@@ -414,150 +414,213 @@
     }
 
     .leaflet-sigap-marker {
-        --marker-color: #0058be;
-        --marker-halo: rgb(0 88 190 / 0.16);
+        --pin-color: #0058be;
+        --pin-border: rgb(9 20 38 / 0.18);
+        --pin-shadow: rgb(15 23 42 / 0.24);
+        background: transparent;
+        border: 0;
+    }
+
+    .leaflet-sigap-pin {
+        position: relative;
+        display: block;
+        height: 2.5rem;
+        width: 2.125rem;
+        transform-origin: 50% 95%;
+        transition:
+            filter 140ms ease-out,
+            transform 140ms ease-out;
+    }
+
+    .leaflet-sigap-pin::before {
+        position: absolute;
+        left: 50%;
+        top: 0.125rem;
+        height: 1.78rem;
+        width: 1.78rem;
+        border-radius: 50% 50% 50% 0;
+        border: 2px solid #ffffff;
+        background: var(--pin-color);
+        box-shadow:
+            0 0 0 1px var(--pin-border),
+            0 8px 18px var(--pin-shadow);
+        content: '';
+        transform: translateX(-50%) rotate(-45deg);
+    }
+
+    .leaflet-sigap-pin-head {
+        position: absolute;
+        left: 50%;
+        top: 0.46rem;
+        z-index: 1;
         display: flex;
+        height: 1.25rem;
+        width: 1.25rem;
         align-items: center;
         justify-content: center;
         border-radius: 9999px;
-        border: 2px solid #ffffff;
+        border: 1px solid rgb(9 20 38 / 0.10);
         background: #ffffff;
-        box-shadow:
-            0 0 0 1.5px var(--marker-color),
-            0 0 0 6px rgb(255 255 255 / 0.72),
-            0 8px 18px rgb(15 23 42 / 0.20);
-        transition:
-            filter 140ms ease-out,
-            transform 140ms ease-out,
-            box-shadow 140ms ease-out;
+        color: #091426;
+        transform: translateX(-50%);
     }
 
-    .leaflet-sigap-marker:hover {
-        filter: saturate(1.1);
+    .leaflet-sigap-pin-head svg {
+        height: 0.88rem;
+        width: 0.88rem;
+        stroke: currentColor;
+        stroke-width: 2.25;
+        stroke-linecap: round;
+        stroke-linejoin: round;
     }
 
-    .leaflet-sigap-marker span {
-        display: block;
-        height: 0.56rem;
-        width: 0.56rem;
-        border-radius: 9999px;
-        background: var(--marker-color);
-        box-shadow: 0 0 0 4px var(--marker-halo);
+    .leaflet-sigap-marker:hover .leaflet-sigap-pin {
+        filter: saturate(1.08);
+        transform: translateY(-1px) scale(1.04);
     }
 
     .leaflet-sigap-marker-flood {
-        --marker-color: #ef4444;
-        --marker-halo: rgb(239 68 68 / 0.18);
+        --pin-color: #ef4444;
+        --pin-border: rgb(185 28 28 / 0.28);
+        --pin-shadow: rgb(127 29 29 / 0.22);
     }
 
     .leaflet-sigap-marker-risk {
-        --marker-color: #f97316;
-        --marker-halo: rgb(249 115 22 / 0.17);
+        --pin-color: #f97316;
+        --pin-border: rgb(154 52 18 / 0.26);
+        --pin-shadow: rgb(124 45 18 / 0.20);
     }
 
     .leaflet-sigap-marker-evacuation {
-        --marker-color: #0d9488;
-        --marker-halo: rgb(13 148 136 / 0.18);
+        --pin-color: #0d9488;
+        --pin-border: rgb(15 118 110 / 0.28);
+        --pin-shadow: rgb(19 78 74 / 0.20);
     }
 
     .leaflet-sigap-marker-equipment {
-        --marker-color: #d97706;
-        --marker-halo: rgb(217 119 6 / 0.17);
-        border-radius: 0.48rem;
+        --pin-color: #d97706;
+        --pin-border: rgb(146 64 14 / 0.28);
+        --pin-shadow: rgb(120 53 15 / 0.20);
     }
 
-    .leaflet-sigap-marker-equipment span {
-        height: 0.52rem;
-        width: 0.52rem;
-        border-radius: 0.22rem;
+    .leaflet-sigap-marker-selected .leaflet-sigap-pin {
+        transform: translateY(-2px) scale(1.12);
     }
 
-    .leaflet-sigap-marker-selected {
+    .leaflet-sigap-marker-selected .leaflet-sigap-pin::before {
         box-shadow:
-            0 0 0 2px #0058be,
-            0 0 0 7px rgb(255 255 255 / 0.9),
+            0 0 0 3px #0058be,
+            0 0 0 7px rgb(255 255 255 / 0.88),
             0 0 0 11px rgb(0 88 190 / 0.18),
-            0 12px 26px rgb(15 23 42 / 0.24);
+            0 12px 26px rgb(15 23 42 / 0.26);
     }
 
-    .leaflet-sigap-marker-selected span {
-        height: 0.72rem;
-        width: 0.72rem;
-    }
-
-    .leaflet-sigap-marker-recommended {
+    .leaflet-sigap-marker-recommended .leaflet-sigap-pin::before {
         box-shadow:
-            0 0 0 1.5px var(--marker-color),
-            0 0 0 6px rgb(255 255 255 / 0.84),
+            0 0 0 2px var(--pin-color),
+            0 0 0 6px rgb(255 255 255 / 0.9),
             0 0 0 10px rgb(0 88 190 / 0.22),
-            0 10px 22px rgb(15 23 42 / 0.22);
+            0 10px 22px rgb(15 23 42 / 0.24);
     }
 
-    .leaflet-container[data-basemap='satellite'] .leaflet-sigap-marker {
+    .leaflet-sigap-marker-selected.leaflet-sigap-marker-recommended .leaflet-sigap-pin::before {
         box-shadow:
-            0 0 0 1.5px var(--marker-color),
-            0 0 0 7px rgb(255 255 255 / 0.9),
-            0 10px 24px rgb(0 0 0 / 0.34);
+            0 0 0 3px #0058be,
+            0 0 0 8px rgb(255 255 255 / 0.92),
+            0 0 0 12px rgb(0 88 190 / 0.24),
+            0 12px 28px rgb(15 23 42 / 0.30);
     }
 
-    .leaflet-container[data-basemap='satellite'] .leaflet-sigap-marker-selected,
-    .leaflet-container[data-basemap='satellite'] .leaflet-sigap-marker-recommended {
+    .leaflet-container[data-basemap='satellite'] .leaflet-sigap-pin::before {
+        border-color: rgb(255 255 255 / 0.96);
         box-shadow:
-            0 0 0 2px #0058be,
+            0 0 0 1px rgb(9 20 38 / 0.22),
+            0 9px 22px rgb(0 0 0 / 0.36);
+    }
+
+    .leaflet-container[data-basemap='satellite'] .leaflet-sigap-pin-head {
+        border-color: rgb(9 20 38 / 0.18);
+        background: #ffffff;
+    }
+
+    .leaflet-container[data-basemap='satellite'] .leaflet-sigap-marker-selected .leaflet-sigap-pin::before,
+    .leaflet-container[data-basemap='satellite'] .leaflet-sigap-marker-recommended .leaflet-sigap-pin::before {
+        box-shadow:
+            0 0 0 3px #0058be,
             0 0 0 8px rgb(255 255 255 / 0.94),
-            0 0 0 12px rgb(0 88 190 / 0.26),
-            0 12px 28px rgb(0 0 0 / 0.38);
+            0 0 0 12px rgb(0 88 190 / 0.28),
+            0 14px 30px rgb(0 0 0 / 0.42);
     }
 
     .map-legend-marker {
-        --marker-color: #0058be;
-        --marker-halo: rgb(0 88 190 / 0.16);
-        display: inline-flex;
+        --pin-color: #0058be;
+        --legend-icon: none;
+        position: relative;
+        display: inline-block;
+        height: 1.55rem;
+        width: 1.25rem;
+        flex-shrink: 0;
+    }
+
+    .map-legend-marker::before {
+        position: absolute;
+        left: 50%;
+        top: 0.1rem;
         height: 1rem;
         width: 1rem;
-        flex-shrink: 0;
-        align-items: center;
-        justify-content: center;
-        border-radius: 9999px;
-        border: 2px solid #ffffff;
-        background: #ffffff;
+        border-radius: 50% 50% 50% 0;
+        border: 1.5px solid #ffffff;
+        background: var(--pin-color);
         box-shadow:
-            0 0 0 1px var(--marker-color),
-            0 0 0 4px rgb(255 255 255 / 0.78),
-            0 2px 5px rgb(15 23 42 / 0.16);
+            0 0 0 1px rgb(9 20 38 / 0.12),
+            0 2px 5px rgb(15 23 42 / 0.18);
+        content: '';
+        transform: translateX(-50%) rotate(-45deg);
     }
 
     .map-legend-marker span {
-        height: 0.42rem;
-        width: 0.42rem;
+        position: absolute;
+        left: 50%;
+        top: 0.3rem;
+        z-index: 1;
+        display: flex;
+        height: 0.66rem;
+        width: 0.66rem;
+        align-items: center;
+        justify-content: center;
         border-radius: 9999px;
-        background: var(--marker-color);
-        box-shadow: 0 0 0 3px var(--marker-halo);
+        background: #ffffff;
+        transform: translateX(-50%);
+    }
+
+    .map-legend-marker span::before {
+        display: block;
+        height: 0.45rem;
+        width: 0.45rem;
+        background: #091426;
+        content: '';
+        mask: var(--legend-icon) center / contain no-repeat;
+        -webkit-mask: var(--legend-icon) center / contain no-repeat;
     }
 
     .map-legend-marker-flood {
-        --marker-color: #ef4444;
-        --marker-halo: rgb(239 68 68 / 0.18);
+        --pin-color: #ef4444;
+        --legend-icon: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M3 15.5c2.25-2 4.5-2 6.75 0s4.5 2 6.75 0 3.75-1.9 5.25-.6'/%3E%3Cpath d='M8 11.5 12 4l4 7.5'/%3E%3C/svg%3E");
     }
 
     .map-legend-marker-risk {
-        --marker-color: #f97316;
-        --marker-halo: rgb(249 115 22 / 0.17);
+        --pin-color: #f97316;
+        --legend-icon: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 4 21 20H3L12 4Z'/%3E%3Cpath d='M12 9v4.5'/%3E%3Cpath d='M12 17h.01'/%3E%3C/svg%3E");
     }
 
     .map-legend-marker-evacuation {
-        --marker-color: #0d9488;
-        --marker-halo: rgb(13 148 136 / 0.18);
+        --pin-color: #0d9488;
+        --legend-icon: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m4 11 8-6 8 6'/%3E%3Cpath d='M6.5 10.5V20h11V10.5'/%3E%3Cpath d='M10 20v-5h4v5'/%3E%3C/svg%3E");
     }
 
     .map-legend-marker-equipment {
-        --marker-color: #d97706;
-        --marker-halo: rgb(217 119 6 / 0.17);
-        border-radius: 0.35rem;
-    }
-
-    .map-legend-marker-equipment span {
-        border-radius: 0.16rem;
+        --pin-color: #d97706;
+        --legend-icon: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 17h9.5l2-3.5H20'/%3E%3Cpath d='M7 17l2.5-7H13l2.5 3.5'/%3E%3Cpath d='M12 10l5-4'/%3E%3Cpath d='M17 6h3l-1.5 3'/%3E%3Cpath d='M6 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z'/%3E%3Cpath d='M16 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z'/%3E%3C/svg%3E");
     }
 
     .map-legend-route {

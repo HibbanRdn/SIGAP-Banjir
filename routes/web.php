@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Auth\AdminAuthController;
+use App\Http\Controllers\Admin\DataSourceController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EquipmentInventoryController;
 use App\Http\Controllers\Admin\EquipmentTypeController;
 use App\Http\Controllers\Admin\FloodEventController;
@@ -20,7 +22,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::middleware(['auth', 'admin'])->group(function () {
         Route::redirect('/', '/admin/dashboard')->name('home');
-        Route::view('/dashboard', 'admin.dashboard')->name('dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::resource('flood-events', FloodEventController::class);
         Route::resource('flood-risks', FloodRiskPointController::class);
         Route::resource('evacuation-points', EvacuationPointController::class);
@@ -28,9 +30,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/equipment', EquipmentInventoryController::class)->name('equipment.index');
         Route::resource('equipment-types', EquipmentTypeController::class);
         Route::resource('heavy-equipment-units', HeavyEquipmentUnitController::class);
-        Route::view('/spatial-analysis', 'admin.spatial-analysis.index')->name('spatial-analysis.index');
-        Route::view('/routes/preview', 'admin.routes.preview')->name('routes.preview');
-        Route::view('/data-sources', 'admin.data-sources.index')->name('data-sources.index');
-        Route::view('/ui-states', 'admin.ui-states.index')->name('ui-states.index');
+        Route::get('/data-sources', [DataSourceController::class, 'index'])->name('data-sources.index');
     });
 });

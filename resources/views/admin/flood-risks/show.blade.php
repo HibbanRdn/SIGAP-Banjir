@@ -38,6 +38,7 @@
                     </p>
                 </div>
                 <div class="flex flex-wrap gap-2">
+                    <a href="{{ route('map') }}" class="sig-button sig-button-outline">Buka Peta Publik</a>
                     <a href="{{ route('admin.flood-risks.edit', $floodRisk) }}" class="sig-button sig-button-primary">Edit Data</a>
                     <a href="{{ route('admin.flood-risks.index') }}" class="sig-button sig-button-outline">Kembali</a>
                 </div>
@@ -46,17 +47,23 @@
 
         <div class="grid gap-6 xl:grid-cols-[1.2fr_.8fr]">
             <section class="sig-card overflow-hidden">
-                <div class="relative min-h-[430px] bg-slate-100">
-                    <div class="absolute inset-0 sig-grid-bg"></div>
-                    <div class="map-marker map-marker-risk map-marker-selected left-[52%] top-[46%] h-6 w-6"></div>
-                    <div class="absolute left-4 top-4 rounded-xl border border-slate-200 bg-white/95 p-3 text-sm shadow-soft">
-                        <p class="font-semibold text-primary">Lokasi Titik Rawan</p>
-                        <p class="font-technical mt-1 text-xs text-slate-500">{{ $formatCoordinate($floodRisk->longitude) }}, {{ $formatCoordinate($floodRisk->latitude) }}</p>
+                @if ($floodRisk->longitude !== null && $floodRisk->latitude !== null)
+                    <div
+                        id="admin-spatial-detail-map"
+                        class="admin-spatial-detail-map h-[430px] min-h-[430px] w-full bg-slate-100"
+                        data-map-type="risk"
+                        data-name="{{ $floodRisk->name }}"
+                        data-longitude="{{ $formatCoordinate($floodRisk->longitude) }}"
+                        data-latitude="{{ $formatCoordinate($floodRisk->latitude) }}"
+                        data-risk-level="{{ $floodRisk->risk_level }}"
+                        data-district="{{ $floodRisk->district }}"
+                        data-data-status="{{ $floodRisk->data_status }}"
+                    ></div>
+                @else
+                    <div class="flex min-h-[430px] items-center justify-center bg-slate-50 p-6 text-center text-sm leading-6 text-slate-500">
+                        Koordinat belum tersedia untuk menampilkan mini map.
                     </div>
-                    <div class="absolute bottom-4 left-4 max-w-sm rounded-xl border border-amber-100 bg-amber-50/95 p-3 text-sm leading-6 text-amber-800 shadow-soft">
-                        Mini map masih placeholder. Integrasi Leaflet dan GeoJSON dikerjakan pada fase peta final.
-                    </div>
-                </div>
+                @endif
             </section>
 
             <aside class="space-y-6">

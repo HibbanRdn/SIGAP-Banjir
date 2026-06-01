@@ -17,7 +17,7 @@ Implementasi final tetap mengikuti stack project:
 - Tailwind CSS untuk styling.
 - Leaflet untuk peta.
 - PostgreSQL + PostGIS untuk database spasial.
-- OSRM/OpenRouteService untuk rute evakuasi sederhana.
+- OSRM untuk rute evakuasi sederhana.
 
 Export Stitch membantu memberi acuan visual untuk:
 

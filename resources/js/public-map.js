@@ -407,7 +407,7 @@ function createMarker(state, config, feature, latLng) {
 
 function markerIcon(kind, options = {}) {
     const classes = ['leaflet-sigap-marker', `leaflet-sigap-marker-${kind}`];
-    const size = markerSize(kind, options);
+    const metrics = markerMetrics(options);
 
     if (options.selected) {
         classes.push('leaflet-sigap-marker-selected');
@@ -419,10 +419,16 @@ function markerIcon(kind, options = {}) {
 
     return L.divIcon({
         className: classes.join(' '),
-        html: '<span></span>',
-        iconSize: [size, size],
-        iconAnchor: [size / 2, size / 2],
-        popupAnchor: [0, -12],
+        html: `
+            <span class="leaflet-sigap-pin" aria-hidden="true">
+                <span class="leaflet-sigap-pin-head">
+                    ${markerSvg(kind)}
+                </span>
+            </span>
+        `,
+        iconSize: [metrics.width, metrics.height],
+        iconAnchor: [metrics.width / 2, metrics.height - 2],
+        popupAnchor: [0, -metrics.height + 7],
     });
 }
 
@@ -441,21 +447,54 @@ function refreshMarkerIcons(state) {
     });
 }
 
-function markerSize(kind, options = {}) {
+function markerMetrics(options = {}) {
     if (options.selected) {
-        return 30;
+        return { width: 38, height: 44 };
     }
 
     if (options.recommended) {
-        return 28;
+        return { width: 36, height: 42 };
     }
 
-    return {
-        flood: 24,
-        risk: 20,
-        evacuation: 22,
-        equipment: 22,
-    }[kind] || 22;
+    return { width: 34, height: 40 };
+}
+
+function markerSvg(kind) {
+    const icons = {
+        flood: `
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M3 15.5c2.25-2 4.5-2 6.75 0s4.5 2 6.75 0 3.75-1.9 5.25-.6" />
+                <path d="M3 19.5c2.25-2 4.5-2 6.75 0s4.5 2 6.75 0 3.75-1.9 5.25-.6" />
+                <path d="M8 11.5 12 4l4 7.5" />
+            </svg>
+        `,
+        risk: `
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 4 21 20H3L12 4Z" />
+                <path d="M12 9v4.5" />
+                <path d="M12 17h.01" />
+            </svg>
+        `,
+        evacuation: `
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="m4 11 8-6 8 6" />
+                <path d="M6.5 10.5V20h11V10.5" />
+                <path d="M10 20v-5h4v5" />
+            </svg>
+        `,
+        equipment: `
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 17h9.5l2-3.5H20" />
+                <path d="M7 17l2.5-7H13l2.5 3.5" />
+                <path d="M12 10l5-4" />
+                <path d="M17 6h3l-1.5 3" />
+                <path d="M6 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" />
+                <path d="M16 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" />
+            </svg>
+        `,
+    };
+
+    return icons[kind] || icons.flood;
 }
 
 function markerZIndex(kind, options = {}) {

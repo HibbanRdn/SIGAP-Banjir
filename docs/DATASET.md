@@ -2,6 +2,31 @@
 
 # Dataset Sistem Informasi Geografis Mitigasi dan Respons Banjir Kota Bandar Lampung
 
+## Status Dataset Aktual
+
+Dataset demo yang aktif pada QA akhir berisi:
+
+| Data | Jumlah |
+|---|---:|
+| Admin demo | 1 |
+| Kejadian banjir | 8 |
+| Titik rawan banjir | 12 |
+| Titik evakuasi | 10 |
+| Pos alat berat | 6 |
+| Unit alat berat | 15 |
+| Jenis alat | 6 |
+
+Ringkasan status data spasial utama:
+
+| Status | Jumlah |
+|---|---:|
+| Simulasi | 30 |
+| Dummy | 6 |
+| Nyata | 0 |
+| Perlu validasi | 36 |
+
+Semua data simulasi dan dummy hanya digunakan untuk kebutuhan demonstrasi akademik. Data tersebut tidak diklaim sebagai data resmi pemerintah atau laporan operasional BPBD.
+
 ## A. Ringkasan Dataset
 
 Project ini membutuhkan beberapa dataset untuk mendukung pemetaan, analisis spasial, rekomendasi titik terdekat, dan demo sistem.
@@ -622,7 +647,7 @@ Penggunaan dataset pada UI dan API:
 3. Data evakuasi digunakan untuk layer marker evakuasi dan rekomendasi titik terdekat.
 4. Data pos alat berat digunakan untuk layer marker pos alat berat.
 5. Data unit alat berat digunakan untuk popup informasi ketersediaan alat.
-6. Data koordinat digunakan untuk routing OSRM/OpenRouteService.
+6. Data koordinat digunakan untuk routing OSRM.
 7. Data status digunakan untuk filter peta.
 8. Data severity digunakan untuk warna marker banjir.
 9. Data district/subdistrict digunakan untuk filter wilayah.
@@ -714,4 +739,4 @@ Dokumen berikutnya yang paling tepat dibuat adalah:
 API.md
 ```
 
-Alasannya, setelah requirements, database, dan dataset jelas, rancangan endpoint API dapat dibuat lebih presisi untuk mendukung Leaflet, GeoJSON, query PostGIS, rekomendasi titik terdekat, dan routing OSRM/OpenRouteService.
+Alasannya, setelah requirements, database, dan dataset jelas, rancangan endpoint API dapat dibuat lebih presisi untuk mendukung Leaflet, GeoJSON, query PostGIS, rekomendasi titik terdekat, dan routing OSRM.

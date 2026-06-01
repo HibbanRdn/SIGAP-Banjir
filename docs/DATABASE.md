@@ -2,6 +2,20 @@
 
 # Desain Database Sistem Informasi Geografis Mitigasi dan Respons Banjir Kota Bandar Lampung
 
+## Status Implementasi Aktual
+
+Pada MVP final, database aktif bernama `sigap-banjir` dan memakai PostgreSQL + PostGIS. Tabel inti yang sudah dibuat dan dipakai aplikasi adalah:
+
+- `users`
+- `flood_risk_points`
+- `flood_events`
+- `evacuation_points`
+- `heavy_equipment_posts`
+- `equipment_types`
+- `heavy_equipment_units`
+
+Kolom spasial utama pada tabel spasial memakai `geom geometry(Point, 4326)`. Tabel opsional seperti `districts`, `data_sources`, `route_histories`, dan `equipment_dispatch_logs` belum dibuat sebagai tabel aktif MVP. Transparansi sumber data saat ini memakai kolom existing pada masing-masing tabel spasial: `source_type`, `source_reference`, `data_status`, dan `is_verified`.
+
 ## A. Ringkasan Desain Database
 
 Database project ini menggunakan PostgreSQL dengan extension PostGIS. PostgreSQL digunakan sebagai relational database utama, sedangkan PostGIS digunakan untuk menyimpan, mengelola, dan menganalisis data spasial.
@@ -53,13 +67,13 @@ SRID yang direkomendasikan:
 SRID 4326
 ```
 
-SRID 4326 adalah sistem koordinat WGS 84 yang umum digunakan oleh GPS, OpenStreetMap, Leaflet, OSRM, dan OpenRouteService.
+SRID 4326 adalah sistem koordinat WGS 84 yang umum digunakan oleh GPS, OpenStreetMap, Leaflet, dan OSRM.
 
 ### Alasan Menggunakan SRID 4326
 
 1. Kompatibel dengan Leaflet.
 2. Kompatibel dengan OpenStreetMap.
-3. Kompatibel dengan API routing seperti OSRM dan OpenRouteService.
+3. Kompatibel dengan API routing seperti OSRM.
 4. Mudah digunakan untuk input koordinat longitude dan latitude.
 5. Cocok untuk project web GIS skala akademik.
 
@@ -747,7 +761,7 @@ Contoh radius:
 
 Fitur ini opsional setelah MVP utama selesai.
 
-### 10. Mengambil Koordinat untuk Routing OSRM/OpenRouteService
+### 10. Mengambil Koordinat untuk Routing OSRM
 
 ```sql
 SELECT
@@ -877,7 +891,7 @@ Data dari database dikirim ke Leaflet dalam format GeoJSON `FeatureCollection`.
 
 ### 4. GeoJSON Rute Evakuasi
 
-Jika rute berasal dari OSRM atau OpenRouteService, frontend dapat langsung memakai geometry dari response provider.
+Jika rute berasal dari OSRM, frontend dapat langsung memakai geometry dari response provider.
 
 Contoh struktur yang disederhanakan:
 
@@ -1120,7 +1134,7 @@ Alasan: satu pos dapat memiliki beberapa jenis alat berat dan jumlah ketersediaa
 
 Keputusan final: tidak wajib untuk MVP.
 
-Alasan: rute evakuasi dapat diambil langsung dari OSRM atau OpenRouteService saat dibutuhkan. Simpan route history hanya jika ingin menambahkan fitur riwayat.
+Alasan: rute evakuasi dapat diambil langsung dari OSRM saat dibutuhkan. Simpan route history hanya jika ingin menambahkan fitur riwayat.
 
 ### 4. Geometry atau Geography
 
@@ -1219,7 +1233,7 @@ Service ini bertanggung jawab untuk:
 1. mencari titik evakuasi terdekat;
 2. mencari alat berat terdekat;
 3. mengubah data menjadi GeoJSON;
-4. mengambil koordinat untuk OSRM/OpenRouteService.
+4. mengambil koordinat untuk OSRM.
 
 ### 6. Endpoint GeoJSON
 
