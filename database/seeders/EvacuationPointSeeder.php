@@ -7,7 +7,11 @@ use Illuminate\Support\Facades\DB;
 
 class EvacuationPointSeeder extends Seeder
 {
-    private const SOURCE_REFERENCE = 'Seeder demo SIGAP Banjir';
+    private const SOURCE_REFERENCE = 'Dataset simulasi pengembangan SIGAP Banjir; lokasi fasilitas/area diverifikasi melalui peta publik OpenStreetMap/Nominatim, fungsi evakuasi merupakan skenario uji aplikasi.';
+
+    private const LEGACY_SOURCE_REFERENCES = [
+        'Seeder demo SIGAP Banjir',
+    ];
 
     /**
      * Run the database seeds.
@@ -15,21 +19,21 @@ class EvacuationPointSeeder extends Seeder
     public function run(): void
     {
         DB::table('evacuation_points')
-            ->where('source_reference', self::SOURCE_REFERENCE)
+            ->whereIn('source_reference', array_merge([self::SOURCE_REFERENCE], self::LEGACY_SOURCE_REFERENCES))
             ->delete();
 
         $now = now();
 
         $points = [
-            ['Masjid Al-Furqon Lungsir', 'masjid', 'Area Lungsir, Tanjung Karang Pusat', 'Tanjung Karang Pusat', 'Lungsir', 300, 'aula,toilet,tempat ibadah,parkir', 'Pengurus Masjid', '0812-7300-2101', 'aktif', 'Titik evakuasi simulasi yang dekat dengan pusat kota.', 105.2635, -5.4230],
+            ['Masjid Al-Furqon Lungsir', 'masjid', 'Area Lungsir, Tanjung Karang Pusat', 'Tanjung Karang Pusat', 'Lungsir', 300, 'aula,toilet,tempat ibadah,parkir', 'Pengurus Masjid', '0812-7300-2101', 'aktif', 'Titik evakuasi simulasi yang dekat dengan pusat kota.', 105.2615707, -5.4291549],
             ['GOR Saburai', 'aula', 'Kompleks GOR Saburai, Enggal', 'Enggal', 'Enggal', 600, 'aula luas,toilet,parkir,pos kesehatan', 'Koordinator GOR', '0812-7300-2102', 'aktif', 'Titik evakuasi simulasi berkapasitas besar untuk area pusat kota.', 105.2598, -5.4218],
             ['Kantor Kecamatan Teluk Betung Selatan', 'gedung_pemerintah', 'Area kantor kecamatan Teluk Betung Selatan', 'Teluk Betung Selatan', 'Pesawahan', 180, 'aula,toilet,ruang koordinasi', 'Petugas Kecamatan', '0812-7300-2103', 'aktif', 'Titik evakuasi simulasi untuk warga sekitar Teluk Betung Selatan.', 105.2591, -5.4485],
-            ['Aula Kecamatan Panjang', 'aula', 'Area Kecamatan Panjang', 'Panjang', 'Panjang Utara', 220, 'aula,toilet,dapur umum', 'Petugas Kecamatan', '0812-7300-2104', 'aktif', 'Titik evakuasi simulasi untuk wilayah Panjang dan sekitar pelabuhan.', 105.3314, -5.4682],
-            ['Puskesmas Sukarame', 'puskesmas', 'Area layanan kesehatan Sukarame', 'Sukarame', 'Sukarame Baru', 120, 'layanan kesehatan,toilet,ruang tunggu', 'Petugas Puskesmas', '0812-7300-2105', 'aktif', 'Titik evakuasi simulasi dengan dukungan kesehatan dasar.', 105.3025, -5.3775],
-            ['SDN Simulasi Way Halim', 'sekolah', 'Area sekolah Way Halim Permai', 'Way Halim', 'Way Halim Permai', 250, 'ruang kelas,toilet,halaman', 'Koordinator Sekolah', '0812-7300-2106', 'aktif', 'Titik evakuasi simulasi untuk area permukiman Way Halim.', 105.2878, -5.3890],
+            ['Kandidat Evakuasi Panjang Utara - Simulasi', 'aula', 'Area Panjang Utara sekitar Jalan Yos Soedarso', 'Panjang', 'Panjang Utara', 220, 'aula,toilet,dapur umum', 'Koordinator Titik Evakuasi', '0812-7300-2104', 'aktif', 'Kandidat titik evakuasi simulasi untuk wilayah Panjang dan sekitar pelabuhan.', 105.3229645, -5.4721335],
+            ['Kandidat Evakuasi Sukarame - Simulasi', 'aula', 'Area Sukarame', 'Sukarame', 'Sukarame', 120, 'aula,toilet,ruang tunggu', 'Koordinator Titik Evakuasi', '0812-7300-2105', 'aktif', 'Kandidat titik evakuasi simulasi untuk area Sukarame.', 105.2946540, -5.3974767],
+            ['SDN Simulasi Way Halim', 'sekolah', 'Area sekolah Way Halim Permai', 'Way Halim', 'Way Halim Permai', 250, 'ruang kelas,toilet,halaman', 'Koordinator Sekolah', '0812-7300-2106', 'aktif', 'Titik evakuasi simulasi untuk area permukiman Way Halim.', 105.2746909, -5.3823404],
             ['Lapangan Enggal', 'lapangan', 'Area lapangan terbuka Enggal', 'Enggal', 'Enggal', 500, 'area terbuka,parkir,posko tenda', 'Petugas Lapangan', '0812-7300-2107', 'aktif', 'Titik kumpul simulasi untuk evakuasi sementara.', 105.2593, -5.4175],
-            ['Balai Warga Rajabasa Nunyai', 'gedung_pemerintah', 'Area Rajabasa Nunyai', 'Rajabasa', 'Rajabasa Nunyai', 160, 'aula,toilet,ruang logistik', 'Petugas Kelurahan', '0812-7300-2108', 'penuh', 'Titik evakuasi simulasi dengan status penuh untuk variasi demo.', 105.2299, -5.3710],
-            ['Masjid Simulasi Kemiling', 'masjid', 'Area Kemiling Permai', 'Kemiling', 'Kemiling Permai', 200, 'aula,toilet,tempat ibadah', 'Pengurus Masjid', '0812-7300-2109', 'aktif', 'Titik evakuasi simulasi untuk area Kemiling.', 105.2157, -5.3971],
+            ['Balai Warga Rajabasa - Simulasi', 'gedung_pemerintah', 'Area Rajabasa', 'Rajabasa', 'Rajabasa', 160, 'aula,toilet,ruang logistik', 'Petugas Kelurahan', '0812-7300-2108', 'penuh', 'Titik evakuasi simulasi dengan status penuh untuk variasi demo.', 105.2297280, -5.3627526],
+            ['Masjid Simulasi Kemiling', 'masjid', 'Area Kemiling Permai', 'Kemiling', 'Kemiling Permai', 200, 'aula,toilet,tempat ibadah', 'Pengurus Masjid', '0812-7300-2109', 'aktif', 'Titik evakuasi simulasi untuk area Kemiling.', 105.2224429, -5.3760226],
             ['Balai Warga Kedamaian', 'gedung_pemerintah', 'Area Balai Warga Kedamaian', 'Kedamaian', 'Kedamaian', 170, 'aula,toilet,dapur umum', 'Petugas Kelurahan', '0812-7300-2110', 'aktif', 'Titik evakuasi simulasi untuk skenario genangan Kedamaian.', 105.2815, -5.4100],
         ];
 

@@ -1,0 +1,21 @@
+[
+    {
+        "id": 7,
+        "name": "Pos Alat Berat Panjang",
+        "address": "Area operasional sekitar Pelabuhan Panjang",
+        "district": "Panjang",
+        "subdistrict": "Panjang Utara",
+        "contact_person": "Koordinator Pos Panjang",
+        "contact_phone": "0812-7300-1101",
+        "status": "aktif",
+        "description": "Pos dummy realistis untuk dukungan respons banjir wilayah Panjang dan sekitarnya.",
+        "source_type": "pemerintah",
+        "source_reference": "Seeder demo SIGAP Banjir",
+        "is_verified": true,
+        "data_status": "nyata",
+        "longitude": 105.3262,
+        "latitude": -5.4669,
+        "created_at": "2026-05-20 17:22:33",
+        "updated_at": "2026-06-01 13:08:55"
+    }
+]

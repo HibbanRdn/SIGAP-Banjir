@@ -7,7 +7,11 @@ use Illuminate\Support\Facades\DB;
 
 class HeavyEquipmentPostSeeder extends Seeder
 {
-    private const SOURCE_REFERENCE = 'Seeder demo SIGAP Banjir';
+    private const SOURCE_REFERENCE = 'Dataset dummy pengembangan SIGAP Banjir; lokasi area pos berbasis wilayah Bandar Lampung dan diverifikasi melalui peta publik OpenStreetMap/Nominatim, bukan fasilitas resmi.';
+
+    private const LEGACY_SOURCE_REFERENCES = [
+        'Seeder demo SIGAP Banjir',
+    ];
 
     /**
      * Run the database seeds.
@@ -15,7 +19,7 @@ class HeavyEquipmentPostSeeder extends Seeder
     public function run(): void
     {
         DB::table('heavy_equipment_posts')
-            ->where('source_reference', self::SOURCE_REFERENCE)
+            ->whereIn('source_reference', array_merge([self::SOURCE_REFERENCE], self::LEGACY_SOURCE_REFERENCES))
             ->delete();
 
         $now = now();
@@ -47,15 +51,15 @@ class HeavyEquipmentPostSeeder extends Seeder
             ],
             [
                 'name' => 'Pos Alat Berat Rajabasa',
-                'address' => 'Area operasional sekitar Rajabasa Nunyai',
+                'address' => 'Area operasional sekitar Rajabasa',
                 'district' => 'Rajabasa',
-                'subdistrict' => 'Rajabasa Nunyai',
+                'subdistrict' => 'Rajabasa',
                 'contact_person' => 'Koordinator Pos Rajabasa',
                 'contact_phone' => '0812-7300-1103',
                 'status' => 'aktif',
                 'description' => 'Pos dummy realistis untuk respons wilayah Rajabasa dan Labuhan Ratu.',
-                'longitude' => 105.2290,
-                'latitude' => -5.3729,
+                'longitude' => 105.2297280,
+                'latitude' => -5.3627526,
             ],
             [
                 'name' => 'Pos Alat Berat Way Halim',
@@ -66,20 +70,20 @@ class HeavyEquipmentPostSeeder extends Seeder
                 'contact_phone' => '0812-7300-1104',
                 'status' => 'aktif',
                 'description' => 'Pos dummy realistis untuk dukungan respons genangan perkotaan.',
-                'longitude' => 105.2896,
-                'latitude' => -5.3912,
+                'longitude' => 105.2746909,
+                'latitude' => -5.3823404,
             ],
             [
                 'name' => 'Pos Alat Berat Sukarame',
-                'address' => 'Area operasional sekitar Korpri Sukarame',
+                'address' => 'Area operasional Sukarame',
                 'district' => 'Sukarame',
-                'subdistrict' => 'Korpri Raya',
+                'subdistrict' => 'Sukarame',
                 'contact_person' => 'Koordinator Pos Sukarame',
                 'contact_phone' => '0812-7300-1105',
                 'status' => 'aktif',
                 'description' => 'Pos dummy realistis untuk wilayah Sukarame dan Kedamaian.',
-                'longitude' => 105.3068,
-                'latitude' => -5.3812,
+                'longitude' => 105.2946540,
+                'latitude' => -5.3974767,
             ],
             [
                 'name' => 'Pos Alat Berat Kemiling',
@@ -90,8 +94,8 @@ class HeavyEquipmentPostSeeder extends Seeder
                 'contact_phone' => '0812-7300-1106',
                 'status' => 'tidak_aktif',
                 'description' => 'Pos dummy realistis dengan status tidak aktif untuk variasi demo.',
-                'longitude' => 105.2140,
-                'latitude' => -5.3965,
+                'longitude' => 105.2224429,
+                'latitude' => -5.3760226,
             ],
         ];
 
