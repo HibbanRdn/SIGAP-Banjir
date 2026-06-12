@@ -535,6 +535,18 @@
         transform: translateX(1rem);
     }
 
+    .map-layer-thematic-swatch {
+        display: inline-block;
+        height: 0.85rem;
+        width: 1.35rem;
+        border-radius: 0.3rem;
+        border: 1px solid rgb(15 23 42 / 0.14);
+        background:
+            linear-gradient(90deg, rgb(203 213 225 / 0.65) 0 24%, transparent 24%),
+            linear-gradient(90deg, rgb(34 197 94 / 0.68) 0 50%, rgb(245 158 11 / 0.72) 50% 74%, rgb(248 113 113 / 0.78) 74%);
+        box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.55);
+    }
+
     .map-result-card {
         display: flex;
         width: 100%;
@@ -844,6 +856,32 @@
         border-top: 3px dashed #0058be;
     }
 
+    .map-legend-district-swatch {
+        display: inline-block;
+        height: 0.72rem;
+        width: 1rem;
+        flex-shrink: 0;
+        border-radius: 0.22rem;
+        border: 1px solid rgb(15 23 42 / 0.14);
+        box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.48);
+    }
+
+    .map-legend-district-none {
+        background: rgb(203 213 225 / 0.42);
+    }
+
+    .map-legend-district-low {
+        background: rgb(34 197 94 / 0.42);
+    }
+
+    .map-legend-district-medium {
+        background: rgb(245 158 11 / 0.46);
+    }
+
+    .map-legend-district-high {
+        background: rgb(248 113 113 / 0.52);
+    }
+
     .sigap-leaflet-popup .leaflet-popup-content-wrapper {
         border-radius: 0.75rem;
         border: 1px solid rgb(226 232 240 / 0.95);
@@ -859,6 +897,38 @@
 
     .sigap-leaflet-popup .leaflet-popup-tip {
         box-shadow: var(--shadow-soft);
+    }
+
+    .sigap-district-tooltip {
+        border: 1px solid rgb(226 232 240 / 0.95);
+        border-radius: 0.65rem;
+        background: rgb(255 255 255 / 0.96);
+        box-shadow: var(--shadow-soft);
+        color: #0f172a;
+        font-family: var(--font-sans);
+        padding: 0;
+    }
+
+    .sigap-district-tooltip::before {
+        display: none;
+    }
+
+    .map-district-tooltip {
+        display: grid;
+        gap: 0.15rem;
+        padding: 0.46rem 0.56rem;
+    }
+
+    .map-district-tooltip strong {
+        font-size: 0.75rem;
+        line-height: 1rem;
+    }
+
+    .map-district-tooltip span {
+        color: #64748b;
+        font-size: 0.6875rem;
+        font-weight: 700;
+        line-height: 0.95rem;
     }
 
     .map-popup-card {

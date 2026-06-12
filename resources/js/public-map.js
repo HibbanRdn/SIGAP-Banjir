@@ -31,6 +31,10 @@ const basemapConfigs = {
 };
 
 const layerConfigs = {
+    districtIntensity: {
+        endpoint: '/api/v1/geojson/district-flood-intensity',
+        label: 'Intensitas Kecamatan',
+    },
     floodEvents: {
         endpoint: '/api/v1/geojson/flood-events',
         kind: 'flood',
@@ -89,7 +93,9 @@ function initPublicMap() {
         basemapButtons: document.querySelectorAll('[data-basemap-mode]'),
         currentBasemapLabel: document.getElementById('current-basemap-label'),
         legendBasemapLabel: document.getElementById('legend-basemap-label'),
+        districtLegend: document.getElementById('district-intensity-legend'),
         counts: {
+            districtIntensity: document.getElementById('count-district-intensity'),
             floodEvents: document.getElementById('count-flood-events'),
             floodRisks: document.getElementById('count-flood-risks'),
             evacuations: document.getElementById('count-evacuations'),
@@ -115,9 +121,16 @@ function initPublicMap() {
         failedBasemaps: new Set(),
     };
 
+    configureMapPanes(state.map);
     setBaseMap(state, refs, 'standard');
     bindControls(state, refs);
     loadAllLayers(state, refs);
+}
+
+function configureMapPanes(map) {
+    const districtPane = map.createPane('districtIntensityPane');
+    districtPane.style.zIndex = 360;
+    districtPane.style.pointerEvents = 'auto';
 }
 
 function bindControls(state, refs) {
@@ -126,17 +139,19 @@ function bindControls(state, refs) {
             const layerName = toggle.dataset.layerToggle;
             const layer = state.layers[layerName];
 
-            if (!layer) {
-                return;
+            if (toggle.checked && layer) {
+                layer.addTo(state.map);
             }
 
-            if (toggle.checked) {
-                layer.addTo(state.map);
-            } else {
+            if (!toggle.checked && layer) {
                 state.map.removeLayer(layer);
             }
+
+            syncDistrictLegend(refs);
         });
     });
+
+    syncDistrictLegend(refs);
 
     refs.basemapButtons.forEach((button) => {
         button.addEventListener('click', () => {
@@ -283,6 +298,7 @@ async function loadAllLayers(state, refs) {
         });
 
         fillDistrictOptions(state, refs);
+        renderDistrictIntensity(state, refs);
         renderFloodEvents(state, refs);
         renderStaticLayer(state, refs, 'floodRisks');
         renderStaticLayer(state, refs, 'evacuations');
@@ -326,6 +342,97 @@ async function fetchJson(url) {
     }
 
     return data;
+}
+
+function renderDistrictIntensity(state, refs) {
+    const data = state.data.districtIntensity || emptyCollection();
+    const totalDistricts = data.features.length;
+    const districtsWithEvents = data.features
+        .filter((feature) => Number(feature.properties?.total_events || 0) > 0)
+        .length;
+
+    removeLayer(state, 'districtIntensity');
+
+    if (refs.counts.districtIntensity) {
+        refs.counts.districtIntensity.textContent = `${districtsWithEvents}/${totalDistricts}`;
+    }
+
+    const layer = L.geoJSON(data, {
+        pane: 'districtIntensityPane',
+        style: districtStyle,
+        onEachFeature: (feature, polygon) => {
+            polygon.bindTooltip(buildDistrictTooltip(feature.properties), {
+                className: 'sigap-district-tooltip',
+                direction: 'top',
+                sticky: true,
+                opacity: 0.96,
+            });
+            polygon.bindPopup(buildDistrictPopup(feature.properties), {
+                className: 'sigap-leaflet-popup',
+                minWidth: 240,
+            });
+            polygon.on({
+                mouseover: () => {
+                    polygon.setStyle(districtStyle(feature, true));
+                    polygon.bringToFront();
+                },
+                mouseout: () => {
+                    polygon.setStyle(districtStyle(feature));
+                },
+            });
+        },
+    });
+
+    state.layers.districtIntensity = layer;
+
+    if (isLayerEnabled('districtIntensity')) {
+        layer.addTo(state.map);
+    }
+
+    syncDistrictLegend(refs);
+}
+
+function districtStyle(feature, hover = false) {
+    const colors = districtColors(feature.properties?.color_key);
+
+    return {
+        color: hover ? '#0f172a' : colors.stroke,
+        fillColor: colors.fill,
+        fillOpacity: hover ? Math.min(colors.fillOpacity + 0.11, 0.42) : colors.fillOpacity,
+        opacity: hover ? 0.9 : 0.72,
+        weight: hover ? 2 : 1.15,
+        lineCap: 'round',
+        lineJoin: 'round',
+    };
+}
+
+function districtColors(colorKey) {
+    return {
+        none: {
+            fill: '#cbd5e1',
+            stroke: '#94a3b8',
+            fillOpacity: 0.18,
+        },
+        low: {
+            fill: '#22c55e',
+            stroke: '#15803d',
+            fillOpacity: 0.22,
+        },
+        medium: {
+            fill: '#f59e0b',
+            stroke: '#b45309',
+            fillOpacity: 0.28,
+        },
+        high: {
+            fill: '#f87171',
+            stroke: '#dc2626',
+            fillOpacity: 0.32,
+        },
+    }[colorKey] || {
+        fill: '#cbd5e1',
+        stroke: '#94a3b8',
+        fillOpacity: 0.18,
+    };
 }
 
 function renderStaticLayer(state, refs, name) {
@@ -884,6 +991,30 @@ function buildPopup(kind, properties) {
     `;
 }
 
+function buildDistrictTooltip(properties) {
+    return `
+        <div class="map-district-tooltip">
+            <strong>${escapeHtml(properties.district || '-')}</strong>
+            <span>${escapeHtml(properties.total_events ?? 0)} kejadian · ${escapeHtml(properties.intensity_label || '-')}</span>
+        </div>
+    `;
+}
+
+function buildDistrictPopup(properties) {
+    return `
+        <div class="map-popup-card">
+            <p class="map-popup-eyebrow">Intensitas Kecamatan</p>
+            <h3>${escapeHtml(properties.district || '-')}</h3>
+            <dl>
+                <div><dt>Total kejadian</dt><dd>${escapeHtml(properties.total_events ?? 0)}</dd></div>
+                <div><dt>Kejadian aktif</dt><dd>${escapeHtml(properties.active_events ?? 0)}</dd></div>
+                <div><dt>Kritis aktif</dt><dd>${escapeHtml(properties.critical_active_events ?? 0)}</dd></div>
+                <div><dt>Kategori</dt><dd>${escapeHtml(properties.intensity_label || '-')}</dd></div>
+            </dl>
+        </div>
+    `;
+}
+
 function fillDistrictOptions(state, refs) {
     const districts = [...new Set((state.data.floodEvents?.features || [])
         .map((feature) => feature.properties.district)
@@ -927,6 +1058,14 @@ function removeMarkers(state, markerKey) {
 
 function isLayerEnabled(name) {
     return document.querySelector(`[data-layer-toggle="${name}"]`)?.checked ?? true;
+}
+
+function syncDistrictLegend(refs) {
+    if (!refs.districtLegend) {
+        return;
+    }
+
+    refs.districtLegend.classList.toggle('hidden', !isLayerEnabled('districtIntensity'));
 }
 
 function setLayerLoading(refs, loading) {

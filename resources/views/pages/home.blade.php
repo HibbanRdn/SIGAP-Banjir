@@ -75,6 +75,15 @@
                     </div>
                     <div class="space-y-2">
                         <label class="map-layer-toggle">
+                            <input type="checkbox" class="sr-only" data-layer-toggle="districtIntensity" checked>
+                            <span class="map-layer-switch"></span>
+                            <span class="flex min-w-0 flex-1 items-center gap-3">
+                                <span class="map-layer-thematic-swatch shrink-0" aria-hidden="true"></span>
+                                <span class="truncate text-sm font-semibold text-slate-700">Intensitas Kecamatan</span>
+                            </span>
+                            <span id="count-district-intensity" class="sig-badge border border-blue-100 bg-blue-50 text-blue-700">0/0</span>
+                        </label>
+                        <label class="map-layer-toggle">
                             <input type="checkbox" class="sr-only" data-layer-toggle="floodEvents" checked>
                             <span class="map-layer-switch"></span>
                             <span class="flex min-w-0 flex-1 items-center gap-3">
@@ -194,6 +203,15 @@
                 <div class="flex items-center justify-between gap-5">
                     <h3 class="text-sm font-bold text-primary">Legend</h3>
                     <span id="legend-basemap-label" class="font-technical text-[11px] text-slate-400">Standar</span>
+                </div>
+                <div id="district-intensity-legend" class="mt-3 border-b border-slate-200 pb-3">
+                    <p class="mb-2 text-xs font-bold text-slate-500">Intensitas Kecamatan</p>
+                    <div class="grid grid-cols-2 gap-x-3 gap-y-1.5 text-xs text-slate-600">
+                        <div class="flex items-center gap-2"><span class="map-legend-district-swatch map-legend-district-none"></span>0</div>
+                        <div class="flex items-center gap-2"><span class="map-legend-district-swatch map-legend-district-low"></span>1-4 Rendah</div>
+                        <div class="flex items-center gap-2"><span class="map-legend-district-swatch map-legend-district-medium"></span>5-7 Sedang</div>
+                        <div class="flex items-center gap-2"><span class="map-legend-district-swatch map-legend-district-high"></span>8+ Tinggi</div>
+                    </div>
                 </div>
                 <div class="mt-3 grid gap-2 text-sm text-slate-600">
                     <div class="flex items-center gap-2"><span class="map-legend-marker map-legend-marker-flood"><span></span></span>Kejadian banjir</div>

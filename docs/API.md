@@ -127,6 +127,42 @@ Filter query yang didukung:
 - `data_status`
 - `source_type`
 
+### GET `/api/v1/geojson/district-flood-intensity`
+
+Layer polygon kecamatan untuk peta tematik intensitas kejadian banjir.
+
+Response berupa `FeatureCollection` langsung. Setiap feature memakai geometry polygon kecamatan Bandar Lampung dari file statis GeoJSON, lalu properties diisi dari agregasi aktual tabel `flood_events`.
+
+Properties utama:
+
+- `district`
+- `source_district_name`
+- `district_code`
+- `city`
+- `province`
+- `total_events`
+- `active_events`
+- `critical_active_events`
+- `intensity_level`
+- `intensity_label`
+- `intensity_range`
+- `color_key`
+
+Klasifikasi intensitas:
+
+| Range `total_events` | `intensity_level` | Label |
+|---:|---|---|
+| 0 | `none` | Tidak ada kejadian |
+| 1-4 | `low` | Rendah |
+| 5-7 | `medium` | Sedang |
+| 8+ | `high` | Tinggi |
+
+Catatan boundary:
+
+- Boundary disimpan di `storage/app/public/geojson/bandar-lampung-districts.geojson`.
+- Sumber boundary: BNPB ArcGIS REST Services, layer `Batas Kecamatan`.
+- Nama kecamatan dari boundary dinormalisasi di backend agar cocok dengan penulisan `district` pada data aplikasi.
+
 ## Spatial Analysis API
 
 Endpoint analisis menggunakan data dari `flood_events` sebagai sumber, lalu menghitung jarak ke resource target dengan PostGIS.

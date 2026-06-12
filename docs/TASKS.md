@@ -67,6 +67,7 @@ GET /api/v1/geojson/flood-events
 GET /api/v1/geojson/flood-risks
 GET /api/v1/geojson/evacuation-points
 GET /api/v1/geojson/heavy-equipment-posts
+GET /api/v1/geojson/district-flood-intensity
 ```
 
 Spatial analysis:

@@ -15,6 +15,7 @@ Dataset demo yang aktif pada QA akhir berisi:
 | Pos alat berat | 6 |
 | Unit alat berat | 15 |
 | Jenis alat | 6 |
+| Boundary kecamatan | 20 polygon |
 
 Ringkasan status data spasial utama:
 
@@ -77,9 +78,26 @@ Prinsip penggunaan data:
 | Pos alat berat | Lokasi sumber alat berat | Wajib | Dummy realistis | `heavy_equipment_posts` | Ya | nama pos, status, geom |
 | Jenis alat berat | Master jenis alat berat | Wajib | Dummy | `equipment_types` | Tidak | nama jenis, fungsi |
 | Unit alat berat | Jumlah alat per pos | Wajib | Dummy realistis | `heavy_equipment_units` | Tidak langsung | post, jenis, quantity |
-| Batas kecamatan/kelurahan | Filter dan visualisasi wilayah | Opsional | Nyata jika tersedia | `districts` | Ya | nama, kode, polygon |
+| Batas kecamatan/kelurahan | Filter dan visualisasi wilayah | Opsional | Nyata jika tersedia | file GeoJSON statis / `districts` | Ya | nama, kode, polygon |
 | Rute evakuasi | Riwayat rute jika disimpan | Opsional | API/simulasi | `route_histories` | Ya | linestring, jarak, durasi |
 | Sumber data | Dokumentasi sumber dataset | Opsional | Nyata | `data_sources` | Tidak | nama sumber, URL, tanggal akses |
+
+### Boundary Kecamatan Bandar Lampung
+
+Boundary kecamatan untuk layer tematik publik disimpan sebagai file statis:
+
+```text
+storage/app/public/geojson/bandar-lampung-districts.geojson
+```
+
+Sumber data:
+
+```text
+BNPB ArcGIS REST Services - Basemap batas_administrasi, layer Batas Kecamatan
+https://gis.bnpb.go.id/server/rest/services/Basemap/batas_administrasi/MapServer/3
+```
+
+File ini berisi 20 polygon kecamatan Kota Bandar Lampung. Nama kecamatan dari sumber memakai huruf kapital dan beberapa penulisan tanpa spasi, misalnya `TELUKBETUNG SELATAN`. Aplikasi menormalisasi nama tersebut di backend agar cocok dengan kolom `district` pada `flood_events`, misalnya menjadi `Teluk Betung Selatan`.
 
 ## D. Dataset Titik Rawan Banjir
 

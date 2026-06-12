@@ -48,6 +48,7 @@ Route::prefix('v1')->name('api.v1.')->group(function () use ($floodEventMissing,
         Route::get('/flood-events', [GeoJsonController::class, 'floodEvents'])->name('flood-events');
         Route::get('/evacuation-points', [GeoJsonController::class, 'evacuationPoints'])->name('evacuation-points');
         Route::get('/heavy-equipment-posts', [GeoJsonController::class, 'heavyEquipmentPosts'])->name('heavy-equipment-posts');
+        Route::get('/district-flood-intensity', [GeoJsonController::class, 'districtFloodIntensity'])->name('district-flood-intensity');
     });
 
     Route::prefix('analysis')->name('analysis.')->group(function () use ($floodEventMissing): void {

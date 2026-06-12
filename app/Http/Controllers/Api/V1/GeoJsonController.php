@@ -8,6 +8,7 @@ use App\Models\FloodEvent;
 use App\Models\FloodRiskPoint;
 use App\Models\HeavyEquipmentPost;
 use App\Models\HeavyEquipmentUnit;
+use App\Services\DistrictFloodIntensityService;
 use App\Services\GeoJsonService;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Builder;
@@ -20,7 +21,10 @@ use JsonException;
 
 class GeoJsonController extends Controller
 {
-    public function __construct(private readonly GeoJsonService $geoJson) {}
+    public function __construct(
+        private readonly GeoJsonService $geoJson,
+        private readonly DistrictFloodIntensityService $districtFloodIntensity,
+    ) {}
 
     /**
      * @throws JsonException
@@ -227,6 +231,14 @@ class GeoJsonController extends Controller
                 'updated_at' => $this->date($post->updated_at),
             ],
         ));
+    }
+
+    /**
+     * @throws JsonException
+     */
+    public function districtFloodIntensity(): JsonResponse
+    {
+        return response()->json($this->districtFloodIntensity->featureCollection());
     }
 
     /**
