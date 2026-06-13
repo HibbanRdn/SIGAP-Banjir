@@ -40,13 +40,14 @@
 Saat menjelaskan dataset, gunakan narasi berikut:
 
 ```text
-Dataset yang digunakan pada tahap progres merupakan dataset pengembangan berbasis lokasi nyata di wilayah Kota Bandar Lampung. Koordinat dan nama area telah diaudit menggunakan peta publik OpenStreetMap/Nominatim, sedangkan status operasional banjir, titik evakuasi, dan pos alat berat masih digunakan sebagai data simulasi/dummy untuk pengujian fungsi spasial aplikasi. Dataset ini belum diklaim sebagai data operasional resmi pemerintah.
+Layer kejadian banjir menggunakan data nyata berbasis berita lokal/nasional terkait banjir Bandar Lampung 14 April 2026. Layer titik rawan banjir menggunakan data nyata berbasis jurnal/literatur akademik. Koordinat kejadian berita merupakan hasil geocoding/plotting lokasi jalan, kelurahan, kecamatan, atau landmark yang disebut dalam berita, sedangkan titik risiko jurnal merupakan representasi/centroid area kelurahan. Titik evakuasi dan pos alat berat tetap dataset pengembangan untuk demo rekomendasi respons, bukan data operasional resmi.
 ```
 
 ## 5. Pengingat Rekaman Video
 
-1. Jangan mengklaim data simulasi/dummy sebagai data resmi.
-2. Sebutkan status final data spasial: 30 simulasi, 6 dummy, 0 nyata, dan 36 perlu validasi operasional.
+1. Jangan mengklaim dataset sebagai data operasional resmi pemerintah.
+2. Sebutkan status final data spasial: 24 nyata, 10 simulasi, 6 dummy, dan 16 perlu validasi operasional.
 3. Tunjukkan halaman `/admin/data-sources` untuk membuktikan transparansi dataset.
-4. Tunjukkan `/peta`, dashboard, detail kejadian, dan rute referensi.
-5. Jelaskan bahwa rute OSRM adalah referensi, bukan rute resmi kebencanaan.
+4. Jelaskan bahwa kejadian banjir adalah data nyata berbasis berita dan titik rawan adalah data nyata berbasis jurnal.
+5. Tunjukkan `/peta`, dashboard, detail kejadian, layer intensitas kecamatan, dan rute referensi.
+6. Jelaskan bahwa rute OSRM adalah referensi, bukan rute resmi kebencanaan.

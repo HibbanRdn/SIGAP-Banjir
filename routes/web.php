@@ -16,8 +16,12 @@ Route::view('/', 'pages.home')->name('home');
 Route::view('/peta', 'pages.home')->name('map');
 
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [AdminAuthController::class, 'login'])->name('login.store');
+    Route::get('/login', [AdminAuthController::class, 'showLoginForm'])
+        ->middleware('throttle:30,1')
+        ->name('login');
+    Route::post('/login', [AdminAuthController::class, 'login'])
+        ->middleware('throttle:5,1')
+        ->name('login.store');
     Route::post('/logout', [AdminAuthController::class, 'logout'])->middleware('auth')->name('logout');
 
     Route::middleware(['auth', 'admin'])->group(function () {

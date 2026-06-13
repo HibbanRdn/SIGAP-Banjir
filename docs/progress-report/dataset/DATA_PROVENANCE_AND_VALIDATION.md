@@ -2,80 +2,102 @@
 
 ## 1. Status Sumber Dataset Saat Ini
 
-Dataset SIGAP Banjir saat ini adalah dataset awal pengembangan untuk kebutuhan progres aplikasi GIS. Data digunakan untuk menguji struktur spasial, layer peta, analisis jarak, rekomendasi resource, dan rute evakuasi referensi.
+Dataset SIGAP Banjir saat ini merupakan dataset pengembangan akademik yang sudah direvisi agar dua layer banjir utama berbasis sumber nyata:
 
-Dataset belum digunakan sebagai dasar keputusan darurat resmi. SIGAP Banjir juga belum diklaim sebagai sistem operasional Pemerintah Kota Bandar Lampung atau BPBD.
+| Kelompok Data | Jumlah | Source Type | Data Status | Status Penggunaan |
+|---|---:|---|---|---|
+| Kejadian banjir | 12 | berita | nyata | Data nyata berbasis pemberitaan banjir Bandar Lampung 14 April 2026 |
+| Titik rawan banjir | 12 | jurnal | nyata | Data nyata berbasis literatur akademik risiko banjir |
+| Titik evakuasi | 10 | admin_input | simulasi | Kandidat evakuasi untuk uji rekomendasi |
+| Pos alat berat | 6 | dummy | dummy | Data resource dummy realistis untuk demo respons |
+| Jenis alat berat | 6 | - | - | Master data pengembangan |
+| Unit alat berat | 15 | - | - | Dummy realistis untuk uji ketersediaan resource |
 
-## 2. Komposisi Data Pengembangan Final
+SIGAP Banjir tetap tidak diklaim sebagai sistem operasional Pemerintah Kota Bandar Lampung atau BPBD. Perubahan ini mengganti data awal demo pada `flood_events` dan `flood_risk_points` menjadi data nyata berbasis sumber berita dan jurnal yang dicatat secara transparan.
 
-| Kelompok Data | Jumlah | Status Penggunaan |
+## 2. Sumber Data Kejadian Banjir
+
+`flood_events` menggunakan data nyata berbasis berita. Semua record memiliki:
+
+| Atribut | Nilai |
+|---|---|
+| `data_status` | `nyata` |
+| `source_type` | `berita` |
+| `is_verified` | `true` |
+| `status` | `surut` |
+
+Sumber yang digunakan:
+
+1. Detik/Antara: https://news.detik.com/berita/d-8445003/banjir-terjang-16-kecamatan-di-bandar-lampung-1-orang-meninggal
+2. Rilis ID 34 titik: https://lampung.rilis.id/Breaking%20News/Berita/banjir-rendam-34-titik-di-bandar-lampung-1-warga-36kR?page=1
+3. Rilis ID Kedaton: https://lampung.rilis.id/Peristiwa/Berita/bandar-lampung-dikepung-banjir-di-kedaton-kEg1
+4. Rilis ID Kedaton halaman 2: https://lampung.rilis.id/Peristiwa/Berita/bandar-lampung-dikepung-banjir-di-kedaton-kEg1?page=2
+5. Bongkar Post: https://bacabongkarpost.com/banjir-rendam-bandar-lampung-akibat-hujan-deras-aktivitas-warga-terganggu/
+
+Catatan presisi: kejadian banjir merupakan data nyata berbasis pemberitaan media, tetapi koordinat merupakan hasil geocoding/plotting lokasi jalan, landmark, kecamatan, atau area yang disebut dalam berita. Koordinat bukan GPS lapangan operasional.
+
+## 3. Sumber Data Titik Rawan Banjir
+
+`flood_risk_points` menggunakan jurnal:
+
+```text
+Agustri & Asbi (2020), Tingkat Risiko Bencana Banjir di Kota Bandar Lampung dan Upaya Pengurangannya Berbasis Penataan Ruang
+```
+
+Semua record memiliki:
+
+| Atribut | Nilai |
+|---|---|
+| `data_status` | `nyata` |
+| `source_type` | `jurnal` |
+| `is_verified` | `true` |
+
+Jurnal tersebut digunakan sebagai dasar literatur karena memuat kelas risiko banjir rendah, sedang, dan tinggi di Kota Bandar Lampung, termasuk risiko tinggi seluas 3.781,12 ha atau 20,58 persen dari luas kota, serta sebaran risiko tinggi pada kelurahan seperti Way Kandis, Sukabumi, Bumi Kedamaian, Rajabasa Jaya, Bumi Waras, Kangkung, Way Tataan, Gedong Pakuan, Pesawahan, Sumberejo Sejahtera, Kampung Baru, dan Kota Karang Raya.
+
+Catatan presisi: titik rawan banjir merupakan representasi/centroid area kelurahan berdasarkan hasil kajian risiko banjir, bukan titik GPS lapangan dan bukan batas polygon risiko resmi.
+
+## 4. Komposisi Status Data Spasial
+
+Status data spasial final:
+
+| Status | Jumlah | Keterangan |
 |---|---:|---|
-| Kejadian banjir | 8 | Dataset simulasi spasial untuk skenario kejadian |
-| Titik rawan banjir | 12 | Dataset simulasi spasial untuk layer risiko |
-| Titik evakuasi | 10 | Dataset simulasi spasial untuk uji rekomendasi evakuasi |
-| Pos alat berat | 6 | Rancangan data operasional/dummy realistis untuk resource respons |
-| Jenis alat berat | 6 | Master data pengembangan |
-| Unit alat berat | 15 | Dummy realistis untuk uji ketersediaan resource |
+| Nyata | 24 | 12 kejadian berbasis berita dan 12 titik risiko berbasis jurnal |
+| Simulasi | 10 | Titik evakuasi pengembangan untuk uji rekomendasi |
+| Dummy | 6 | Pos alat berat dummy realistis |
+| Perlu validasi operasional | 16 | Titik evakuasi dan pos alat berat yang belum memiliki sumber resmi |
 
-Status data spasial final setelah audit adalah 30 record `simulasi`, 6 record `dummy`, dan 0 record `nyata`. Seluruh 36 record spasial masih `is_verified = false` karena validasi yang dilakukan baru sebatas validasi lokasi/area melalui peta publik, bukan verifikasi operasional resmi.
-
-## 3. Koreksi Inkonsistensi Status Data
-
-Pada audit awal ditemukan satu record `Pos Alat Berat Panjang` yang berlabel `data_status = nyata`, `source_type = pemerintah`, dan `is_verified = true`, tetapi `source_reference` masih menunjukkan asal data dari seeder demo. Karena tidak tersedia URL, dokumen, atau bukti sumber resmi, record tersebut dikoreksi menjadi `data_status = dummy`, `source_type = dummy`, dan `is_verified = false`.
-
-Koreksi ini merupakan koreksi inkonsistensi pelabelan status sumber data, bukan manipulasi data agar terlihat resmi. Backup record sebelum koreksi disimpan pada `audit_backups/heavy_equipment_posts_panjang_before_correction.json`.
-
-## 4. Alasan Penggunaan Dataset Simulasi
-
-Dataset simulasi digunakan secara sadar karena tahap progres berfokus pada pembuktian fungsi GIS, bukan validasi data operasional resmi. Penggunaan dataset simulasi membantu:
-
-1. Menguji penyimpanan titik spasial pada PostGIS.
-2. Menguji GeoJSON API untuk Leaflet.
-3. Menguji filter, layer toggle, popup, dan marker kategori.
-4. Menguji rekomendasi titik evakuasi terdekat.
-5. Menguji rekomendasi pos alat berat terdekat.
-6. Menguji rute evakuasi referensi dengan OSRM.
-7. Menjaga demo tetap konsisten tanpa mengklaim data belum tervalidasi sebagai data resmi.
+Tidak ada lagi record `flood_events` atau `flood_risk_points` yang berstatus `dummy` atau `simulasi`.
 
 ## 5. Mekanisme Transparansi yang Sudah Ada
 
 | Mekanisme | Fungsi |
 |---|---|
-| `source_type` | Menjelaskan jenis sumber, misalnya `admin_input` atau `dummy` |
-| `source_reference` | Menyimpan catatan sumber atau referensi dataset |
-| `data_status` | Membedakan `simulasi`, `dummy`, dan `nyata` |
-| `is_verified` | Menandai apakah data sudah diverifikasi secara operasional |
+| `source_type` | Menjelaskan jenis sumber, misalnya `berita`, `jurnal`, `admin_input`, atau `dummy` |
+| `source_reference` | Menyimpan URL berita atau referensi literatur |
+| `data_status` | Membedakan `nyata`, `simulasi`, dan `dummy` |
+| `is_verified` | Menandai apakah data sudah diverifikasi terhadap sumber yang tersedia |
 | Halaman Sumber Data & Validasi | Menampilkan status sumber dan verifikasi per data |
-| Badge status di UI | Membuat status simulasi/dummy terlihat pada dashboard, detail, dan tabel |
+| Popup peta | Menampilkan sumber dan status data pada marker kejadian/risiko |
 
-## 6. Validasi yang Dilakukan Saat Ekspor Final
+## 6. Validasi yang Dilakukan
 
 | Validasi | Hasil |
 |---|---|
-| Jumlah row `flood_events.csv` | 8 record |
+| Backup sebelum update | `docs/progress-report/dataset/backups/before_real_source_update/` |
+| Jumlah row `flood_events.csv` | 12 record |
 | Jumlah row `flood_risk_points.csv` | 12 record |
-| Jumlah row `evacuation_points.csv` | 10 record |
-| Jumlah row `heavy_equipment_posts.csv` | 6 record |
-| Jumlah row `equipment_types.csv` | 6 record |
-| Jumlah row `heavy_equipment_units.csv` | 15 record |
+| Jumlah row `real_source_flood_dataset.csv` | 24 record |
+| Status `flood_events` | 12 `nyata`, 0 `dummy/simulasi` |
+| Status `flood_risk_points` | 12 `nyata`, 0 `dummy/simulasi` |
+| Source type `flood_events` | 12 `berita` |
+| Source type `flood_risk_points` | 12 `jurnal` |
 | Longitude/latitude | Berada pada rentang wilayah studi Bandar Lampung |
-| Reverse geocoding | 36 record terbaca pada area Bandar Lampung melalui OpenStreetMap/Nominatim |
-| Quantity unit | `available_quantity <= quantity` |
+| Nominatim/OSM | 24 target dicek; 14 memperoleh kandidat lokasi, 10 dipertahankan sebagai plotting manual/representatif |
 | Credential | Tidak ada data user, password, atau credential yang diekspor |
-| Sumber data | Tidak ada URL sumber resmi yang dikarang |
 
-## 7. Rencana Pengembangan Dataset
+## 7. Batasan Penggunaan
 
-Jika project dilanjutkan, tahap validasi dataset yang disarankan adalah:
+Dataset kejadian dan risiko sudah berbasis sumber nyata, tetapi belum setara dengan data operasional resmi pemerintah. Koordinat berita adalah titik representatif dari lokasi yang disebutkan media. Koordinat jurnal adalah centroid/representasi kelurahan dari kajian risiko. Titik evakuasi dan pos alat berat tetap dataset pengembangan untuk demo rekomendasi resource.
 
-1. Mengumpulkan data kejadian banjir dari berita, dokumen pemerintah, atau laporan yang dapat diverifikasi.
-2. Menyimpan URL/dokumen sumber pada `source_reference`.
-3. Melakukan verifikasi koordinat melalui peta atau survei sederhana.
-4. Memisahkan data yang benar-benar nyata dari data dummy/simulasi.
-5. Melakukan validasi bersama pihak terkait jika project dikembangkan di luar konteks akademik.
-
-## 8. Batasan Penggunaan
-
-Dataset saat ini tidak boleh digunakan sebagai dasar keputusan darurat resmi. Rute evakuasi yang ditampilkan juga merupakan rute referensi dari OSRM dan belum mempertimbangkan jalan tertutup, kondisi banjir aktual, lalu lintas, atau keputusan petugas lapangan.
-
-Transparansi data ini bukan kelemahan sistem, tetapi praktik penting dalam pengembangan SIG akademik agar struktur dataset, status sumber, dan validasi dapat ditingkatkan secara bertahap.
+Rute evakuasi yang ditampilkan juga merupakan rute referensi dari OSRM dan belum mempertimbangkan jalan tertutup, tinggi banjir aktual, lalu lintas, atau keputusan petugas lapangan.

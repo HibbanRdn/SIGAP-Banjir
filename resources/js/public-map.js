@@ -932,6 +932,7 @@ function buildPopup(kind, properties) {
                     <div><dt>Severity</dt><dd>${escapeHtml(label(properties.severity_level))}</dd></div>
                     <div><dt>Kecamatan</dt><dd>${escapeHtml(properties.district || '-')}</dd></div>
                     ${properties.water_depth_cm ? `<div><dt>Kedalaman</dt><dd>${escapeHtml(properties.water_depth_cm)} cm</dd></div>` : ''}
+                    <div><dt>Sumber</dt><dd>${escapeHtml(label(properties.source_type))}</dd></div>
                     <div><dt>Data</dt><dd>${escapeHtml(label(properties.data_status))}</dd></div>
                 </dl>
                 <div class="map-popup-actions">
@@ -985,6 +986,7 @@ function buildPopup(kind, properties) {
             <dl>
                 <div><dt>Risiko</dt><dd>${escapeHtml(label(properties.risk_level))}</dd></div>
                 <div><dt>Kecamatan</dt><dd>${escapeHtml(properties.district || '-')}</dd></div>
+                <div><dt>Sumber</dt><dd>${escapeHtml(label(properties.source_type))}</dd></div>
                 <div><dt>Data</dt><dd>${escapeHtml(label(properties.data_status))}</dd></div>
             </dl>
         </div>

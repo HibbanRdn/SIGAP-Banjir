@@ -270,7 +270,7 @@ class DataSourceMonitoringService
             'source_type' => $record->source_type,
             'source_label' => $this->readableSourceType((string) $record->source_type),
             'source_reference' => $sourceReference,
-            'source_url' => filter_var($sourceReference, FILTER_VALIDATE_URL) ? $sourceReference : null,
+            'source_url' => $this->extractFirstUrl($sourceReference),
             'data_status' => $record->data_status,
             'data_status_label' => $this->readableLabel((string) $record->data_status),
             'is_verified' => (bool) $record->is_verified,
@@ -413,6 +413,17 @@ class DataSourceMonitoringService
             'dummy' => 'Dummy',
             default => $this->readableLabel($value),
         };
+    }
+
+    private function extractFirstUrl(string $sourceReference): ?string
+    {
+        if (filter_var($sourceReference, FILTER_VALIDATE_URL)) {
+            return $sourceReference;
+        }
+
+        preg_match('/https?:\/\/[^\s|]+/', $sourceReference, $matches);
+
+        return $matches[0] ?? null;
     }
 
     private function readableLabel(string $value): string

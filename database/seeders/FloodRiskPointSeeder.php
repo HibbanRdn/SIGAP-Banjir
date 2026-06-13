@@ -10,11 +10,9 @@ class FloodRiskPointSeeder extends Seeder
 {
     private const ADMIN_EMAIL = 'hibbanrdn@gmail.com';
 
-    private const SOURCE_REFERENCE = 'Dataset simulasi pengembangan SIGAP Banjir; lokasi area diverifikasi melalui peta publik OpenStreetMap/Nominatim, tingkat risiko merupakan skenario uji aplikasi.';
+    private const SOURCE_REFERENCE = 'Agustri & Asbi (2020), Tingkat Risiko Bencana Banjir di Kota Bandar Lampung dan Upaya Pengurangannya Berbasis Penataan Ruang';
 
-    private const LEGACY_SOURCE_REFERENCES = [
-        'Seeder demo SIGAP Banjir',
-    ];
+    private const CENTROID_NOTE = 'Titik merupakan representasi/centroid area kelurahan berdasarkan hasil kajian risiko banjir, bukan batas polygon risiko resmi.';
 
     /**
      * Run the database seeds.
@@ -28,47 +26,179 @@ class FloodRiskPointSeeder extends Seeder
         }
 
         DB::table('flood_risk_points')
-            ->whereIn('source_reference', array_merge([self::SOURCE_REFERENCE], self::LEGACY_SOURCE_REFERENCES))
+            ->whereIn('data_status', ['dummy', 'simulasi'])
             ->delete();
 
         $now = now();
 
-        $points = [
-            ['Rawan Banjir Way Halim', 'Koridor permukiman Way Halim Permai', 'Way Halim', 'Way Halim Permai', 'tinggi', 'Area simulasi rawan genangan saat hujan deras dan drainase meluap.', 105.2746909, -5.3823404],
-            ['Rawan Banjir Teluk Betung Selatan', 'Sekitar Pesawahan dan akses pesisir', 'Teluk Betung Selatan', 'Pesawahan', 'tinggi', 'Area simulasi rawan banjir rob dan genangan hujan intensitas tinggi.', 105.2608, -5.4469],
-            ['Rawan Banjir Panjang Utara', 'Koridor akses Pelabuhan Panjang', 'Panjang', 'Panjang Utara', 'tinggi', 'Area simulasi rawan genangan pada akses jalan rendah.', 105.3229645, -5.4721335],
-            ['Rawan Banjir Rajabasa', 'Permukiman sekitar Rajabasa', 'Rajabasa', 'Rajabasa', 'sedang', 'Area simulasi dengan potensi limpasan saat hujan deras.', 105.2297280, -5.3627526],
-            ['Rawan Banjir Sukarame', 'Area Sukarame', 'Sukarame', 'Sukarame', 'tinggi', 'Area simulasi rawan genangan pada permukiman padat.', 105.2946540, -5.3974767],
-            ['Rawan Banjir Kedamaian', 'Koridor Kedamaian dan sekitarnya', 'Kedamaian', 'Kedamaian', 'sedang', 'Area simulasi rawan genangan lokal di jalan penghubung.', 105.2816, -5.4095],
-            ['Rawan Banjir Labuhan Ratu', 'Area Labuhan Ratu Raya', 'Labuhan Ratu', 'Labuhan Ratu Raya', 'sedang', 'Area simulasi dengan potensi genangan pada titik rendah.', 105.2448, -5.3756],
-            ['Rawan Banjir Tanjung Karang Timur', 'Koridor jalan permukiman Tanjung Karang Timur', 'Tanjung Karang Timur', 'Kota Baru', 'sedang', 'Area simulasi rawan limpasan dari saluran perkotaan.', 105.2779, -5.4163],
-            ['Rawan Banjir Bumi Waras', 'Area Bumi Waras dekat pesisir', 'Bumi Waras', 'Bumi Waras', 'tinggi', 'Area simulasi rawan genangan pesisir dan drainase padat.', 105.2706967, -5.4486092],
-            ['Rawan Banjir Enggal', 'Area pusat kota Enggal', 'Enggal', 'Enggal', 'rendah', 'Area simulasi rawan genangan ringan saat hujan puncak.', 105.2597, -5.4189],
-            ['Rawan Banjir Kemiling Permai', 'Permukiman Kemiling Permai', 'Kemiling', 'Kemiling Permai', 'rendah', 'Area simulasi pemantauan genangan lokal.', 105.2224429, -5.3760226],
-            ['Rawan Banjir Teluk Betung Timur', 'Koridor akses Teluk Betung Timur', 'Teluk Betung Timur', 'Keteguhan', 'sedang', 'Area simulasi rawan limpasan menuju wilayah pesisir.', 105.2452182, -5.4698660],
-        ];
+        foreach ($this->points() as $point) {
+            $longitude = $point['longitude'];
+            $latitude = $point['latitude'];
+            unset($point['longitude'], $point['latitude']);
 
-        foreach ($points as [$name, $address, $district, $subdistrict, $riskLevel, $description, $longitude, $latitude]) {
-            $this->insertPoint('flood_risk_points', [
-                'name' => $name,
-                'address' => $address,
-                'district' => $district,
-                'subdistrict' => $subdistrict,
-                'risk_level' => $riskLevel,
-                'description' => $description,
-                'source_type' => 'admin_input',
+            $this->upsertPoint('flood_risk_points', [
+                ...$point,
+                'source_type' => 'jurnal',
                 'source_reference' => self::SOURCE_REFERENCE,
-                'is_verified' => false,
-                'data_status' => 'simulasi',
+                'is_verified' => true,
+                'data_status' => 'nyata',
                 'created_by' => $adminId,
-                'created_at' => $now,
+                'created_at' => $point['created_at'] ?? $now,
                 'updated_at' => $now,
             ], $longitude, $latitude);
         }
     }
 
-    private function insertPoint(string $table, array $row, float $longitude, float $latitude): void
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    private function points(): array
     {
+        return [
+            [
+                'name' => 'Risiko Banjir Way Kandis',
+                'address' => 'Kelurahan Way Kandis',
+                'district' => 'Tanjung Senang',
+                'subdistrict' => 'Way Kandis',
+                'risk_level' => 'tinggi',
+                'description' => 'Area permukiman risiko tinggi berdasarkan jurnal, luasan sekitar 143,19 ha. '.self::CENTROID_NOTE,
+                'longitude' => 105.2920,
+                'latitude' => -5.3608,
+            ],
+            [
+                'name' => 'Risiko Banjir Sukabumi',
+                'address' => 'Kelurahan Sukabumi',
+                'district' => 'Sukabumi',
+                'subdistrict' => 'Sukabumi',
+                'risk_level' => 'tinggi',
+                'description' => 'Area permukiman risiko tinggi berdasarkan jurnal, luasan sekitar 136,80 ha. '.self::CENTROID_NOTE,
+                'longitude' => 105.3110,
+                'latitude' => -5.4105,
+            ],
+            [
+                'name' => 'Risiko Banjir Bumi Kedamaian',
+                'address' => 'Kelurahan Bumi Kedamaian',
+                'district' => 'Kedamaian',
+                'subdistrict' => 'Bumi Kedamaian',
+                'risk_level' => 'tinggi',
+                'description' => 'Area sempadan sungai dan permukiman risiko tinggi; terkait Sungai Kalibalok menurut pembahasan jurnal. '.self::CENTROID_NOTE,
+                'longitude' => 105.2860,
+                'latitude' => -5.3940,
+            ],
+            [
+                'name' => 'Risiko Banjir Rajabasa Jaya',
+                'address' => 'Kelurahan Rajabasa Jaya',
+                'district' => 'Rajabasa',
+                'subdistrict' => 'Rajabasa Jaya',
+                'risk_level' => 'tinggi',
+                'description' => 'Disebut dalam jurnal sebagai kelurahan dengan tingkat risiko tinggi terluas. '.self::CENTROID_NOTE,
+                'longitude' => 105.2350,
+                'latitude' => -5.3585,
+            ],
+            [
+                'name' => 'Risiko Banjir Bumi Waras',
+                'address' => 'Kelurahan Bumi Waras',
+                'district' => 'Bumi Waras',
+                'subdistrict' => 'Bumi Waras',
+                'risk_level' => 'tinggi',
+                'description' => 'Area sempadan pantai risiko tinggi berdasarkan jurnal. '.self::CENTROID_NOTE,
+                'longitude' => 105.2680,
+                'latitude' => -5.4395,
+            ],
+            [
+                'name' => 'Risiko Banjir Kangkung',
+                'address' => 'Kelurahan Kangkung',
+                'district' => 'Bumi Waras',
+                'subdistrict' => 'Kangkung',
+                'risk_level' => 'tinggi',
+                'description' => 'Area sempadan pantai risiko tinggi berdasarkan jurnal. '.self::CENTROID_NOTE,
+                'longitude' => 105.2600,
+                'latitude' => -5.4470,
+            ],
+            [
+                'name' => 'Risiko Banjir Way Tataan',
+                'address' => 'Kelurahan Way Tataan',
+                'district' => 'Teluk Betung Timur',
+                'subdistrict' => 'Way Tataan',
+                'risk_level' => 'tinggi',
+                'description' => 'Area sempadan pantai risiko tinggi berdasarkan jurnal. '.self::CENTROID_NOTE,
+                'longitude' => 105.2910,
+                'latitude' => -5.4730,
+            ],
+            [
+                'name' => 'Risiko Banjir Gedong Pakuan',
+                'address' => 'Kelurahan Gedong Pakuan',
+                'district' => 'Teluk Betung Selatan',
+                'subdistrict' => 'Gedong Pakuan',
+                'risk_level' => 'tinggi',
+                'description' => 'Area sempadan sungai risiko tinggi berdasarkan jurnal. '.self::CENTROID_NOTE,
+                'longitude' => 105.2560,
+                'latitude' => -5.4380,
+            ],
+            [
+                'name' => 'Risiko Banjir Pesawahan',
+                'address' => 'Kelurahan Pesawahan',
+                'district' => 'Teluk Betung Selatan',
+                'subdistrict' => 'Pesawahan',
+                'risk_level' => 'tinggi',
+                'description' => 'Area sempadan sungai/pantai risiko tinggi berdasarkan jurnal. '.self::CENTROID_NOTE,
+                'longitude' => 105.2490,
+                'latitude' => -5.4370,
+            ],
+            [
+                'name' => 'Risiko Banjir Sumberejo Sejahtera',
+                'address' => 'Kelurahan Sumberejo Sejahtera',
+                'district' => 'Kemiling',
+                'subdistrict' => 'Sumberejo Sejahtera',
+                'risk_level' => 'tinggi',
+                'description' => 'Area permukiman risiko tinggi berdasarkan jurnal. '.self::CENTROID_NOTE,
+                'longitude' => 105.2230,
+                'latitude' => -5.3930,
+            ],
+            [
+                'name' => 'Risiko Banjir Kampung Baru',
+                'address' => 'Kelurahan Kampung Baru',
+                'district' => 'Labuhan Ratu',
+                'subdistrict' => 'Kampung Baru',
+                'risk_level' => 'tinggi',
+                'description' => 'Area permukiman risiko tinggi; jurnal juga membahas Kampung Baru sebagai permukiman berkepadatan tinggi. '.self::CENTROID_NOTE,
+                'longitude' => 105.2450,
+                'latitude' => -5.3720,
+            ],
+            [
+                'name' => 'Risiko Banjir Kota Karang Raya',
+                'address' => 'Kelurahan Kota Karang Raya',
+                'district' => 'Teluk Betung Timur',
+                'subdistrict' => 'Kota Karang Raya',
+                'risk_level' => 'tinggi',
+                'description' => 'Area sempadan pantai dan permukiman risiko tinggi berdasarkan jurnal. '.self::CENTROID_NOTE,
+                'longitude' => 105.2550,
+                'latitude' => -5.4630,
+            ],
+        ];
+    }
+
+    /**
+     * @param  array<string, mixed>  $row
+     */
+    private function upsertPoint(string $table, array $row, float $longitude, float $latitude): void
+    {
+        $existingId = DB::table($table)->where('name', $row['name'])->value('id');
+
+        if ($existingId) {
+            $columns = array_keys($row);
+            $setSql = collect($columns)
+                ->map(fn (string $column): string => "\"{$column}\" = ?")
+                ->implode(', ');
+
+            DB::update(
+                "UPDATE {$table} SET {$setSql}, geom = ST_SetSRID(ST_MakePoint(?, ?), 4326) WHERE id = ?",
+                [...array_values($row), $longitude, $latitude, $existingId],
+            );
+
+            return;
+        }
+
         $columns = array_keys($row);
         $columnSql = collect($columns)->map(fn (string $column): string => "\"{$column}\"")->implode(', ');
         $placeholders = collect($columns)->map(fn (): string => '?')->implode(', ');
